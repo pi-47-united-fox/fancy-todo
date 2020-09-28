@@ -28,6 +28,7 @@ _Request Body_
   "due_date": "<due date to get insert into>"
 }
 ```
+<b> Success Response :</b>
 
 _Response (201 - Created)_
 ```
@@ -41,6 +42,8 @@ _Response (201 - Created)_
 }
 ```
 
+<b> Error Response :</b>
+
 _Response (400 - Bad Request)_
 ```
 {
@@ -48,7 +51,7 @@ _Response (400 - Bad Request)_
 }
 ```
 
-_Response (500)_
+_Response (500 -  Internal Server Error)_
 ```
 {
     "message": "Internal server error"
@@ -72,7 +75,9 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
+<b> Success Response :</b>
+
+_Response (200 - Ok)_
 ```
 [
   {
@@ -96,7 +101,9 @@ _Response (200)_
 ]
 ```
 
-_Response (500)_
+<b> Error Response :</b>
+
+_Response (500 - Internal Server Error)_
 ```
 {
     "message": "Internal server error"
@@ -120,7 +127,9 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
+<b> Success Response :</b>
+
+_Response (200 - Ok)_
 ```
 [
   {
@@ -135,6 +144,8 @@ _Response (200)_
 ]
 ```
 
+<b> Error Response :</b>
+
 _Response (404 - Bad Request)_
 ```
 {
@@ -145,7 +156,7 @@ _Response (404 - Bad Request)_
 ---
 ### PUT /todos/:id
 
-> Put todo
+> Update todo
 
 _Request Header_
 ```
@@ -166,7 +177,9 @@ _Request Body_
 }
 ```
 
-_Response (200)_
+<b> Success Response :</b>
+
+_Response (200 - Created)_
 ```
 [
   {
@@ -180,15 +193,17 @@ _Response (200)_
   }
 ]
 ```
-_Response (400)_
+<b> Error Response :</b>
+
+_Response (400 - Bad Request)_
 ```
 [
   {
-    "message": "Validation Error
+    "message": "Validation Error"
   }
 ]
 ```
-_Response (404)_
+_Response (404 - Not Found)_
 ```
 [
   {
@@ -196,7 +211,7 @@ _Response (404)_
   }
 ]
 ```
-_Response (500)_
+_Response (500 - Internal Server Error)_
 ```
 [
   { 
@@ -208,7 +223,7 @@ _Response (500)_
 ---
 ### PATCH /todos/:id
 
-> Put todo
+> Update todo
 
 _Request Header_
 ```
@@ -219,12 +234,13 @@ _Request Header_
 
 _Request Body_
 ```
-{
+[
   {  
     "status": "<posted new status>"
   }
-}
+]
 ```
+<b> Success Response :</b>
 
 _Response (200)_
 ```
@@ -240,56 +256,61 @@ _Response (200)_
   }
 ]
 ```
-_Response (400)_
+
+<b> Error Response :</b>
+
+_Response (400 - Bad Request)_
 ```
-[
-  {
-    "message": "Validation Error
-  }
-]
+
+{
+"message": "Validation Error
+}
+
 ```
-_Response (404)_
+_Response (404 - Not Found)_
 ```
-[
-  {
-    "message": "Not Found"
-  }
-]
+
+{
+"message": "Not Found"
+}
+
 ```
-_Response (500)_
+_Response (500 - Internal Server Error)_
 ```
-[
-  { 
-    "message": "Internal server error"
-  }
-]
+
+{ 
+"message": "Internal server error"
+}
+
 ```
 
 ---
 ### DELETE /todos/:id
 > Delete Todos
 
-_Response (200)_
+_Request Body_
 ```
-[
-    {
-        "message": "todo success to delete"
-    }
-]
+Not needed
 ```
-_Response (404)_
+<b> Success Response :</b>
+_Response (200 - Ok)_
 ```
-[
-    {
-        "message": "not found"
-    }
-]
+{
+    "message": "todo success to delete"
+}
 ```
-_Response (500)_
+
+<b> Error Response :</b>
+
+_Response (404 - Not Found)_
 ```
-[
-    {
-        "message": "Internal server error"
-    }
-]
+{
+    "message": "not found"
+}
+```
+_Response (500 -  Internal Server Error)_
+```
+{
+    "message": "Internal server error"
+}
 ```
