@@ -1,28 +1,31 @@
-# Fancy Todo App Server
+<h1 style="text-align: center"> Fancy Todo App Server </h1>
 Fancy Todo App is an application to manage your task. This app has :
 * RESTful endpoint for asset's CRUD operation
 * JSON formatted response
 
 &nbsp;
+---
 ## TOC
 <!-- TOC -->
 
-- [Fancy Todo App Server](#fancy-todo-app-server)
+    - [&nbsp;](#nbsp)
     - [TOC](#toc)
-    - [RESTful endpoints](#restful-endpoints)
-        - [GET /todos](#get-todos)
-        - [GET /todos/:id](#get-todosid)
-        - [POST /todos/](#post-todos)
-        - [PUT /todos/:id](#put-todosid)
-        - [PATCH /todos/:id](#patch-todosid)
-        - [DELETE /todos/:id](#delete-todosid)
+    - [](#)
+- [RESTful endpoints](#restful-endpoints)
+  - [Todo](#todo)
+    - [GET /todos](#get-todos)
+  - [User](#user)
+    - [POST /register](#post-register)
+    - [POST /login](#post-login)
 
 <!-- /TOC -->
+---
 
 &nbsp;
 
-## RESTful endpoints
+# RESTful endpoints
 
+## Todo
 ### GET /todos
 > Get all todos data (datatype array - of object)
 
@@ -299,6 +302,79 @@ _Response (404 - Not Found)_
 ```json
 {
   "message": "Error Not Found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+## User
+### POST /register
+
+> Create User by min requirement `(email, password)`
+
+_Request Body_
+* validate : tidak bisa input 'due_date' melebihi hari ini
+```json
+{
+  "emal": "random-sample-mail@mail.com",
+  "password": "thisMustBePassword123"
+}
+```
+
+_Response (202 - OK)_
+```json
+{
+  "id": 4,
+  "email": "random-sample-mail@mail.com",
+  "password": "$2a$10$9rtP9xtcj9y0fNb6GdCWy.ZdHbOQwE.ysvQm8JgfJWtuugNhnoXxS",
+  "updatedAt": "2020-09-28T13:30:00.213Z",
+  "createdAt": "2020-09-28T13:30:00.213Z"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid email or password"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+### POST /login
+
+> Find User by requirement `(email, password)`
+
+_Request Body_
+* validate : tidak bisa input 'due_date' melebihi hari ini
+```json
+{
+  "emal": "random-sample-mail@mail.com",
+  "password": "thisMustBePassword123"
+}
+```
+
+_Response (202 - OK)_
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYW5kb20tc2FtcGxlLW1haWxAbWFpbC5jb20iLCJpYXQiOjE2MDEyOTk2ODN9.16x-3S2zGwLkBhB0IK44fr9fIpgO_i4iozPadlsIKdA"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid email or password"
 }
 ```
 

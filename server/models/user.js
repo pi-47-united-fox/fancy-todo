@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    pw: {
+    password: {
       type: DataTypes.STRING
       // validate: { // jika digunakan
       //   isAlphanumeric: {
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (instance) => {
-        instance.pw = BcriptJs.makeHash(instance.pw)
+        instance.password = BcriptJs.makeHash(instance.password)
       }
     },
     sequelize,

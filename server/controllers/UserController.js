@@ -1,26 +1,31 @@
 const { User } = require('../models')
 const BcriptJs = require('../helper/bcryptjs')
-const Jwt = require('../helper/jwt')
+const Jwt      = require('../helper/jwt')
 
 class UserController {
     static registerC (req, res) {
         User.create({
             email: req.body.email,
-            pw: req.body.password
+            password: req.body.password
         }).then((result) => {
             return res.status(201).json(result)
         }).catch((err) => {
             console.log (err)
-            return res.status(400).json(err)
+            return res.status(400).json({ 
+                message: err.errors[0].message
+            })
         })
     }
 
     static loginC (req, res) {
         User.findOne({
-            email: req.body.email
+            where: {
+                email: req.body.email
+            }
         }).then((result) => {
             // check password dengan compare bcrypt
-            if (result && BcriptJs.check(req.body.password, result.pw)) {
+            if (BcriptJs.check(req.body.password, result.password)) {
+                // console.log ('masuk')
                 // encoding data user menggunakan JWT
                 let access_token = Jwt.generate(
                     result.id,
@@ -32,8 +37,11 @@ class UserController {
             }
             // return res.status(201).json(result)
         }).catch((err) => {
+            // console.log (err)
+            return res.status(500).json({
+                message: 'Invalid email or password'
+            })
             // return res.status(400).json(err)
-            res.status(500).json({message : err.message})
         })
     }
 }
