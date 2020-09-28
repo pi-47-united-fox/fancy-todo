@@ -28,9 +28,9 @@ _Response (200)_
   {
     "id": 1,
     "title": "Learn REST API",
+    "description": "Learn how to create RESTful API with Express and Sequelize",
     "status": "on going",
     "do_date": "2020-09-28",
-    "description": "Learn how to create RESTful API with Express and Sequelize",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
