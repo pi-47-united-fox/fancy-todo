@@ -14,7 +14,7 @@ class TodoControllers {
                 return res.status(201).json(data)
             })
             .catch(err => {
-                return res.send(400)
+                return res.send(500).json(err)
             })
     }
 
@@ -24,10 +24,7 @@ class TodoControllers {
                 return res.status(201).json(data)
             })
             .catch(err => {
-                return res.status(400)
-            })
-            .catch(err => {
-                return res.status(500)
+                return res.status(500).json(err)
             })
     }
 
@@ -37,7 +34,7 @@ class TodoControllers {
                 return res.status(200).json(data)
             })
             .catch(err => {
-                return res.status(404).json({ error: `error not found` })
+                return res.status(500).json(err)
             })
     }
 
@@ -57,13 +54,7 @@ class TodoControllers {
                 return res.status(200).json(data)
             })
             .catch(err => {
-                return res.status(400).json({ msg: "validation errors" })
-            })
-            .catch(err => {
-                return res.status(404).json({ msg: "error not found" })
-            })
-            .catch(errors => {
-                return res.status(500).json({ msg: "validation errors" })
+                return res.status(500).json(err)
             })
     }
 
@@ -79,11 +70,8 @@ class TodoControllers {
             .then(data => {
                 return res.status(200).json(data)
             })
-            .catch(err => {
-                return res.status(404)
-            })
             .catch(errors => {
-                return res.status(500)
+                return res.status(500).json(err)
             })
     }
 
@@ -97,10 +85,7 @@ class TodoControllers {
                 return res.status(200).json({ msg: `todo sucess to delete` })
             })
             .catch(err => {
-                return res.status(404).json({ errors: `error not found` })
-            })
-            .catch(errServers => {
-                return res.status(500)
+                return res.status(500).json(err)
             })
     }
 

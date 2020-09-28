@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        isAfter : {
-          args : new Date(),
+        isAfter: {
+          args: new Date().toLocaleString(),
           msg: `validate error`
         }
       }
@@ -30,5 +30,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Todo',
   });
-  return Todo;
+  return Todo; s
 };
