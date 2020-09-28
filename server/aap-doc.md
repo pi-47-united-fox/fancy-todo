@@ -113,6 +113,15 @@ _Request Header_
 }
 ```
 
+_Request Body_
+```json
+
+{
+    "id" : 1,
+}
+
+```
+
 _Response (200)_
 ```json
 
