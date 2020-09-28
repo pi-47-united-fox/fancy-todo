@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const todo = require('./routes/todo')
+const router = require('./routes/index')
 
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/todos', todo)
+app.use(router)
 
 app.listen(port, () => {
     console.log(`Todos app listening at http://localhost:${port}`)

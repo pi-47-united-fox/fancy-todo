@@ -282,3 +282,68 @@ _Response (500 - server error)_
 }
 ```
 
+### POST /register
+
+> Register user
+
+_Request Body_
+```json
+{
+    "email" : "ibx@hacktiv8.com",
+    "password" : "123456"
+}
+```
+
+_Response (201)_
+```json
+[
+  {
+    "id": 1,
+    "email" : "ibx@hacktiv8.com"
+  }
+]
+```
+
+_Response (400 - errors)_
+```json
+{
+  "message": "errors"
+}
+```
+---
+
+### POST /login
+
+> Login user
+
+_Request Params_
+```json
+{
+    "email" : "ibx@hacktiv8.com"
+}
+```
+
+_Request Body_
+```json
+{
+    "email" : "ibx@hacktiv8.com",
+    "password" : "123456"
+}
+```
+
+_Response (200)_
+```json
+[
+  {
+    "access_token" : "<access_token>"
+  }
+]
+```
+
+_Response (401 - errors)_
+```json
+{
+  "message": "errors"
+}
+```
+---
