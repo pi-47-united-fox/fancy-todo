@@ -130,9 +130,8 @@ not needed
 <b> Success Response :</b>
 
 _Response (200 - Ok)_
-```
-[
-  {
+``` 
+{
     "id": <todo id>,
     "title": "<todo title>",
     "description": "<todo description>",
@@ -140,8 +139,7 @@ _Response (200 - Ok)_
     "due_date": "<todo due_date>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+} 
 ```
 
 <b> Error Response :</b>
@@ -166,23 +164,20 @@ _Request Header_
 ```
 
 _Request Body_
-```
-{
-  { 
+``` 
+{ 
     "title": "<posted new title>",
     "description": "<posted new description>",
     "status": "<posted news tatus>",
     "due_date": "<posted new due_date>"
-  }
-}
+} 
 ```
 
 <b> Success Response :</b>
 
 _Response (200 - Created)_
-```
-[
-  {
+``` 
+{
     "id": <todo id>,
     "title": "<todo title>",
     "description": "<todo description>",
@@ -190,34 +185,27 @@ _Response (200 - Created)_
     "due_date": "<todo due_date>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+} 
 ```
 <b> Error Response :</b>
 
 _Response (400 - Bad Request)_
 ```
-[
-  {
+{
     "message": "Validation Error"
-  }
-]
+}
 ```
 _Response (404 - Not Found)_
 ```
-[
-  {
+{
     "message": "Not Found"
-  }
-]
+}
 ```
 _Response (500 - Internal Server Error)_
 ```
-[
-  { 
+{ 
     "message": "Internal server error"
-  }
-]
+}
 ```
 
 ---
@@ -234,27 +222,23 @@ _Request Header_
 
 _Request Body_
 ```
-[
-  {  
+{  
     "status": "<posted new status>"
-  }
-]
+}
 ```
 <b> Success Response :</b>
 
-_Response (200)_
+_Response (200 - Ok)_
 ```
-[
-  {
+{
     "id": <todo id>,
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due_date>",
     "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+    "updatedAt": "2020-03-20T07:15:12.149Z"
+}
 ```
 
 <b> Error Response :</b>
@@ -263,7 +247,7 @@ _Response (400 - Bad Request)_
 ```
 
 {
-"message": "Validation Error
+    "message": "Validation Error
 }
 
 ```
@@ -271,7 +255,7 @@ _Response (404 - Not Found)_
 ```
 
 {
-"message": "Not Found"
+    "message": "Not Found"
 }
 
 ```
@@ -279,7 +263,7 @@ _Response (500 - Internal Server Error)_
 ```
 
 { 
-"message": "Internal server error"
+    "message": "Internal server error"
 }
 
 ```
