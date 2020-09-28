@@ -3,11 +3,11 @@ const userRouter = require('../routers/user-router')
 const taskRouter = require('../routers/task-router')
 
 
-router.get('/', (req,res) => {
-    res.send(`Routing berhasil`)
-})
+// router.get('/', (req,res) => {
+//     res.send(`Routing berhasil`)
+// })
 router.use('/todos', taskRouter)
-router.use('/users', userRouter)
+router.use('/', userRouter)
 
 
 

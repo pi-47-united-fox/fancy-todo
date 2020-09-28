@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const { Sequelize } = require('.');
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     /**
@@ -12,20 +11,32 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Task.belongsTo(models.User, {
-        model: "User",
-        targetKey: "id",
-      })
+      Task.belongsTo(models.User)
     }
   };
   Task.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      unique: {
+        args: true,
+        msg: 'Title already in use!'
+    }
+
+    },
     description: DataTypes.STRING,
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    due_date: DataTypes.DATE,
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isAfter: {
+          args: new Date().toDateString(),
+          msg: "tanggal yg anda masukkan salah"
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

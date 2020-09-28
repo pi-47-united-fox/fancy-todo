@@ -1,6 +1,7 @@
 const { Task } = require('../models/index')
 class TaskController {
     static taskCreate(req, res) {
+        // console.log(req.body);
         let obj = {
             title: req.body.title,
             description: req.body.description,
@@ -10,19 +11,25 @@ class TaskController {
         console.log(obj);
         Task.create(obj)
             .then(data => {
+                console.log(data);
                 res.status(201).json(data)
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(500).json({
+                    message: 'Invalid request'
+                })
             })
     }
     static taskFindAll(req, res) {
         Task.findAll()
             .then(data => {
+                console.log(data);
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(500).json({
+                    message: 'Invalid request'
+                })
             })
     }
     static taskFindByid(req, res) {
@@ -35,7 +42,9 @@ class TaskController {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(404).json(err)
+                res.status(500).json({
+                    message: 'Invalid request'
+                })
             })
     }
     static editById(req, res) {
@@ -56,12 +65,14 @@ class TaskController {
                 })
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(500).json({
+                    message: 'Invalid request'
+                })
             })
 
     }
     static editStatus(req, res) {
-        let status = { status : req.body.status }
+        let status = { status: req.body.status }
         Task.update(status, {
             where: {
                 id: req.params.id
@@ -71,7 +82,9 @@ class TaskController {
                 res.status(201).json(data)
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(500).json({
+                    message: 'Invalid request'
+                })
             })
     }
     static taskDeleteById(req, res) {
@@ -92,7 +105,9 @@ class TaskController {
                 }
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(500).json({
+                    message: 'Invalid request'
+                })
             })
     }
 
