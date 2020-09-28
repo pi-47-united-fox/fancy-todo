@@ -271,3 +271,91 @@ _Response (500 - Internal Server Errors)_
 }
 ```
 ---
+
+### POST /register
+
+> Create new asset
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "username": "<name to get insert into>",
+  "email": "<email to get insert into>",
+  "password" : "<password to get insert into>"
+
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+  "id": <given id by system>,
+  "username": "<name to get insert into>",
+  "email": "<email to get insert into>",
+  "password" : "<password to get insert into>",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Validation errors"
+}
+```
+
+_Response (500 - INTERNAL SERVER ERROR)_
+```json
+{
+  "message": "errors status code 500"
+}
+```
+
+### POST /login
+
+> Create new asset
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "email": "<email to get insert into>",
+  "password" : "<password to get insert into>"
+
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+   "acess_token": "<jwt acess token user>"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Validation errors"
+}
+```
+
+_Response (500 - INTERNAL SERVER ERROR)_
+```json
+{
+  "message": "errors status code 500"
+}
+```
