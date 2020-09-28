@@ -7,6 +7,7 @@ Fancy Todo App is an application to manage your activity. This app has :
 
 ## RESTful endpoints
 
+
 ### POST /todos
 > Get all assets
 
@@ -26,6 +27,8 @@ _Request Body_
     "status" : false,
     "due_date" : "2020-10-03"
 }
+
+*status using done = true, undone = false
 
 ```
 
@@ -289,6 +292,67 @@ _Response (500 - Bad Request)_
 ```json
 {
   "message": "error not found"
+}
+```
+
+---
+### POST /register
+
+> Create new asset
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+
+_Response (200)_
+```json
+
+{
+    "id" : "<id>",
+    "email" : "<email>"
+},
+
+
+```
+
+_Response (404)_
+```json
+{
+  "message": "error"
+}
+```
+
+---
+### POST /login
+
+> Create new asset
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+
+_Response (201)_
+```json
+
+{
+    "accesToken" : "<your access token>"
+},
+
+
+```
+
+_Response (400 )_
+```json
+{
+  "message": "error"
 }
 ```
 

@@ -13,23 +13,12 @@ class TodoController {
     }
     // post/todos
     static postInputTodo(req, res) {
-
-        let status = false
-        if (req.body.status === "belum") {
-            status = false
-        } else if (req.body.status === "sudah") {
-            status = true
-        } else {
-            res.status(400).json("invalid input")
-        }
-
         let value = {
             title: req.body.title,
             description: req.body.description,
-            status: status,
+            status: req.body.status,
             due_date: req.body.due_date
         }
-        console.log(value)
         Todo.create(value)
             .then(data => {
                 res.status(201).json(data)
@@ -37,7 +26,6 @@ class TodoController {
             .catch(err => {
                 res.status(500).json(err)
             })
-
 
     }
 
@@ -101,8 +89,6 @@ class TodoController {
             .catch(err => {
                 res.status(500).json(err)
             })
-
-
 
     }
 

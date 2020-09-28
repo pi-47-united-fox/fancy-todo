@@ -49,13 +49,19 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     hooks: {
-      beforeCreate: (inst, opt) => {
-        if (inst.status === "belum") {
-          inst.status = false
-        } else if (inst.status === "sudah") {
-          inst.status = true
+      beforeCreate: (instance, opt) => {
+        if (instance.status === "undone") {
+          instance.status = false
+        } else if (instance.status === "done") {
+          instance.status = true
         }
+      }, beforeUpdate: (instance, opt) => {
 
+        if (instance.status === "undone") {
+          instance.status = false
+        } else if (instance === "done") {
+          instance.status = true
+        }
       }
     },
     sequelize,
