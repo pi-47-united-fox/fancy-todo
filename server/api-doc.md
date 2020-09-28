@@ -74,6 +74,8 @@ _Request Body_
 {
     "title": "Eat some meals",
     "description": "Pizzas for lunch and dinner",
+    "status": "on progress",
+    "due_date": "3 October 2020"
 }
 ```
 
