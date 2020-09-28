@@ -11,21 +11,28 @@ class TodoController {
             return res.status(201).json(result)
         }).catch((err) => {
             console.log (err)
+            // console.log (new Date())
+            if (err.name == 'SequelizeValidationError') {
+                return res.status(400).json({
+                    message: err.errors[0].message
+                })
+            } else {
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                })
+            }
         })
     }
 
     static readAllTodoC (req, res) {
         Todo.findAll()
             .then((result) => {
-                if (result) {
-                    return res.status(200).json(result)
-                } else {
-                    return res.status(500).json({
-                        message: 'Internal Server Error'
-                    })
-                }
+                return res.status(200).json(result)
             }).catch((err) => {
                 console.log (err)
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                })
             })
     }
 
@@ -55,7 +62,7 @@ class TodoController {
                 id: req.params.id
             }
         }).then((result) => {
-            if (result[0] == 0) {
+            if (result == 0) {
                 return res.status(404).json({
                     message: 'Data Not Found'
                 })
@@ -64,6 +71,15 @@ class TodoController {
             }
         }).catch((err) => {
             console.log (err)
+            if (err.name == 'SequelizeValidationError') {
+                return res.status(400).json({
+                    message: err.errors[0].message
+                })
+            } else {
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                })
+            }
         })
     }
 
@@ -75,15 +91,26 @@ class TodoController {
                 id: req.params.id
             }
         }).then((result) => {
-            if (result == 1) {
-                return res.status(200).json(result)
-            } else {
-                return res.status(500).json({
+            if (result == 0) {
+                return res.status(404).json({
                     message: 'Data Not Found'
+                })
+            } else {
+                return res.status(200).json({
+                    message: 'Succes change status'
                 })
             }
         }).catch((err) => {
             console.log (err)
+            if (err.name == 'SequelizeValidationError') {
+                return res.status(400).json({
+                    message: err.errors[0].message
+                })
+            } else {
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                })
+            }
         })
     }
 
@@ -105,6 +132,9 @@ class TodoController {
             }
         }).catch((err) => {
             console.log (err)
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            })
         })
     }
 }

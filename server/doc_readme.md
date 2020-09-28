@@ -8,9 +8,14 @@ Fancy Todo App is an application to manage your task. This app has :
 <!-- TOC -->
 
 - [Fancy Todo App Server](#fancy-todo-app-server)
-  - [TOC](#toc)
-  - [RESTful endpoints](#restful-endpoints)
-    - [GET /todos](#get-todos)
+    - [TOC](#toc)
+    - [RESTful endpoints](#restful-endpoints)
+        - [GET /todos](#get-todos)
+        - [GET /todos/:id](#get-todosid)
+        - [POST /todos/](#post-todos)
+        - [PUT /todos/:id](#put-todosid)
+        - [PATCH /todos/:id](#patch-todosid)
+        - [DELETE /todos/:id](#delete-todosid)
 
 <!-- /TOC -->
 
