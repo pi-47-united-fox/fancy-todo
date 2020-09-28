@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            Todo.belongsTo(models.User, {
+                targetKey: 'id',
+                foreignKey: 'UserId'
+            })
         }
     };
     Todo.init({
@@ -25,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
                     msg: "The date cannot be before today's date"
                 }
             }
-        }
+        },
+        UserId: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'Todo',
