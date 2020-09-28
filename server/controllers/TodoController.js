@@ -58,16 +58,15 @@ class TodoController {
             status : req.body.status,
             due_date: req.body.due_date
         }, {
-            where: {
-                id: req.params.id
-            }
+            where: { id: req.params.id },
+            returning: true
         }).then((result) => {
-            if (result == 0) {
+            if (result && result[0] == 1) {
+                return res.status(200).json(result[1][0])
+            } else {
                 return res.status(404).json({
                     message: 'Data Not Found'
                 })
-            } else {
-                return res.status(200).json(result)
             }
         }).catch((err) => {
             console.log (err)
@@ -87,17 +86,14 @@ class TodoController {
         Todo.update({
             status : req.body.status
         }, {
-            where: {
-                id: req.params.id
-            }
+            where: { id: req.params.id },
+            returning : true
         }).then((result) => {
-            if (result == 0) {
+            if (result && result[0] == 1) {
+                return res.status(200).json(result[1][0])
+            } else {
                 return res.status(404).json({
                     message: 'Data Not Found'
-                })
-            } else {
-                return res.status(200).json({
-                    message: 'Succes change status'
                 })
             }
         }).catch((err) => {
@@ -123,7 +119,7 @@ class TodoController {
             // 1 0
             if (result == 1) {
                 return res.status(200).json({
-                    message: 'Todo success to delete'
+                    message: 'Todo: success deleted'
                 }) 
             } else {
                 return res.status(404).json({

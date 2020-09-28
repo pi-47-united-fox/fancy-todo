@@ -20,19 +20,19 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        // isAfter: {
-        //   args: new Date().setDate(d.getDate() - 1) + '',
-        //   msg: 'Date must be greater than today'
-        // }
-        isTodayOrAfter (value) {
-          // get yesterday date
-          let yesterday = new Date();
-          yesterday.setDate(yesterday.getDate() - 1)
-          
-          if (value <= yesterday) {
-            throw new Error('Date must be greater than today')
-          }
+        isAfter: {
+          args: new Date() + '',
+          msg: 'Date must be greater than today'
         }
+        // isTodayOrAfter (value) {
+        //   // get yesterday date
+        //   let yesterday = new Date();
+        //   yesterday.setDate(yesterday.getDate() - 1)
+
+        //   if (value <= yesterday) {
+        //     throw new Error('Date must be greater than today')
+        //   }
+        // }
       }
     }
   }, {
