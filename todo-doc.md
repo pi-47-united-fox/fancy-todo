@@ -16,7 +16,7 @@ GET /todos:
             [
                {
                     "id": 1,
-                    "name": "Learn API",
+                    "title": "Learn API",
                     "description": "Belajar API",
                     "status": "uncompleted",
                     "due_date": "2020-03-20T07:15:12.149Z",
@@ -25,7 +25,7 @@ GET /todos:
                 },
                 {
                     "id": 2,
-                    "name": "Learn write documentation",
+                    "title": "Learn write documentation",
                     "description": "nulis dokumentasi",
                     "status": "uncompleted",
                     "due_date": "2020-03-20T07:15:12.149Z",
@@ -44,7 +44,7 @@ POST /todos :
     -   Request header: 
     -   Request body: 
             {
-                "name": "Learn API",
+                "title": "Learn API",
                 "description": "API",
             }
     -   Response (201 - Created):
@@ -52,7 +52,7 @@ POST /todos :
             [
                {
                     "id": 1,
-                    "name": "Learn API",
+                    "title": "Learn API",
                     "description": "API",
                     "status": "uncompleted",
                     "due_date": "2020-03-20T07:15:12.149Z",
@@ -79,9 +79,41 @@ GET /todos/:id:
             [
                {
                     "id": 1,
-                    "name": "Learn API",
+                    "title": "Learn API",
                     "description": "Belajar API",
-                    "status": "uncompleted",
+                    "status": "on progress",
+                }
+            ]
+    
+    - Response (404 - not found):
+        {
+            "message": "Invalid request"
+        }
+
+PUT /todos/:id :
+
+    -   Request header: 
+    -   Request parameter: 
+            [
+               {
+                    "id": 1,
+                    
+                }
+            ]
+    -   Req body: 
+            [
+               {    
+                   "title": "Learn API",
+                    "description": "API",
+                    "status": "completed",
+                    "due_date": "2020-03-20T07:15:12.149Z",
+                }
+            ]
+    -   Response (200):
+        ```json
+            [
+                {
+                    "massage": "Edit Success"
                 }
             ]
     
@@ -102,8 +134,6 @@ PATCH /todos/:id :
     -   Req body: 
             [
                {
-                    "name": "Learn API",
-                    "description": "Belajar API",
                     "status": "completed",
                 }
             ]
