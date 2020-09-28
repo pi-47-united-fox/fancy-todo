@@ -410,19 +410,11 @@ _Response (201 - Created)_
 }
 ```
 
-_Response (400 - Bad Request)_
-
-```
-{
-    "message": "<validation error message>"
-}
-```
-
 _Response (401 - Unauthorized)_
 
 ```
 {
-    "message": "<wrong username/password>"
+    "message": "<Invalid email or password>"
 }
 ```
 

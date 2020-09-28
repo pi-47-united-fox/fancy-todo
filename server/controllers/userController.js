@@ -2,6 +2,7 @@
 
 const { User } = require("../models");
 const { checkPassword } = require("../helpers/bcrypt");
+const loginToken = require("../helpers/jwt");
 
 class userController {
 	static addUser(req, res) {
@@ -21,6 +22,26 @@ class userController {
 				} else {
 					res.status(500).json({ message: err });
 				}
+			});
+	}
+
+	static login(req, res) {
+		const userBody = {
+			email: req.body.email,
+			password: req.body.password,
+		};
+
+		User.findOne({ where: { email: userBody.email } })
+			.then((data) => {
+				if (data && checkPassword(userBody.password, data.password)) {
+					const access_token = loginToken({ id: data.id, email: data.email });
+					res.status(200).json({ access_token });
+				} else {
+					res.status(401).json({ message: "Invalid email or password" });
+				}
+			})
+			.catch((err) => {
+				res.status(500).json({ message: err });
 			});
 	}
 }
