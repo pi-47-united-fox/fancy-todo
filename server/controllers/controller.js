@@ -6,7 +6,7 @@ class TodoControllers {
         const inputData = {
             title: req.body.title,
             description: req.body.description,
-            status: req.body.status,
+            status: false,
             due_date: req.body.due_date
         }
         Todo.create(inputData)
