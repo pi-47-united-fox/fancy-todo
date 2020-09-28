@@ -1,4 +1,4 @@
-# Todos App Server
+c# Todos App Server
 Todos App is an application to manage your todos. This app has : 
 * RESTful endpoint for asset's CRUD operation
 * JSON formatted response
@@ -9,7 +9,7 @@ Todos App is an application to manage your todos. This app has :
 ` - GET /todos `
 ` - POST /todos `
 ` - GET /todos/:id `
-` - POST /todos/:id `
+` - PUT /todos/:id `
 ` - PATCH /todos/:id `
 ` - DELETE /todos/:id `
 
