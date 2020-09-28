@@ -6,6 +6,7 @@ class UserController {
 
     static registerUser(req, res) {
         let value = {
+            name: req.body.name,
             email: req.body.email,
             password: req.body.password
         }
@@ -24,6 +25,7 @@ class UserController {
             .then(data => {
                 res.status(200).json({
                     id: data.id,
+                    name: data.name,
                     email: data.email
                 })
             })
@@ -54,7 +56,7 @@ class UserController {
                         message: "email or password wrong"
                     })
                 } else {
-                    let access_token = signToken(user.email)
+                    let access_token = signToken(user.email, user.name, user.id)
                     res.status(200).json(access_token)
                 }
             }

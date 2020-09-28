@@ -12,9 +12,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Todo, { foreignKey: "UserId" })
     }
   };
   User.init({
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "name can't be empty"
+        }
+      }
+    },
     email: {
       type: DataTypes.STRING,
       unique: true,
@@ -31,27 +40,21 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       validate: {
-        isEven(value) {
-          if (value < 6) {
-            throw new Error('password mush be 6 character');
-          }
-        },
         notEmpty: {
           msg: "can't empty"
         },
+        len: {
+          args: [6],
+          msg: "password must be min 6 character"
+        }
       }
     }
   }, {
     hooks: {
       beforeCreate: (instace, opt) => {
-        if (instace.password < 6) {
-          throw new Error("password mush be 6 character")
-        } else {
-          let salt = bcrypt.genSaltSync(10);
-          let hash = bcrypt.hashSync(instace.password, salt);
-          instace.password = hash
-
-        }
+        let salt = bcrypt.genSaltSync(10);
+        let hash = bcrypt.hashSync(instace.password, salt);
+        instace.password = hash
       }
     },
     sequelize,
