@@ -150,11 +150,10 @@ _Request Params_
 _Request Body_
 ```json
 {
-    "id": 1,
     "title": "Create a todo app",
     "description": "Create a fancy todo app this week!",
     "status": "done",
-    "due_date": "3 October 2020"
+    "due_date": "2 October 2020"
 }
 ```
 
@@ -165,7 +164,7 @@ _Response (200)_
     "title": "Create a todo app",
     "description": "Create a fancy todo app this week!",
     "status": "done",
-    "due_date": "3 October 2020"
+    "due_date": "2 October 2020"
 }
 ```
 
