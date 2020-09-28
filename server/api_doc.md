@@ -1,4 +1,4 @@
-c# Todos App Server
+# Todos App Server
 Todos App is an application to manage your todos. This app has : 
 * RESTful endpoint for asset's CRUD operation
 * JSON formatted response
