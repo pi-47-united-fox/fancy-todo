@@ -23,7 +23,7 @@ _Request Body_
 {
     "title" : "makan",
     "description" : "makan siang bareng temen",
-    "status" : "belum",
+    "status" : false,
     "due_date" : "2020-10-03"
 }
 
@@ -36,7 +36,7 @@ _Response (201)_
     "id" : 1,
     "title" : "makan",
     "description" : "makan siang bareng temen",
-    "status" : "belum",
+    "status" : false,
     "due_date" : "2020-10-03",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
@@ -78,7 +78,7 @@ _Response (200-)_
     "id" : 1,
     "title" : "makan",
     "description" : "makan siang bareng temen",
-    "status" : "belum",
+    "status" : false,
     "due_date" : "2020-10-03",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
@@ -88,8 +88,8 @@ _Response (200-)_
     "id" : 2,
     "title" : "<input_title>",
     "description" : "<input_decription>",
-    "status" : "<input_date>",
-    "due_date" : "2020-10-03",
+    "status" : "<input_status>",
+    "due_date" : "<input_date>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
@@ -120,7 +120,7 @@ _Response (200)_
     "id" : 1,
     "title" : "makan",
     "description" : "makan siang bareng temen",
-    "status" : "belum",
+    "status" : false,
     "due_date" : "2020-10-03"
 }
 
@@ -149,7 +149,7 @@ _Request Body_
 {
     "title" : "minum",
     "description" : "makan siang bareng temen",
-    "status" : "belum",
+    "status" : false,
     "due_date" : "2020-10-03"
 }
 
@@ -162,7 +162,7 @@ _Response (200)_
     "id" : 1,
     "title" : "minum",
     "description" : "makan siang bareng temen",
-    "status" : "belum",
+    "status" : false,
     "due_date" : "2020-10-03",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
@@ -205,7 +205,7 @@ _Request Body_
 ```json
 
 {
-    "status" : "sudah",  
+    "status" : true,  
 }
 
 ```
@@ -217,7 +217,7 @@ _Response (200)_
     "id" : 1,
     "title" : "minum",
     "description" : "makan siang bareng temen",
-    "status" : "sudah",
+    "status" : true,
     "due_date" : "2020-10-03",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
