@@ -2,6 +2,7 @@
 
 const routes = require("express").Router();
 const todoController = require("../controllers/todoController");
+const userContoller = require("../controllers/userController");
 
 // test routes
 routes.get("/", (req, res) => {
@@ -20,6 +21,6 @@ routes.patch("/todos/:id", todoController.editTodoPATCH);
 routes.delete("/todos/:id", todoController.deleteTodo);
 
 // user routes
-
+routes.post("/register", userContoller.addUser)
 
 module.exports = routes;

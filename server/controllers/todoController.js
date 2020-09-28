@@ -43,7 +43,7 @@ class todoController {
 				if (err.name === "SequelizeValidationError") {
 					res.status(400).json(err.errors);
 				} else {
-					res.status(500).json({ message: "Internal Server Error" });
+					res.status(500).json({ message: err });
 				}
 			});
 	}

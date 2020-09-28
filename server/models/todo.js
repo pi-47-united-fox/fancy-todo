@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			// define association here
+			Todo.belongsTo(models.User, {
+				targetKey: "id",
+				foreignKey: "UserId",
+			});
 		}
 	}
 	Todo.init(
@@ -57,6 +60,19 @@ module.exports = (sequelize, DataTypes) => {
 					isAfter: {
 						args: new Date().toLocaleDateString(),
 						msg: "Due Date must be atleast tommorow",
+					},
+				},
+			},
+			UserId: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				validate: {
+					min: {
+						args: 1,
+						msg: "User Id start at 1",
+					},
+					notNull: {
+						msg: "User Id is Required",
 					},
 				},
 			},

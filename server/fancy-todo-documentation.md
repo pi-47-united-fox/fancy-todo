@@ -330,3 +330,108 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
+
+### POST /register
+
+> Create A Todo
+
+_Request Header_
+
+```
+{
+    "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+
+```
+{
+    "email": "<user email>",
+    "password": "<user password>",
+}
+```
+
+_Response (201 - Created)_
+
+```
+{
+    "id": <given id by system>,
+    "email": "<user email>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (400 - Bad Request)_
+
+```
+{
+    "message": "<validation error message>"
+}
+```
+
+_Response (500 - Internal Server Error)_
+
+```
+{
+    "message": "<error messages>"
+}
+```
+
+---
+
+### POST /login
+
+> Create A Todo
+
+_Request Header_
+
+```
+{
+    "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+
+```
+{
+    "email": "<user email>",
+    "password": "<user password>",
+}
+```
+
+_Response (201 - Created)_
+
+```
+{
+    "access_token": "<generated accesss token>"
+}
+```
+
+_Response (400 - Bad Request)_
+
+```
+{
+    "message": "<validation error message>"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "<wrong username/password>"
+}
+```
+
+_Response (500 - Internal Server Error)_
+
+```
+{
+    "message": "<error messages>"
+}
+```
+
+---
