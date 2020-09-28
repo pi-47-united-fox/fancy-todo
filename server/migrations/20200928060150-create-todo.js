@@ -14,8 +14,8 @@ module.exports = {
 			description: {
 				type: Sequelize.STRING,
 			},
-			statis: {
-				type: Sequelize.STRING,
+			status: {
+				type: Sequelize.BOOLEAN,
 			},
 			due_date: {
 				type: Sequelize.DATEONLY,

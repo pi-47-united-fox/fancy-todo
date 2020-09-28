@@ -13,10 +13,53 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Todo.init(
 		{
-			title: DataTypes.STRING,
-			description: DataTypes.STRING,
-			statis: DataTypes.STRING,
-			due_date: DataTypes.DATEONLY,
+			title: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					notEmpty: {
+						msg: "Title cannot be empty",
+					},
+					notNull: {
+						msg: "Title Date cannot be empty",
+					},
+				},
+			},
+			description: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					notEmpty: {
+						msg: "Description cannot be empty",
+					},
+					notNull: {
+						msg: "Description cannot be empty",
+					},
+				},
+			},
+			status: {
+				type: DataTypes.BOOLEAN,
+				validate: {
+					isBoolean(value) {
+						if (typeof value !== "boolean") {
+							throw new Error("Status must be boolean");
+						}
+					},
+				},
+			},
+			due_date: {
+				type: DataTypes.DATEONLY,
+				validate: {
+					isDate: {
+						args: true,
+						msg: "Due Date format is invalid",
+					},
+					isAfter: {
+						args: new Date().toLocaleDateString(),
+						msg: "Due Date must be atleast tommorow",
+					},
+				},
+			},
 		},
 		{
 			sequelize,

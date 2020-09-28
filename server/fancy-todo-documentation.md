@@ -50,10 +50,12 @@ _Response (200)_
 ]
 ```
 
-_Response (500 - Bad Request)_
+_Response (500 - Internal Server Error)_
 
 ```
-not needed
+{
+    "message": "<error messages>"
+}
 ```
 
 ---
@@ -94,6 +96,14 @@ _Response (404 - Not Found)_
 ```
 {
     "message": "Not Found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+
+```
+{
+    "message": "<error messages>"
 }
 ```
 
@@ -147,7 +157,9 @@ _Response (400 - Bad Request)_
 _Response (500 - Internal Server Error)_
 
 ```
-not needed
+{
+    "message": "<error messages>"
+}
 ```
 
 ---
@@ -209,7 +221,9 @@ _Response (404 - Not Found)_
 _Response (500 - Internal Server Error)_
 
 ```
-not needed
+{
+    "message": "<error messages>"
+}
 ```
 
 ---
@@ -268,7 +282,9 @@ _Response (404 - Not Found)_
 _Response (500 - Internal Server Error)_
 
 ```
-not needed
+{
+    "message": "<error messages>"
+}
 ```
 
 ---
@@ -308,7 +324,9 @@ _Response (404 - Not Found)_
 _Response (500 - Internal Server Error)_
 
 ```
-not needed
+{
+    "message": "<error messages>"
+}
 ```
 
 ---
