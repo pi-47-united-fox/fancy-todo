@@ -7,6 +7,75 @@ My Todo App is an application to manage your schedule. This app has :
 
 ## RESTful endpoints
 
+### POST /register
+> regist new user
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+_Request Body_
+```
+{
+  "fullname":"<name to get insert into>"
+  "email":"<email to get insert into>"
+  "password":"<password to get insert into>"
+}
+```
+<b> Success Response :</b>
+
+_Response (201 - Created)_
+```
+{
+  "id":"<id of the new user>"
+  "fullname":"<name of the new user>"
+  "email":"<email of the new user>"
+}
+```
+
+<b> Error Response :</b>
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Validation errors"
+}
+```
+
+### POST /login
+> logging in as registered user
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+_Request Body_
+```
+{ 
+  "email":"<email to login>"
+  "password":"<password to login>"
+}
+```
+<b> Success Response :</b>
+
+_Response (200 - Ok)_
+```
+{
+  "access_token":"<access_token>" 
+}
+```
+
+<b> Error Response :</b>
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Email or Password Error"
+}
+```
+
 
 ### POST /todos
 
