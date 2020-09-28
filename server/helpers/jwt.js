@@ -3,7 +3,7 @@
 const jwt = require("jsonwebtoken");
 
 const loginToken = (obj) => {
-	return jwt.sign(obj, "mySecret");
+	return jwt.sign(obj, process.env.JWT_SECRET);
 };
 
 module.exports = loginToken;
