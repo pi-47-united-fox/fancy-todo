@@ -8,7 +8,7 @@ routes.get("/", (req, res) => {
 	res.send("Hello World");
 });
 
-// real routes
+// to do routes
 routes.get("/todos", todoController.findAllTodo);
 routes.get("/todos/:id", todoController.findTodo);
 
@@ -18,5 +18,8 @@ routes.put("/todos/:id", todoController.editTodoPUT);
 routes.patch("/todos/:id", todoController.editTodoPATCH);
 
 routes.delete("/todos/:id", todoController.deleteTodo);
+
+// user routes
+
 
 module.exports = routes;
