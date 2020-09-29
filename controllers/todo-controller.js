@@ -1,39 +1,36 @@
-const { Task } = require('../models/index')
-class TaskController {
-    static taskCreate(req, res) {
-        // console.log(req.body);
+const { Todo, User } = require('../models/index')
+class TodoController {
+    static create(req, res, next) {
         let obj = {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            userId: req.userData.id
         }
-        console.log(obj);
-        Task.create(obj)
+        // console.log(obj);
+        Todo.create(obj, {
+            include: User
+        })
             .then(data => {
-                console.log(data);
+                // console.log(data,'kjhjkjk');
                 res.status(201).json(data)
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Invalid request'
-                })
+                return next(err)
             })
     }
-    static taskFindAll(req, res) {
-        Task.findAll()
+    static findAll(req, res, next) {
+        Todo.findAll()
             .then(data => {
-                console.log(data);
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Invalid request'
-                })
+                return next(err)
             })
     }
-    static taskFindByid(req, res) {
-        Task.findOne({
+    static findByid(req, res, next) {
+        Todo.findOne({
             where: {
                 id: req.params.id
             }
@@ -42,19 +39,18 @@ class TaskController {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Invalid request'
-                })
+                return next(err)
             })
     }
-    static editById(req, res) {
+    static editById(req, res, next) {
         let obj = {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+
         }
-        Task.update(obj, {
+        Todo.update(obj, {
             where: {
                 id: req.params.id
             }
@@ -65,15 +61,13 @@ class TaskController {
                 })
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Invalid request'
-                })
+                return next(err)
             })
 
     }
-    static editStatus(req, res) {
+    static editStatus(req, res, next) {
         let status = { status: req.body.status }
-        Task.update(status, {
+        Todo.update(status, {
             where: {
                 id: req.params.id
             }
@@ -82,13 +76,11 @@ class TaskController {
                 res.status(201).json(data)
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Invalid request'
-                })
+                return next(err)
             })
     }
-    static taskDeleteById(req, res) {
-        Task.destroy({
+    static deleteById(req, res, next) {
+        Todo.destroy({
             where: {
                 id: req.params.id
             }
@@ -99,19 +91,17 @@ class TaskController {
                         message: `deleted successfully`
                     })
                 } else {
-                    res.status(400).json({
+                    return res.status(400).json({
                         message: `Data not Found, failed to delete`
                     })
                 }
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Invalid request'
-                })
+                return next(err)
             })
     }
 
 
 }
 
-module.exports = TaskController
+module.exports = TodoController

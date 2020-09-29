@@ -3,7 +3,6 @@ const {
   Model
 } = require('sequelize');
 const bcrypt = require('bcryptjs')
-
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Task)
+      User.hasMany(models.Todo, {
+        foreignKey: "userId",
+        sourceKey: "id"
+      })
     }
   };
   User.init({
@@ -21,12 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isEmail: true,
-        // unique: true
       },
-      unique: {
-        args: true,
-        msg: 'Email address already in use!'
-    }
+      unique: true
 
     },
     password: DataTypes.STRING

@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const userRouter = require('../routers/user-router')
-const taskRouter = require('../routers/task-router')
+const todoRouter = require('../routers/todo-router')
 
 
 // router.get('/', (req,res) => {
 //     res.send(`Routing berhasil`)
 // })
-router.use('/todos', taskRouter)
+router.use('/todos', todoRouter)
 router.use('/', userRouter)
 
 
