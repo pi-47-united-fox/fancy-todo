@@ -11,7 +11,7 @@ class TodoController {
         }) .then((result) => {
             return res.status(201).json(result)
         }).catch((err) => {
-            console.log (err)
+            // console.log (err)
             // console.log (new Date())
             // if (err.name == 'SequelizeValidationError') {
             //     return res.status(400).json({

@@ -24,7 +24,7 @@ module.exports = (err, req, res, next) => {
         })
     } // ! JWT Problem
     else if (err.name == 'JsonWebTokenError') {
-        return res.status(500).json({
+        return res.status(401).json({
             message: 'You dont have acces to this operation'
         })
     } // ! Default
