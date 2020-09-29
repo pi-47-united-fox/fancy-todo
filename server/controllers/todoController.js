@@ -79,9 +79,9 @@ class todoController {
 			});
 
 			if (!isUpdateSuccess[0]) {
-				res.status(404).json({ message: "Data Not Found" });
-			} else {
 				next({ name: "DataNotFound" });
+			} else {
+				res.status(200).json(await Todo.findByPk(+req.params.id));
 			}
 		} catch (err) {
 			next(err);

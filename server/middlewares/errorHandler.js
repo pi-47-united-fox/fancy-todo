@@ -3,7 +3,6 @@
 const errorHandler = (err, req, res, next) => {
 	let statusCode = 500;
 	let message = "Internal Server Error!";
-	console.log(err);
 
 	switch (err.name) {
 		case "SequelizeValidationError":
@@ -13,13 +12,6 @@ const errorHandler = (err, req, res, next) => {
 			err.errors.forEach((err) => {
 				message.push(err.message);
 			});
-			break;
-		case "NotFoundError":
-		case "ForbiddenError":
-		case "UnauthorizedError":
-		case "BadRequestError":
-			statusCode = err.statusCode;
-			message = err.message;
 			break;
 		case "JsonWebTokenError":
 		case "TokenExpiredError":
