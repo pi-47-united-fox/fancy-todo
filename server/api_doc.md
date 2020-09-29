@@ -17,6 +17,13 @@ Todos App is an application to manage your todos. This app has :
 
 > Get all todos
 
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
 _Request Body_
 ```json
 not needed
@@ -57,6 +64,13 @@ _Response (500 - Failed Request)_
 ### POST /todos
 
 > Create new todos
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
 
 _Required_
  - validasi tidak boleh memasukan tanggal yang sudah lewat dari hari ini
@@ -102,6 +116,13 @@ _Response (500 - Server Problem)_
 
 > Find todo by id
 
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
 _Request Params_
 ```json
 {
@@ -138,6 +159,13 @@ _Response (500 - failed request)_
 ### PUT /todos/:id
 
 > Update todo by id
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
 
 _Request Params_
 ```json
@@ -196,6 +224,13 @@ _Response (500 - server error)_
 
 > Update todo by id
 
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
 _Request Params_
 ```json
 {
@@ -248,6 +283,13 @@ _Response (500 - server error)_
 ### DELETE /todos/:id
 
 > Delete todo by id
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
 
 _Request Params_
 ```json
@@ -315,6 +357,13 @@ _Response (400 - errors)_
 ### POST /login
 
 > Login user
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
 
 _Request Params_
 ```json

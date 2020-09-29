@@ -6,7 +6,8 @@ class TodoController {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }
         Todo.create(newTodo)
             .then(todo => {
@@ -30,7 +31,7 @@ class TodoController {
     static findTodo(req, res) {
         Todo.findOne({
                 where: {
-                    id: req.params.id
+                    id: +req.params.id
                 }
             })
             .then(result => {
@@ -46,7 +47,8 @@ class TodoController {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }
         Todo.update(updateTodo, {
                 where: {
@@ -64,6 +66,7 @@ class TodoController {
     static updateAttTodo(req, res) {
         const updateTodo = {
             status: req.body.status,
+            UserId: req.userData.id
         }
         Todo.update(updateTodo, {
                 where: {

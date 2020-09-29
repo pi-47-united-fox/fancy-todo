@@ -10,13 +10,14 @@ class UserController {
         }
         User.create(newUser)
             .then(result => {
+                console.log(result);
                 res.status(201).json({
                     id: result.id,
                     email: result.email
                 })
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(400).json({ message: err.message })
             })
     }
 
@@ -34,24 +35,23 @@ class UserController {
 
         try {
             if (!user) {
-                res.status(401).json({
+                res.status(404).json({
                     name: 'Unauthorized',
                     message: 'Wrong email/password'
                 })
             } else if (!comparePass(loginData.password, user.password)) {
-                res.status(401).json({
+                res.status(404).json({
                     name: 'Unauthorized',
                     message: 'Wrong email/password'
                 })
             } else {
-                const access_token = signToken(user.email)
-
+                const access_token = signToken({ id: user.id, email: user.email })
                 res.status(200).json({
                     access_token
                 })
             }
         } catch (error) {
-            res.status(500).json(error)
+            res.status(400).json({ message: err.message })
         }
     }
 }
