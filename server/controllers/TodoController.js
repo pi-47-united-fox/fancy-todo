@@ -6,7 +6,8 @@ class TodoController {
             title: req.body.title,
             description: req.body.description,
             status : req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }) .then((result) => {
             return res.status(201).json(result)
         }).catch((err) => {
@@ -25,8 +26,11 @@ class TodoController {
     }
 
     static readAllTodoC (req, res) {
-        Todo.findAll()
-            .then((result) => {
+        Todo.findAll({
+            where: {
+                UserId: req.userData.id
+            }
+        }).then((result) => {
                 return res.status(200).json(result)
             }).catch((err) => {
                 console.log (err)

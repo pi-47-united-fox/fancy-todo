@@ -7,6 +7,10 @@ class Jwt {
             email: email
         }, process.env.SECRET)
     }
+
+    static check (access_token) {
+        return jwt.verify(access_token, process.env.SECRET)
+    }
 }
 
 module.exports = Jwt
