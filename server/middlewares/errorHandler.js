@@ -16,7 +16,7 @@ const errorHandler = (err, req, res, next) => {
 		case "JsonWebTokenError":
 		case "TokenExpiredError":
 			statusCode = 401;
-			message = "Failed to authenticate";
+			message = "You do not have access";
 			break;
 		case "DataNotFound":
 			statusCode = 404;

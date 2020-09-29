@@ -37,6 +37,7 @@ _Response (200)_
         "description": "<todo description>",
         "status": "<todo status>",
         "due_date": "<todo due date>",
+        "UserId: "<creator user id>",
         "createdAt": "2020-03-20T07:15:12.149Z",
         "updatedAt": "2020-03-20T07:15:12.149Z",
     },
@@ -46,6 +47,7 @@ _Response (200)_
         "description": "<todo description>",
         "status": "<todo status>",
         "due_date": "<todo due date>",
+        "UserId: "<creator user id>",
         "createdAt": "2020-03-20T07:15:12.149Z",
         "updatedAt": "2020-03-20T07:15:12.149Z",
     }
@@ -97,6 +99,7 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
+    "UserId: "<creator user id>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -162,6 +165,7 @@ _Response (201 - Created)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
+    "UserId: "<creator user id>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -226,6 +230,7 @@ _Response (200)_
     "description": "<updated todo description>",
     "status": "<updated todo status>",
     "due_date": "<updated todo due date>",
+    "UserId: "<creator user id>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -296,6 +301,7 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<updated todo status>",
     "due_date": "<todo due date>",
+    "UserId: "<creator user id>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -406,6 +412,9 @@ _Request Body_
 {
     "email": "<user email>",
     "password": "<user password>",
+    "first_name": "<user first name>",
+    "last_name": "<user last name>",
+    "gender": "<user gender>"
 }
 ```
 
@@ -414,9 +423,7 @@ _Response (201 - Created)_
 ```
 {
     "id": <given id by system>,
-    "email": "<user email>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "email": "<user email>"
 }
 ```
 
