@@ -1,39 +1,41 @@
 const { Todo } = require('../models')
 
 class TodoController {
-    static getAllTodo(req,res){
+    static getAllTodo(req,res,next){
         Todo.findAll()
         .then(data => {
             res.status(200).json(data)
         })
         .catch(err => {
-            res.status(500).json(err)
+            next(err)
         })
     }
-    static getTodoByPk(req,res){
+    static getTodoByPk(req,res,next){
         Todo.findByPk(+req.params.id)
         .then(data => {
             res.status(200).json(data)
         })
         .catch(err => {
-            res.status(404).json(err)
+            next(err)
         })
     }
-    static createTodo(req,res){
+    static createTodo(req,res,next){
+        // console.log('halo')
         Todo.create({
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         })
         .then(data => {
             res.status(201).json(data)
         })
         .catch(err => {
-            res.status(400).json(err)
+            next(err)
         })
     }
-    static putTodo(req,res){
+    static putTodo(req,res,next){
         const putTodo = {
             title: req.body.title,
             description: req.body.description,
@@ -49,10 +51,10 @@ class TodoController {
             res.status(200).json({message: 'todo success to update'})
         })
         .catch(err => {
-            res.status(500).json(err)
+            next(err)
         })
     }
-    static patchTodo(req,res){
+    static patchTodo(req,res,next){
         const patchTodo = {
             status: req.body.status,
         }
@@ -65,10 +67,10 @@ class TodoController {
             res.status(200).json({message: 'todo status success to update'})
         })
         .catch(err => {
-            res.status(500).json(err)
+            next(err)
         })
     }
-    static deleteTodo(req,res){
+    static deleteTodo(req,res,next){
         Todo.destroy({
             where: {
                 id: req.params.id
@@ -82,9 +84,10 @@ class TodoController {
             }
         })
         .catch(err => {
-            res.status(500).json(err)
+            next(err)
         })
     }
+    
 }
 
 module.exports = TodoController

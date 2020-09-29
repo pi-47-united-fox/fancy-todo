@@ -1,23 +1,26 @@
-//require express
+require('dotenv').config()
+
 const express = require('express')
 const app = express()
 
-//define port
-const port = 3000
-const routes = require('./routes')
+const port = process.env.PORT
+const routes = require('./routes/index.js')
+
+const errorHandler = require('./middlewares/errorHandler.js')
 
 app.use(express.urlencoded({extended:true}))
-app.use(express.json()) // kalau raw json
+app.use(express.json())
 
-//routing
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Homepage Todo')
 })
 
 app.use(routes)
 
-//listen port
+app.use(errorHandler)
+
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })

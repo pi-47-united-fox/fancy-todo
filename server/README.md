@@ -13,6 +13,8 @@ Membuat website untuk manage hal- hal menarik yang akan dilakukan. This app has:
 `- PUT /todos/:id`
 `- PATCH /todos/:id`
 `- DELETE /todos/:id`
+`- POST /register`
+`- POST /login`
 
 ### GET /todos
 
@@ -21,7 +23,7 @@ Membuat website untuk manage hal- hal menarik yang akan dilakukan. This app has:
 _Request Header_
 ```json
 {
-  "Content-Type": "application/json"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -63,9 +65,10 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```json
 {
-  "Content-Type": "application/json"
+  "access_token": "<your access token>"
 }
 ```
+
 _Request Params_
 ```json
 {
@@ -101,7 +104,7 @@ _Response (404 - Not Found)_
 _Request Header_
 ```json
 {
-  "Content-Type": "application/json"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -111,7 +114,8 @@ _Request Body_
   "title": "Livecode",
   "description": "Ujian untuk dapat lulus dari hacktiv",
   "status": false,
-  "due_date": "2020-09-30"
+  "due_date": "2020-09-30",
+  "UserId": 1
 }
 ```
 
@@ -123,8 +127,9 @@ _Response (201 - Created)_
   "description": "Ujian untuk dapat lulus dari hacktiv",
   "status": false,
   "due_date": "2020-09-30",
+  "UserId": 1,
   "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z"
 }
 ```
 
@@ -142,7 +147,7 @@ _Response (400 - Bad Request)_
 _Request Header_
 ```json
 {
-  "Content-Type": "application/json"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -162,6 +167,7 @@ _Response (200 - OK)_
   "title": "Belajar Livecode",
   "description": "Review dan belajar untuk livecode",
   "status": false,
+  "UserId": 3,
   "due_date": "2020-03-20T07:15:12.149Z",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
@@ -194,7 +200,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```json
 {
-  "Content-Type": "application/json"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -233,13 +239,6 @@ _Response (500 - Internal Server Error)_
 }
 ```
 
-_Response (400 - Bad Request)_
-```
-{
-  "message": "Invalid requests"
-}
-```
-
 ### DELETE /todos/:id
 
 > Delete asset fancy-todo by Id
@@ -247,7 +246,7 @@ _Response (400 - Bad Request)_
 _Request Header_
 ```json
 {
-  "Content-Type": "application/json"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -275,5 +274,59 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "message": "Server error"
+}
+```
+
+### POST /register
+
+> Create new asset fancy-todo
+
+_Request Body_
+```json
+{
+  "email": "todo@gmail.com",
+  "password": "rahasia",
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+  "id": 1,
+  "email": "todo@gmail.com"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid Input"
+}
+```
+
+### POST /login
+
+> Create new asset fancy-todo
+
+
+_Request Body_
+```json
+{
+  "email": "todo@gmail.com",
+  "password": "$2a$10$x30iMVW3HrzDck6u4CPMkO7/LoDTBPh5UBPW/asBMhxDrTztliioS",
+}
+```
+
+_Response (200 - AccessToken)_
+```json
+{
+  "access_token": "<eyJhbGciOiJIUzI1NiJ9.dG9kb0BnbWFpbC5jb20.WzgvS_O37ySBPBr-uOp3NLc9vsplqm3ZUSSWnRf9Mrs>"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid Input"
 }
 ```
