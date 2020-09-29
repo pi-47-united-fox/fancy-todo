@@ -3,7 +3,7 @@ const BcriptJs = require('../helper/bcryptjs')
 const Jwt      = require('../helper/jwt')
 
 class UserController {
-    static registerC (req, res) {
+    static registerC (req, res, next) {
         User.create({
             email: req.body.email,
             password: req.body.password
@@ -11,13 +11,14 @@ class UserController {
             return res.status(201).json(result)
         }).catch((err) => {
             // console.log (err)
-            return res.status(400).json({ 
-                message: err.errors[0].message
-            })
+            // return res.status(400).json({
+            //     message: err.errors[0].message
+            // })
+            return next(err)
         })
     }
 
-    static loginC (req, res) {
+    static loginC (req, res, next) {
         User.findOne({
             where: {
                 email: req.body.email
@@ -33,13 +34,19 @@ class UserController {
                 )
                 res.status(200).json({access_token})
             } else {
-                return res.status(400).json({message : 'Invalid email or password'})
+                // return res.status(400).json({message : 'Invalid email or password'})
+                return next({
+                    name: 'invalid email pw input'
+                })
             }
             // return res.status(201).json(result)
         }).catch((err) => {
             // console.log (err)
-            return res.status(500).json({
-                message: 'Invalid email or password'
+            // return res.status(500).json({
+            //     message: 'Invalid email or password'
+            // })
+            return next({
+                name: 'invalid email pw input'
             })
             // return res.status(400).json(err)
         })
