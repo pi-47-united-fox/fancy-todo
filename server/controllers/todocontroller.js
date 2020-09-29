@@ -4,19 +4,18 @@ const axios = require("axios")
 
 class TodoController {
     // get/todos
-    static getDataTodo(req, res) {
-        // console.log(req.userData.name)
+    static getDataTodo(req, res, next) {
 
         Todo.findAll({ where: { UserId: req.userData.id } })
             .then(result => {
                 res.status(200).json(result)
             })
             .catch(err => {
-                res.status(500).json({ message: "error not found" })
+                next(err)
             })
     }
     // post/todos
-    static postInputTodo(req, res) {
+    static postInputTodo(req, res, next) {
         if (req.query.food) {
             axios({
                 method: "GET",
@@ -41,12 +40,12 @@ class TodoController {
                     res.status(201).json(data)
                 })
                 .catch(err => {
-                    res.status(500).json(err)
+                    next(err)
                 })
         } else {
             let value = {
                 title: req.body.title,
-                description: `${req.body.description}`,
+                description: req.body.description,
                 status: req.body.status,
                 due_date: req.body.due_date,
                 UserId: req.userData.id
@@ -56,25 +55,25 @@ class TodoController {
                     res.status(201).json(data)
                 })
                 .catch(err => {
-                    res.status(500).json(err)
+                    next(err)
                 })
         }
     }
 
     //Get /todos/:id
-    static findTodoById(req, res) {
+    static findTodoById(req, res, next) {
         let newid = req.params.id
         Todo.findByPk(newid)
             .then(data => {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(404).json({ message: "not found data" })
+                next(err)
             })
 
     }
     //Put /todos/:id
-    static updateTodoById(req, res) {
+    static updateTodoById(req, res, next) {
 
         let newid = req.params.id
         let value = {
@@ -88,23 +87,18 @@ class TodoController {
                 id: newid
             },
             individualHooks: true,
-            plain: true
-
+            returning: true
         })
             .then(data => {
-                console.log(data[1])
                 res.status(200).json(data[1][0])
             })
             .catch(err => {
-                // console.log(err)
-                // res.status(404).json({ message: "user not found" })
-                res.status(404).json(err)
-
+                next(err)
             })
     }
 
     //Patch /todos/:id
-    static changeStatusTodo(req, res) {
+    static changeStatusTodo(req, res, next) {
 
         let value = {
             status: req.body.status
@@ -115,20 +109,18 @@ class TodoController {
             },
             individualHooks: true,
             returning: true,
-            // plain: true
-
         })
             .then(data => {
                 res.status(200).json(data[1][0])
             })
             .catch(err => {
-                res.status(500).json(err)
+                next(err)
             })
 
     }
 
     //DELETE /todos/:id
-    static deleteTodoById(req, res) {
+    static deleteTodoById(req, res, next) {
 
         Todo.destroy({
             where: {
@@ -138,12 +130,10 @@ class TodoController {
             .then(data => {
                 if (data === 1) {
                     res.status(200).json({ message: "todo succses to delete" })
-                } else {
-                    res.status(404).json({ message: "error not found" })
                 }
             })
             .catch(err => {
-                res.status(500).json(err)
+                next(err)
             })
     }
 

@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: `can't be empty`
+          msg: `title can't be empty`
         }
       }
     },
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: `can't be empty`
+          msg: `description can't be empty`
         }
       }
     },
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       validate: {
         notEmpty: {
-          msg: `can't be empty`
+          msg: `status can't be empty`
         }
       }
     },
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          msg: `can't be empty`
+          msg: `UserId can't be empty`
         }
       }
     },
