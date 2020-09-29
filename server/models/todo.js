@@ -58,6 +58,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     hooks: {
+      beforeUpdate: (todo, opt) => {
+        if (todo.status === "undone") {
+          todo.status = false
+        } else if (todo.status === "done") {
+          todo.status = true
+        }
+      },
       beforeCreate: (instance, opt) => {
         if (instance.status === "undone") {
           instance.status = false
@@ -65,13 +72,7 @@ module.exports = (sequelize, DataTypes) => {
           instance.status = true
         }
       },
-      beforeUpdate: (user, opt) => {
-        if (user.status === "undone") {
-          user.status = false
-        } else if (user.status === "done") {
-          user.status = true
-        }
-      }
+
     },
     sequelize,
     modelName: 'Todo',

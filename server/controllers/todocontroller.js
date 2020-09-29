@@ -1,35 +1,64 @@
 const { Todo } = require("../models")
+const axios = require("axios")
+
 
 class TodoController {
     // get/todos
     static getDataTodo(req, res) {
-        console.log(req.userData.name)
+        // console.log(req.userData.name)
+
         Todo.findAll({ where: { UserId: req.userData.id } })
             .then(result => {
                 res.status(200).json(result)
             })
             .catch(err => {
-                res.status(500)
+                res.status(500).json({ message: "error not found" })
             })
     }
     // post/todos
     static postInputTodo(req, res) {
-        console.log(req.userData.id)
-        let value = {
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date,
-            UserId: req.userData.id
+        if (req.query.food) {
+            axios({
+                method: "GET",
+                url: `https://developers.zomato.com/api/v2.1/search?q=${req.query.food}`,
+                headers: {
+                    "user-key": process.env.USER_KEY
+                }
+            })
+                .then(response => {
+                    let addressResto = response.data.restaurants[0].restaurant.location.address
+                    let nameResto = response.data.restaurants[0].restaurant.name
+                    let value = {
+                        title: req.body.title,
+                        description: `${req.body.description} ${nameResto} alamat terdekat : ${addressResto}`,
+                        status: req.body.status,
+                        due_date: req.body.due_date,
+                        UserId: req.userData.id
+                    }
+                    return Todo.create(value)
+                })
+                .then(data => {
+                    res.status(201).json(data)
+                })
+                .catch(err => {
+                    res.status(500).json(err)
+                })
+        } else {
+            let value = {
+                title: req.body.title,
+                description: `${req.body.description}`,
+                status: req.body.status,
+                due_date: req.body.due_date,
+                UserId: req.userData.id
+            }
+            Todo.create(value)
+                .then(data => {
+                    res.status(201).json(data)
+                })
+                .catch(err => {
+                    res.status(500).json(err)
+                })
         }
-        Todo.create(value)
-            .then(data => {
-                res.status(201).json(data)
-            })
-            .catch(err => {
-                res.status(500).json(err)
-            })
-
     }
 
     //Get /todos/:id
@@ -46,11 +75,6 @@ class TodoController {
     }
     //Put /todos/:id
     static updateTodoById(req, res) {
-        if (req.body.status === "undone") {
-            req.body.status = false
-        } else if (req.body.status === "done") {
-            req.body.status = true
-        }
 
         let newid = req.params.id
         let value = {
@@ -63,25 +87,25 @@ class TodoController {
             where: {
                 id: newid
             },
-            returning: true,
+            individualHooks: true,
             plain: true
 
         })
             .then(data => {
-                res.status(200).json(data[1])
+                console.log(data[1])
+                res.status(200).json(data[1][0])
             })
             .catch(err => {
-                res.status(404).json({ message: "user not found" })
+                // console.log(err)
+                // res.status(404).json({ message: "user not found" })
+                res.status(404).json(err)
+
             })
     }
 
     //Patch /todos/:id
     static changeStatusTodo(req, res) {
-        if (req.body.status === "undone") {
-            req.body.status = false
-        } else if (req.body.status === "done") {
-            req.body.status = true
-        }
+
         let value = {
             status: req.body.status
         }
@@ -89,13 +113,13 @@ class TodoController {
             where: {
                 id: req.params.id,
             },
+            individualHooks: true,
             returning: true,
-            plain: true
+            // plain: true
 
         })
             .then(data => {
-                console.log(data)
-                res.status(200).json(data[1])
+                res.status(200).json(data[1][0])
             })
             .catch(err => {
                 res.status(500).json(err)

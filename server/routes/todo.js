@@ -1,6 +1,6 @@
 const route = require("express").Router()
 const TodoConstroller = require("../controllers/todocontroller")
-const { authentication, authorization } = require("../midleware/midleware")
+const { authentication, authorization } = require("../midleware/autho")
 
 
 // form index endpoint => /todos
