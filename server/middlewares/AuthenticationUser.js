@@ -18,9 +18,8 @@ module.exports = (req, res, next) => {
                 })
             }
         }).catch((err) => {
-            console.log (err)
-            return res.status(500).json({
-                message: err.message
+            next({
+                name: 'masuk ke 500 aja'
             })
         })
     } catch (error) {

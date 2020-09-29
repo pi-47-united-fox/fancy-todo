@@ -37,11 +37,15 @@ module.exports = (sequelize, DataTypes) => {
         //   msg: 'Password must contain alfabet and number'
         // }
       }
-    }
+    },
+    bg_img: DataTypes.STRING,
+    location: DataTypes.STRING
   }, {
     hooks: {
       beforeCreate: (instance) => {
         instance.password = BcriptJs.makeHash(instance.password)
+        instance.location = 'Jakarta'
+        instance.bg_img   = 'no_image'
       }
     },
     sequelize,
