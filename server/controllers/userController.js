@@ -1,6 +1,6 @@
 const { User } = require("../models/index")
 const bcrypt = require("bcryptjs")
-const signToken = require("../helpers/jwt")
+const { signToken } = require("../helpers/jwt")
 
 class UserController {
 
@@ -56,7 +56,7 @@ class UserController {
                         message: "email or password wrong"
                     })
                 } else {
-                    let access_token = signToken(user.email, user.name, user.id)
+                    let access_token = signToken({ id: user.id, name: user.name, email: user.email })
                     res.status(200).json(access_token)
                 }
             }

@@ -48,7 +48,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    UserId: DataTypes.INTEGER
+    UserId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: `can't be empty`
+        }
+      }
+    },
   }, {
     hooks: {
       beforeCreate: (instance, opt) => {
@@ -58,6 +65,13 @@ module.exports = (sequelize, DataTypes) => {
           instance.status = true
         }
       },
+      beforeUpdate: (user, opt) => {
+        if (user.status === "undone") {
+          user.status = false
+        } else if (user.status === "done") {
+          user.status = true
+        }
+      }
     },
     sequelize,
     modelName: 'Todo',

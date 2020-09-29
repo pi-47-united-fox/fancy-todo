@@ -3,7 +3,8 @@ const { Todo } = require("../models")
 class TodoController {
     // get/todos
     static getDataTodo(req, res) {
-        Todo.findAll()
+        console.log(req.userData.name)
+        Todo.findAll({ where: { UserId: req.userData.id } })
             .then(result => {
                 res.status(200).json(result)
             })
@@ -13,11 +14,13 @@ class TodoController {
     }
     // post/todos
     static postInputTodo(req, res) {
+        console.log(req.userData.id)
         let value = {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }
         Todo.create(value)
             .then(data => {
@@ -65,11 +68,9 @@ class TodoController {
 
         })
             .then(data => {
-                console.log(data)
                 res.status(200).json(data[1])
             })
             .catch(err => {
-                console.log(err)
                 res.status(404).json({ message: "user not found" })
             })
     }
