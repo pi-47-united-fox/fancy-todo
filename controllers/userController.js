@@ -26,6 +26,7 @@ class UserController {
             email: req.body.email,
             password: req.body.password
         }
+        console.log(input)
 
         try {
             const user = await User.findOne({
@@ -45,7 +46,10 @@ class UserController {
                     message: "Wrong email/password"
                 })
             } else {
-                const access_token = signToken(user.email)
+                const access_token = signToken({
+                    id: user.id,
+                    email: user.email
+                })
                 res.status(200).json({
                     access_token
                 })
