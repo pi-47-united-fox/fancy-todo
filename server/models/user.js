@@ -77,6 +77,18 @@ module.exports = (sequelize, DataTypes) => {
 					},
 				},
 			},
+			profile_pic: {
+				type: DataTypes.STRING,
+			},
+			gender: {
+				type: DataTypes.STRING,
+				validate: {
+					isIn: {
+						args: [["male", "female"]],
+						msg: "Gender is Invalid",
+					},
+				},
+			},
 		},
 		{
 			hooks: {

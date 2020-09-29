@@ -3,6 +3,7 @@
 const { User } = require("../models");
 const { checkPassword } = require("../helpers/bcrypt");
 const { loginToken } = require("../helpers/jwt");
+const getPicture = require("../helpers/defaultPicture");
 
 class userController {
 	static addUser(req, res, next) {
@@ -11,6 +12,8 @@ class userController {
 			password: req.body.password,
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
+			gender: req.body.gender,
+			profile_pic: getPicture(req.body.gender),
 		};
 		User.create(userBody)
 			.then(({ id, email }) => {
