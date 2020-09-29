@@ -3,7 +3,7 @@ const { comparePass } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwt')
 
 class UserController {
-    static register(req, res) {
+    static register(req, res, next) {
         const newUser = {
             email: req.body.email,
             password: req.body.password
@@ -17,11 +17,11 @@ class UserController {
                 })
             })
             .catch(err => {
-                res.status(400).json({ message: err.message })
+                return next(err)
             })
     }
 
-    static async login(req, res) {
+    static async login(req, res, next) {
         const loginData = {
             email: req.body.email,
             password: req.body.password
@@ -35,13 +35,13 @@ class UserController {
 
         try {
             if (!user) {
-                res.status(404).json({
-                    name: 'Unauthorized',
+                return next({
+                    name: "Unauthorized",
                     message: 'Wrong email/password'
                 })
             } else if (!comparePass(loginData.password, user.password)) {
-                res.status(404).json({
-                    name: 'Unauthorized',
+                return next({
+                    name: "Unauthorized",
                     message: 'Wrong email/password'
                 })
             } else {
@@ -50,8 +50,11 @@ class UserController {
                     access_token
                 })
             }
-        } catch (error) {
-            res.status(400).json({ message: err.message })
+        } catch (err) {
+            return next({
+                name: 'InternalServerError',
+                message: message.err
+            })
         }
     }
 }
