@@ -7,7 +7,8 @@ class TodoControllers {
             title: req.body.title,
             description: req.body.description,
             status: false,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }
         Todo.create(inputData)
             .then(data => {

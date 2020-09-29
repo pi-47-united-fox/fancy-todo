@@ -27,7 +27,6 @@ class UserControllers {
             email: req.body.email,
             password: req.body.password
         }
-
         try {
             const user = await User.findOne({
                 where: {
@@ -45,8 +44,8 @@ class UserControllers {
                     msg: 'email or password wrong!'
                 })
             } else {
-                const acess_token = signToken({ id: user.id, username: user.username, email: user.email });
-                res.status(200).json({ acess_token })
+                const access_token = signToken({ id: user.id, username: user.username, email: user.email });
+                res.status(200).json({ access_token })
             }
         } catch (err) {
             res.status(500).json(err)
