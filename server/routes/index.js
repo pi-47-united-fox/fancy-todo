@@ -1,7 +1,7 @@
 const todoRoute = require("./todoRoute")
 const Controller = require("../controllers/controller")
-const router = require("express").Router()
-
+const errorHandler = require("../middlewares/errorHandler")
+const router = require("express").Router()  
 
 
 router.get("/", (req,res)=>{
@@ -11,5 +11,7 @@ router.post("/register", Controller.postRegister)
 router.post("/login", Controller.postLogin)
 
 router.use("/todos", todoRoute) 
+router.use(errorHandler)
+
 
 module.exports = router

@@ -72,7 +72,7 @@ _Response (200 - Ok)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Email or Password Error"
+  "message": "Wrong Email or Password"
 }
 ```
 

@@ -3,7 +3,7 @@ const secret_key = 'zanadh13'
 const jwt = require('jsonwebtoken')
 
 function sign(obj){
-    return jwt.sign({ foo: 'bar' }, secret_key);
+    return jwt.sign(obj, secret_key);
 }
 
 function verify(token){
