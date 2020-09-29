@@ -13,12 +13,13 @@ class CTodo{
     }
 
     static addHandler(req,res){
+        //console.log(req.userData)
         const input = {
             title: req.body.title,
             description: req.body.description,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: +req.userData.id
         }
-
         Todo.create(input)
         .then(data=>{
             res.status(201).json(data)
@@ -56,7 +57,8 @@ class CTodo{
                 title: req.body.title,
                 description: req.body.description,
                 status: req.body.status,
-                due_date: req.body.due_date
+                due_date: req.body.due_date,
+                UserId: req.userData.id
             }
             const resultPut = await Todo.update(inputBody,{where:{
                 id:+req.params.id
@@ -80,7 +82,7 @@ class CTodo{
 
     static async patchHandler(req,res){
         try{
-            const inputBody = { status: req.body.status }
+            const inputBody = { status: req.body.status, UserId: req.userData.id}
             
             const resultPatch = await Todo.update(inputBody,{where:{
                 id:+req.params.id

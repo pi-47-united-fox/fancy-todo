@@ -1,17 +1,27 @@
-class Helper{
-    static isFutureDate(date){
-        let currentDate = new Date().now()
-        console.log(currentDate)
-        var today = new Date().now(),
-        date = date.split("/")
-        console.log(today)
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
-        date = new Date(date[2], date[1]-1, date[0])
-        console.log(date)
-        return (today - date) < 0
+class Helper{
+
+    static hashPassword(password){
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(password,salt)
+        
+        return hash
     }
+
+    static comparePassword(password,hash){
+        return bcrypt.compareSync(password,hash)
+    }
+
+    static signToken(payload){
+        let token
+        return token = jwt.sign(payload, 'secret')
+    }
+
 }
 
-console.log(Helper.isFutureDate('28/09/2020'))
+module.exports = Helper
+
 
 
