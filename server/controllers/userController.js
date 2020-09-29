@@ -2,7 +2,7 @@
 
 const { User } = require("../models");
 const { checkPassword } = require("../helpers/bcrypt");
-const loginToken = require("../helpers/jwt");
+const { loginToken } = require("../helpers/jwt");
 
 class userController {
 	static addUser(req, res) {
@@ -35,7 +35,7 @@ class userController {
 			.then((data) => {
 				if (data && checkPassword(userBody.password, data.password)) {
 					const access_token = loginToken({ id: data.id, email: data.email });
-					res.status(200).json({ access_token });
+					res.status(201).json({ access_token });
 				} else {
 					res.status(401).json({ message: "Invalid email or password" });
 				}

@@ -4,7 +4,7 @@ const { Todo } = require("../models");
 
 class todoController {
 	static findAllTodo(req, res) {
-		Todo.findAll()
+		Todo.findAll({ where: { UserId: req.userData.id } })
 			.then((data) => {
 				res.status(200).json(data);
 			})
@@ -19,7 +19,7 @@ class todoController {
 				if (data) {
 					res.status(200).json(data);
 				} else {
-					res.status(404).json({ message: "Not Found" });
+					res.status(404).json({ message: "Data Not Found" });
 				}
 			})
 			.catch((err) => {
@@ -33,6 +33,7 @@ class todoController {
 			description: req.body.description,
 			status: req.body.status || false,
 			due_date: req.body.due_date,
+			UserId: req.userData.id,
 		};
 
 		Todo.create(addBody)
@@ -40,7 +41,7 @@ class todoController {
 				res.status(201).json(data);
 			})
 			.catch((err) => {
-				if (err.name === "SequelizeValidationError") {
+				if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
 					res.status(400).json(err.errors);
 				} else {
 					res.status(500).json({ message: err });
@@ -62,12 +63,12 @@ class todoController {
 			});
 
 			if (!isUpdateSuccess[0]) {
-				res.status(404).json({ message: "Not Found" });
+				res.status(404).json({ message: "Data Not Found" });
 			} else {
 				res.status(200).json(await Todo.findByPk(+req.params.id));
 			}
 		} catch (err) {
-			if (err.name === "SequelizeValidationError") {
+			if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
 				res.status(400).json(err.errors);
 			} else {
 				res.status(500).json({ message: err });
@@ -86,12 +87,12 @@ class todoController {
 			});
 
 			if (!isUpdateSuccess[0]) {
-				res.status(404).json({ message: "Not Found" });
+				res.status(404).json({ message: "Data Not Found" });
 			} else {
 				res.status(200).json(await Todo.findByPk(+req.params.id));
 			}
 		} catch (err) {
-			if (err.name === "SequelizeValidationError") {
+			if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
 				res.status(400).json(err.errors);
 			} else {
 				res.status(500).json({ message: err });
@@ -107,7 +108,7 @@ class todoController {
 				if (data) {
 					res.status(200).json({ message: "todo success to delete" });
 				} else {
-					res.status(404).json({ message: "Not Found" });
+					res.status(404).json({ message: "Data Not Found" });
 				}
 			})
 			.catch((err) => {

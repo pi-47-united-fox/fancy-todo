@@ -6,4 +6,11 @@ const loginToken = (obj) => {
 	return jwt.sign(obj, process.env.JWT_SECRET);
 };
 
-module.exports = loginToken;
+const verifyToken = (token) => {
+	return jwt.verify(token, process.env.JWT_SECRET);
+};
+
+module.exports = {
+	loginToken,
+	verifyToken,
+};

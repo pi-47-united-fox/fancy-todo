@@ -16,7 +16,9 @@ Fancy TODO App is an application to manage your day to day activity. This app ha
 _Request Header_
 
 ```
-not needed
+{
+    "access_token": "<access token>"
+}
 ```
 
 _Request Body_
@@ -58,6 +60,14 @@ _Response (500 - Internal Server Error)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "You do not have access"
+}
+```
+
 ---
 
 ### GET /todos/:id
@@ -67,7 +77,9 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 
 ```
-not needed
+{
+    "access_token": "<access token>"
+}
 ```
 
 _Request Body_
@@ -95,7 +107,7 @@ _Response (404 - Not Found)_
 
 ```
 {
-    "message": "Not Found"
+    "message": "Data Not Found"
 }
 ```
 
@@ -104,6 +116,14 @@ _Response (500 - Internal Server Error)_
 ```
 {
     "message": "<error messages>"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "You do not have access"
 }
 ```
 
@@ -117,7 +137,8 @@ _Request Header_
 
 ```
 {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "access_token": "<access token>"
 }
 ```
 
@@ -162,6 +183,14 @@ _Response (500 - Internal Server Error)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "You do not have access"
+}
+```
+
 ---
 
 ### PUT /todos/:id
@@ -172,7 +201,8 @@ _Request Header_
 
 ```
 {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "access_token": "<access token>"
 }
 ```
 
@@ -210,11 +240,19 @@ _Response (400 - Bad Request)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "You do not have access"
+}
+```
+
 _Response (404 - Not Found)_
 
 ```
 {
-    "message": "Not Found"
+    "message": "Data Not Found"
 }
 ```
 
@@ -236,7 +274,8 @@ _Request Header_
 
 ```
 {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "access_token": "<access token>"
 }
 ```
 
@@ -271,11 +310,19 @@ _Response (400 - Bad Request)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "You do not have access"
+}
+```
+
 _Response (404 - Not Found)_
 
 ```
 {
-    "message": "Not Found"
+    "message": "Data Not Found"
 }
 ```
 
@@ -296,7 +343,9 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 
 ```
-not needed
+{
+    "access_token": "<access token>"
+}
 ```
 
 _Request Body_
@@ -313,11 +362,19 @@ _Response (200)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "You do not have access"
+}
+```
+
 _Response (404 - Not Found)_
 
 ```
 {
-    "message": "Not Found"
+    "message": "Data Not Found"
 }
 ```
 
