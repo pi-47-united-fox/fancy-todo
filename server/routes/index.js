@@ -4,6 +4,7 @@ const UserController = require('../controllers/userController')
 
 const { User, Todo } = require('../models')
 const { verifyToken } = require('../helpers/jwt')
+const ApiController = require('../controllers/api')
 
 const authentication = (req, res, next) => {
     const decoded = verifyToken(req.headers.access_token)
@@ -50,10 +51,14 @@ const authorization = (req, res, next) => {
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 
+router.use('/movies', ApiController.searchMovies)
+router.use('/restaurant', ApiController.searchRestaurant)
+
 
 router.use(authentication)
 router.post('/todos', TodoControllers.createData)
 router.get('/todos', TodoControllers.list)
+
 
 router.get('/todos/:id', authorization, TodoControllers.searchId)
 router.put('/todos/:id', authorization, TodoControllers.editData)
