@@ -1,25 +1,15 @@
 <h1 style="text-align: center"> Fancy Todo App Server </h1>
 Fancy Todo App is an application to manage your task. This app has :
-* RESTful endpoint for asset's CRUD operation
-* JSON formatted response
 
-&nbsp;
----
-## TOC
-<!-- TOC -->
+- RESTful endpoint for Todo's CRUD operation
+- RESTful endpoint for Users's CR operation
+- JSON formatted response
 
-    - [&nbsp;](#nbsp)
-    - [TOC](#toc)
-    - [](#)
-- [RESTful endpoints](#restful-endpoints)
-  - [Todo](#todo)
-    - [GET /todos](#get-todos)
-  - [User](#user)
-    - [POST /register](#post-register)
-    - [POST /login](#post-login)
+<!-- &nbsp; -->
+<!-- ---
+# TOC
 
-<!-- /TOC -->
----
+--- -->
 
 &nbsp;
 
@@ -321,7 +311,7 @@ _Request Body_
 * validate : tidak bisa input 'due_date' melebihi hari ini
 ```json
 {
-  "emal": "random-sample-mail@mail.com",
+  "email": "random-sample-mail@mail.com",
   "password": "thisMustBePassword123"
 }
 ```
@@ -359,7 +349,7 @@ _Request Body_
 * validate : tidak bisa input 'due_date' melebihi hari ini
 ```json
 {
-  "emal": "random-sample-mail@mail.com",
+  "email": "random-sample-mail@mail.com",
   "password": "thisMustBePassword123"
 }
 ```

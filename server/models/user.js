@@ -19,18 +19,24 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          msg: 'Must enter valid email'
+        },
         isEmail: {
           msg: 'Must enter valid email'
         }
       }
     },
     password: {
-      type: DataTypes.STRING
-      // validate: { // jika digunakan
-      //   isAlphanumeric: {
-      //     msg: 'Password must contain alfabet and number'
-      //   }
-      // }
+      type: DataTypes.STRING,
+      validate: { // jika digunakan
+        notEmpty: {
+          msg: 'Must enter password'
+        }
+        // isAlphanumeric: {
+        //   msg: 'Password must contain alfabet and number'
+        // }
+      }
     }
   }, {
     hooks: {
