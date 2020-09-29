@@ -13,8 +13,7 @@ class TodoController {
             include: User
         })
             .then(data => {
-                // console.log(data,'kjhjkjk');
-                res.status(201).json(data)
+                return res.status(201).json(data)
             })
             .catch(err => {
                 return next(err)
@@ -23,7 +22,7 @@ class TodoController {
     static findAll(req, res, next) {
         Todo.findAll()
             .then(data => {
-                res.status(200).json(data)
+                return res.status(200).json(data)
             })
             .catch(err => {
                 return next(err)
@@ -36,7 +35,7 @@ class TodoController {
             }
         })
             .then(data => {
-                res.status(200).json(data)
+                return res.status(200).json(data)
             })
             .catch(err => {
                 return next(err)
@@ -56,7 +55,7 @@ class TodoController {
             }
         })
             .then(data => {
-                res.status(201).json({
+                return res.status(201).json({
                     message: 'Update successfully'
                 })
             })
@@ -73,7 +72,7 @@ class TodoController {
             }
         })
             .then(data => {
-                res.status(201).json(data)
+                return res.status(201).json(data)
             })
             .catch(err => {
                 return next(err)

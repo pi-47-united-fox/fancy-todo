@@ -24,10 +24,24 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true,
       },
-      unique: true
+      unique: {
+        args: true,
+        msg: 'Email required'
+      }
 
     },
-    password: DataTypes.STRING
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Password required'
+        },
+        len:{
+          args:[4,20],
+          msg:`Password min 4 characters`
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

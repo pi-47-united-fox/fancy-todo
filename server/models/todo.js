@@ -12,14 +12,28 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Todo.belongsTo(models.User, {
-        foreignKey:"userId",
-        targetKey:"id"
+        foreignKey: "userId",
+        targetKey: "id"
       })
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Title required'
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Description required'
+        }
+      }
+    },
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
@@ -28,6 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
+        notEmpty: {
+          msg: 'Dudate required'
+        },
         isAfter: {
           args: new Date().toString(),
           msg: "Invalide Date"

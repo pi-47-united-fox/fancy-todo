@@ -12,11 +12,10 @@ class UserController {
         }
         User.create(user)
             .then(data => {
-                res.send(data)
-                res.status(201).json(data)
+                return res.status(201).json(data)
             })
             .catch(err => {
-               return next(err)
+                return next(err)
             })
     }
     static login(req, res, next) {
