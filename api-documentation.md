@@ -6,6 +6,9 @@
 `-PUT /todos/:id`
 `-PATCH /todos/:id`
 `-DELETE /todos/:id`
+`-POST /register`
+`-POST /login`
+
 
 
 ## POST /todos 
@@ -252,6 +255,89 @@
 ```
 {
     "message":"Error Not Found"
+}
+```
+### _Response (500)_
+```
+{
+    "message":"Internal Server Error"
+}
+
+```
+
+
+## POST /register
+### _Request Header_
+```
+{
+
+}
+```  
+### _Request Params_
+```       
+{
+
+}
+```
+### _Request Body_
+```       
+{
+    "email:"idham@mail.com",
+    "password:"123"
+}
+```
+### _Response (201)_
+```
+{
+    "id":1,
+    "email:"idham@mail.com"
+}
+```
+### _Response (400)_
+```
+{
+    "message":"Bad Request"
+}
+```
+### _Response (500)_
+```
+{
+    "message":"Internal Server Error"
+}
+
+```
+
+
+## POST /login
+### _Request Header_
+```
+{
+
+}
+```  
+### _Request Params_
+```       
+{
+    
+}
+```
+### _Request Body_
+```       
+{
+    "email:"idham@mail.com",
+    "password:"123"
+}
+```
+### _Response (201)_
+```
+{
+    "access_token":"kasdad921dasid13291dsma@sadmaskdo"
+}
+```
+### _Response (400)_
+```
+{
+    "message":"Bad Request"
 }
 ```
 ### _Response (500)_
