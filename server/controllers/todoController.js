@@ -3,31 +3,31 @@
 const { Todo } = require("../models");
 
 class todoController {
-	static findAllTodo(req, res) {
+	static findAllTodo(req, res, next) {
 		Todo.findAll({ where: { UserId: req.userData.id } })
 			.then((data) => {
 				res.status(200).json(data);
 			})
 			.catch((err) => {
-				res.status(500).json({ message: err });
+				next(err);
 			});
 	}
 
-	static findTodo(req, res) {
+	static findTodo(req, res, next) {
 		Todo.findByPk(+req.params.id)
 			.then((data) => {
 				if (data) {
 					res.status(200).json(data);
 				} else {
-					res.status(404).json({ message: "Data Not Found" });
+					next({ name: "DataNotFound" });
 				}
 			})
 			.catch((err) => {
-				res.status(500).json({ message: err });
+				next(err);
 			});
 	}
 
-	static addTodo(req, res) {
+	static addTodo(req, res, next) {
 		const addBody = {
 			title: req.body.title,
 			description: req.body.description,
@@ -41,15 +41,11 @@ class todoController {
 				res.status(201).json(data);
 			})
 			.catch((err) => {
-				if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
-					res.status(400).json(err.errors);
-				} else {
-					res.status(500).json({ message: err });
-				}
+				next(err);
 			});
 	}
 
-	static async editTodoPUT(req, res) {
+	static async editTodoPUT(req, res, next) {
 		try {
 			const editBody = {
 				title: req.body.title,
@@ -63,20 +59,16 @@ class todoController {
 			});
 
 			if (!isUpdateSuccess[0]) {
-				res.status(404).json({ message: "Data Not Found" });
+				next({ name: "DataNotFound" });
 			} else {
 				res.status(200).json(await Todo.findByPk(+req.params.id));
 			}
 		} catch (err) {
-			if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
-				res.status(400).json(err.errors);
-			} else {
-				res.status(500).json({ message: err });
-			}
+			next(err);
 		}
 	}
 
-	static async editTodoPATCH(req, res) {
+	static async editTodoPATCH(req, res, next) {
 		try {
 			const editBody = {
 				status: req.body.status,
@@ -89,18 +81,14 @@ class todoController {
 			if (!isUpdateSuccess[0]) {
 				res.status(404).json({ message: "Data Not Found" });
 			} else {
-				res.status(200).json(await Todo.findByPk(+req.params.id));
+				next({ name: "DataNotFound" });
 			}
 		} catch (err) {
-			if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
-				res.status(400).json(err.errors);
-			} else {
-				res.status(500).json({ message: err });
-			}
+			next(err);
 		}
 	}
 
-	static deleteTodo(req, res) {
+	static deleteTodo(req, res, next) {
 		Todo.destroy({
 			where: { id: +req.params.id },
 		})
@@ -108,11 +96,11 @@ class todoController {
 				if (data) {
 					res.status(200).json({ message: "todo success to delete" });
 				} else {
-					res.status(404).json({ message: "Data Not Found" });
+					next({ name: "DataNotFound" });
 				}
 			})
 			.catch((err) => {
-				res.status(500).json({ message: err });
+				next(err);
 			});
 	}
 }

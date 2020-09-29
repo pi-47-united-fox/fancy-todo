@@ -5,7 +5,7 @@ const { checkPassword } = require("../helpers/bcrypt");
 const { loginToken } = require("../helpers/jwt");
 
 class userController {
-	static addUser(req, res) {
+	static addUser(req, res, next) {
 		const userBody = {
 			email: req.body.email,
 			password: req.body.password,
@@ -17,15 +17,11 @@ class userController {
 				res.status(201).json({ id, email });
 			})
 			.catch((err) => {
-				if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
-					res.status(400).json(err.errors);
-				} else {
-					res.status(500).json({ message: err });
-				}
+				next(err);
 			});
 	}
 
-	static login(req, res) {
+	static login(req, res, next) {
 		const userBody = {
 			email: req.body.email,
 			password: req.body.password,
@@ -41,7 +37,7 @@ class userController {
 				}
 			})
 			.catch((err) => {
-				res.status(500).json({ message: err });
+				next(err);
 			});
 	}
 }
