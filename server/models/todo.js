@@ -57,14 +57,7 @@ module.exports = (sequelize, DataTypes) => {
         } else if (instance.status === "done") {
           instance.status = true
         }
-      }, beforeUpdate: (instance, opt) => {
-
-        if (instance.status === "undone") {
-          instance.status = false
-        } else if (instance === "done") {
-          instance.status = true
-        }
-      }
+      },
     },
     sequelize,
     modelName: 'Todo',

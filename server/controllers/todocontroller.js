@@ -43,6 +43,11 @@ class TodoController {
     }
     //Put /todos/:id
     static updateTodoById(req, res) {
+        if (req.body.status === "undone") {
+            req.body.status = false
+        } else if (req.body.status === "done") {
+            req.body.status = true
+        }
 
         let newid = req.params.id
         let value = {
@@ -71,6 +76,11 @@ class TodoController {
 
     //Patch /todos/:id
     static changeStatusTodo(req, res) {
+        if (req.body.status === "undone") {
+            req.body.status = false
+        } else if (req.body.status === "done") {
+            req.body.status = true
+        }
         let value = {
             status: req.body.status
         }
