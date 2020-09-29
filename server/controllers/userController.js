@@ -3,7 +3,7 @@ const { comparePassword } = require('../helpers/bcrypt.js')
 const { signToken } = require('../helpers/jwt.js')
 
 class UserController {
-    static registerUser(req, res){
+    static registerUser(req, res, next){
         let obj = {
             email : req.body.email,
             password: req.body.password
@@ -16,11 +16,12 @@ class UserController {
                 })
             })
             .catch(err => {
-                res.status(500).json(err.message)
+                // res.status(500).json(err.message)
+                next(err)
             })
     }
 
-    static async loginUser(req, res){
+    static async loginUser(req, res, next){
         const input = {
             email: req.body.email,
             password: req.body.password
@@ -33,15 +34,23 @@ class UserController {
             })
 
             if(!user){
-                res.status(401).json({
+                // res.status(401).json({
+                //     name: 'Unauthorized',
+                //     message: 'Wrong email or password!'
+                // })
+                next({
                     name: 'Unauthorized',
-                    message: 'Wrong email or password!'
+                    message: 'Please use the correct email or password!'
                 })
             }
             else if(!comparePassword(input.password, user.password)) {
-                res.status(401).json({
+                // res.status(401).json({
+                //     name: 'Unauthorized',
+                //     message: 'Wrong email or password!'
+                // })
+                next({
                     name: 'Unauthorized',
-                    message: 'Wrong email or password!'
+                    message: 'Please use the correct email or password!'
                 })
             }
             else{
@@ -50,7 +59,8 @@ class UserController {
             }
         }
         catch(err){
-            res.status(500).json({message: err.message})
+            // res.status(500).json({message: err.message})
+            next(err)
         }
     }
 }
