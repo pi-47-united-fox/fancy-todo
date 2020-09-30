@@ -1,5 +1,5 @@
 # fancy-todo
-Membuat website untuk manage hal- hal menarik yang akan dilakukan. This app has:
+Membuat website untuk manage musik untuk hal- hal menarik yang akan dilakukan. This app has:
 
 * RESTful endpoint for asset's CRUD operation
 * JSON formatted response
@@ -32,21 +32,21 @@ _Response (200)_
 [
   {
     "id": 1,
-    "title": "Belajar coding",
-    "description": "Mengikuti lecture dan menyelesaikan challenge",
+    "title": "Mendengarkan musik Barat",
+    "description": "Hits musik by Artist",
     "status" : false,
-    "due_date": "2020-09-30",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "due_date": "2020-10-30",
+    "artist": "Taylor Swift",
+    "UserId": 1
   },
   {
     "id": 2,
-    "title": "Ishoma",
-    "description": "Kembalikan energi untuk bisa menyelesaikan coding",
+    "title": "Dengerin lagu galau",
+    "description": "Setel musik hits buat galau galauin nih",
     "status" : false,
-    "due_date": "2020-09-30",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "due_date": "2020-12-12",
+    "artist": "Raisa",
+    "UserId": 1
   }
 ]
 ```
@@ -81,11 +81,15 @@ _Response (200)_
 [
   {
     "id": 1,
-    "title": "Belajar coding",
-    "description": "Mengikuti lecture dan menyelesaikan challenge",
+    "title": "Mendengarkan musik Barat",
+    "description": "Hits musik by Artist",
     "status" : false,
-    "createdAt": "2020-09-30",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "due_date": "2020-10-30",
+    "artist": "Taylor Swift",
+    "link": "https//linklagunyadari3rdAPI.com",
+    "image": "link image dari 3rd API",
+    "song": "judul lagu dari 3rd API",
+    "UserId": 1
   }
 ]
 ```
@@ -111,10 +115,12 @@ _Request Header_
 _Request Body_
 ```json
 {
-  "title": "Livecode",
-  "description": "Ujian untuk dapat lulus dari hacktiv",
-  "status": false,
-  "due_date": "2020-09-30",
+  "id": 1,
+  "title": "Mendengarkan musik Barat",
+  "description": "Hits musik by Artist",
+  "status" : false,
+  "due_date": "2020-10-30",
+  "artist": "Taylor Swift",
   "UserId": 1
 }
 ```
@@ -122,11 +128,15 @@ _Request Body_
 _Response (201 - Created)_
 ```json
 {
-  "id": 3,
-  "title": "Livecode",
-  "description": "Ujian untuk dapat lulus dari hacktiv",
-  "status": false,
-  "due_date": "2020-09-30",
+  "id": 1,
+  "title": "Mendengarkan musik Barat",
+  "description": "Hits musik by Artist",
+  "status" : false,
+  "due_date": "2020-10-30",
+  "artist": "Taylor Swift",
+  "link": "https//linklagunyadari3rdAPI.com",
+  "image": "link image dari 3rd API",
+  "song": "judul lagu dari 3rd API",
   "UserId": 1,
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z"
@@ -154,23 +164,36 @@ _Request Header_
 _Request Body_
 ```json
 {
-  "title": "Livecode",
-  "description": "Ujian untuk dapat lulus dari hacktiv",
-  "status": false,
-  "due_date": "2020-09-30"
+  "id": 1,
+  "title": "Mendengarkan musik Barat",
+  "description": "Hits musik by Artist",
+  "status" : false,
+  "due_date": "2020-10-30",
+  "artist": "Taylor Swift",
+  "link": "https//linklagunyadari3rdAPI.com",
+  "image": "link image dari 3rd API",
+  "song": "judul lagu dari 3rd API",
+  "UserId": 1,
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z"
 }
 ```
 
 _Response (200 - OK)_
 ```json
 {
-  "title": "Belajar Livecode",
-  "description": "Review dan belajar untuk livecode",
-  "status": false,
-  "UserId": 3,
-  "due_date": "2020-03-20T07:15:12.149Z",
+  "id": 1,
+  "title": "Mendengarkan musik Indonesia",
+  "description": "Hits musik by Artist",
+  "status" : false,
+  "due_date": "2020-11-05",
+  "artist": "Kangen Band",
+  "link": "https//linklagunyadari3rdAPI.com",
+  "image": "link image dari 3rd API",
+  "song": "judul lagu dari 3rd API",
+  "UserId": 1,
   "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z"
 }
 ```
 
@@ -313,14 +336,14 @@ _Request Body_
 ```json
 {
   "email": "todo@gmail.com",
-  "password": "$2a$10$x30iMVW3HrzDck6u4CPMkO7/LoDTBPh5UBPW/asBMhxDrTztliioS",
+  "password": "<your hash password from bcrypt>"
 }
 ```
 
 _Response (200 - AccessToken)_
 ```json
 {
-  "access_token": "<eyJhbGciOiJIUzI1NiJ9.dG9kb0BnbWFpbC5jb20.WzgvS_O37ySBPBr-uOp3NLc9vsplqm3ZUSSWnRf9Mrs>"
+  "access_token": "<your token from jwt>"
 }
 ```
 

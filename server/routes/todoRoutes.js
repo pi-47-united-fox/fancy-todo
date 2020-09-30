@@ -9,9 +9,9 @@ router.use(authentication)
 
 router.get('/', TodoController.getAllTodo)
 
-router.post('/', TodoController.createTodo)
+router.post('/', TodoController.postCreateTodo)
 
-router.get('/:id',authorization, TodoController.getTodoByPk)
+router.get('/:id',authorization, TodoController.getFindOneTodo)
 
 router.put('/:id',authorization, TodoController.putTodo)
 

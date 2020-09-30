@@ -51,6 +51,23 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    link: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Please fill the Artist!"
+        }
+      }
+    },
+    image: {
+      type: DataTypes.STRING
+    },
+    song: {
+      type: DataTypes.STRING
+    },
+    artist: {
+      type: DataTypes.STRING
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

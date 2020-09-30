@@ -1,8 +1,14 @@
 const { Todo } = require('../models')
 
+const axios = require('axios')
+
 class TodoController {
     static getAllTodo(req,res,next){
-        Todo.findAll()
+        Todo.findAll({
+            where: {
+                UserId: req.userData.id
+            }
+        })
         .then(data => {
             res.status(200).json(data)
         })
@@ -10,8 +16,12 @@ class TodoController {
             next(err)
         })
     }
-    static getTodoByPk(req,res,next){
-        Todo.findByPk(+req.params.id)
+    static getFindOneTodo(req,res,next){
+        Todo.findOne({
+            where: {
+                id: +req.params.id
+            }
+        })
         .then(data => {
             res.status(200).json(data)
         })
@@ -19,14 +29,26 @@ class TodoController {
             next(err)
         })
     }
-    static createTodo(req,res,next){
-        // console.log('halo')
-        Todo.create({
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date,
-            UserId: req.userData.id
+    static searchMusic(artist){
+        return axios({
+            method: "GET",
+            url: `https://api.deezer.com/search?q=${artist}`,
+        })
+    }
+    static postCreateTodo(req,res,next){
+        TodoController.searchMusic(req.body.artist)
+        .then(response => {
+            return Todo.create({
+                title: req.body.title,
+                description: req.body.description,
+                status: req.body.status,
+                due_date: req.body.due_date,
+                artist: response.data.data[0].artist.name,
+                song: response.data.data[0].title,
+                link: response.data.data[0].link,
+                image: response.data.data[0].artist.picture_big,
+                UserId: req.userData.id
+            })
         })
         .then(data => {
             res.status(201).json(data)
@@ -36,16 +58,24 @@ class TodoController {
         })
     }
     static putTodo(req,res,next){
-        const putTodo = {
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date
-        }
-        Todo.update(putTodo, {
-            where: {
-                id: +req.params.id
-            }
+        let id = +req.params.id
+        TodoController.searchMusic(req.body.artist)
+        .then(response => {
+            return Todo.update({
+                title: req.body.title,
+                description: req.body.description,
+                status: req.body.status,
+                due_date: req.body.due_date,
+                artist: response.data.data[0].artist.name,
+                song: response.data.data[0].title,
+                link: response.data.data[0].link,
+                image: response.data.data[0].artist.picture_big,
+                UserId: req.userData.id
+            },{
+                where: {
+                    id : id
+                }
+            })
         })
         .then(data => {
             res.status(200).json({message: 'todo success to update'})
@@ -80,14 +110,13 @@ class TodoController {
             if(data === 1){
                 res.status(200).json({message: 'todo success to delete'})
             } else {
-                res.status(404).json({message: 'Invalid todo'})
+                res.status(404).json({message: 'invalid todo'})
             }
         })
         .catch(err => {
             next(err)
         })
     }
-    
 }
 
 module.exports = TodoController
