@@ -15,19 +15,50 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    status: DataTypes.STRING,
+    title:{
+     type: DataTypes.STRING,
+     validate:{
+        notEmpty:{
+          msg:"Title cannot empty"
+        }
+     }
+    }, 
+    description: {
+     type: DataTypes.STRING,
+     validate:{
+      notEmpty:{
+        msg:"Description cannot empty"
+        }
+      }
+    },
+    status: {
+     type: DataTypes.STRING,
+     validate:{
+      notEmpty:{
+        msg:"Status cannot empty"
+        }
+      }
+    },
     due_date: {
       type: DataTypes.DATE,
       validate: {
         isAfter: {
           args: new Date().toString(),
           msg: "Date must be now or future."
+        },
+        notEmpty:{
+          msg:"Date cannot empty"
         }
       }
     },
-    UserId: DataTypes.INTEGER
+    UserId: {
+     type: DataTypes.INTEGER,
+      validate:{
+        notEmpty:{
+          msg: "UserId cannot empty"
+        }
+      }
+    }
   }, {
     hooks:{
       beforeCreate(instance, options){

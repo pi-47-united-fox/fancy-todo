@@ -25,11 +25,24 @@ module.exports = (sequelize, DataTypes) => {
         isEmail:{
           args: true,
           msg: 'Must be email Format'
+        },
+        notEmpty:{
+          msg: "Email cannot empty"
+        },
+      }
+    },
+    password:{
+      type: DataTypes.STRING,
+      validate:{
+        notEmpty:{
+          msg:"Password cannot empty"
+        },
+        len:{
+          args: [6],
+          msg: "Please use at least 6 characters"
         }
       }
-
-    },
-    password:DataTypes.STRING,
+    }   
   }, {
     hooks:{
       beforeCreate(instance){

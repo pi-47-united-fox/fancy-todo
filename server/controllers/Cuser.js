@@ -2,7 +2,7 @@ const {User} = require('../models')
 const Helper = require('../helper/helper')
 
 class CUser{
-    static async registerHandler (req,res){
+    static async registerHandler (req,res,next){
         const obj = {
             email:req.body.email,
             password:req.body.password
@@ -16,12 +16,11 @@ class CUser{
             })
         }
         catch(err){
-            console.log(err)
-            res.status(400).json({ message: err.message })
+            next(err)
         }
     }
 
-    static async loginHandler(req,res){
+    static async loginHandler(req,res,next){
         const obj = {
             email: req.body.email,
             password: req.body.password
@@ -33,13 +32,13 @@ class CUser{
             }})
 
             if(!data){
-                res.status(401).json({
+                next({
                     name: "Unauthorized",
                     message: "Wrong email/password"
                 })
             }
             else if(!Helper.comparePassword(obj.password,data.password)){
-                res.status(401).json({
+                next({
                     name: "Unauthorized",
                     message: "Wrong email/password"
                 })
@@ -60,10 +59,10 @@ class CUser{
 
         }
         catch(err){
-            res.status(400).json({
-                message: err.message
-            })
-
+            // res.status(400).json({
+            //     message: err.message
+            // })
+            next(err)
         }
     }
 

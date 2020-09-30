@@ -1,19 +1,18 @@
 const {Todo} = require('../models/index')
 
 class CTodo{
-    static listHandler(req,res){
+    static listHandler(req,res,next){
         Todo.findAll()
         .then(data=>{
             res.status(200).json(data)
         })
         .catch(err=>{
-            res.status(500).json({message: err})
+            next(err)
         })
 
     }
 
-    static addHandler(req,res){
-        //console.log(req.userData)
+    static addHandler(req,res,next){
         const input = {
             title: req.body.title,
             description: req.body.description,
@@ -25,17 +24,11 @@ class CTodo{
             res.status(201).json(data)
         })
         .catch(err=>{
-            if(err.name === "SequelizeValidationError"){
-                res.status(400).json(err.errors)
-            }
-            else{
-
-                res.status(500).json({message:err})
-            }
+            next(err)
         })
     }
 
-    static async findHandler(req,res){
+    static async findHandler(req,res,next){
         try{
            const resultFind = await Todo.findByPk(+req.params.id)
 
@@ -43,11 +36,11 @@ class CTodo{
                res.status(200).json(resultFind)
            }
            else{
-               res.status(404).json({message:"Not Found"})
+            next({name: 'Not Found', message: 'Data not found!'})
            }
         }
         catch(err){
-            res.status(500).json(err)
+            next(err)
         }
     }
 
@@ -89,7 +82,7 @@ class CTodo{
             }})
 
             if(!resultPatch[0]){
-                res.status(404).json({message:'Not found'})
+                next({name: 'Not Found', message: 'Data not found!'})
             }
             else{
                 res.status(200).json(await Todo.findByPk(+req.params.id))
@@ -118,7 +111,7 @@ class CTodo{
 
         }
         catch(err){
-            res.status(500).json({message:err})
+            next(err)
         }
     }
     
