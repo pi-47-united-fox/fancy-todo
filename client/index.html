@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Fancy Todo</title>
+</head>
+
+<body>
+
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top ">
+
+        <a class="navbar-brand text-white" href="#"> Home </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="#"> Register <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Login</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4 text-primary">Wolcome To Fancy Todo Apps</h1>
+        </div>
+    </div>
+
+    <!-- form Register -->
+
+    <div class="jumbotron jumbotron-fluid bg-info">
+        <div class="container ">
+
+            <h1>Register</h1>
+            <form action="/todos" method="POST">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" name="email">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Name</label>
+                        <input type="text" class="form-control" id="inputName" name="name">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" name="password">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-danger">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- login -->
+
+    <div class="jumbotron jumbotron-fluid bg-info">
+        <div class="container ">
+            <h1>Login</h1>
+            <form action="/todos" method="POST">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" name="email">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" name="password">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-danger">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- todos card -->
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div>
+                <h2><a href="">Add New Todo</a></h2>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Title</div>
+                        <div class="card-body">
+                            <h5 class="card-title">3 Oktober 2010</h5>
+                            <p class="card-text">descripton. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Nesciunt
+                                dolorum ex tempore quis magnam veniam laboriosam accusantium, commodi corporis
+                                blanditiis
+                                itaque? Sint recusandae, fugit expedita harum esse minus! Repellendus, asperiores.</p>
+                            <label for="true">Done</label>
+                            <input type="radio" name="status" value="true" id="true">
+                            <label for="false">Undone</label>
+                            <input type="radio" name="status" value="false" id="false">
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm" id="hide">Update</button>
+                                <button type="button" class="btn btn-warning btn-sm" id="show">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Title</div>
+                        <div class="card-body">
+                            <h5 class="card-title">3 Oktober 2010</h5>
+                            <p class="card-text">descripton. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Nesciunt
+                                dolorum ex tempore quis magnam veniam laboriosam accusantium, commodi corporis
+                                blanditiis
+                                itaque? Sint recusandae, fugit expedita harum esse minus! Repellendus, asperiores.</p>
+                            <label for="true">Done</label>
+                            <input type="radio" name="status" value="true" id="true">
+                            <label for="false">Undone</label>
+                            <input type="radio" name="status" value="false" id="false">
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm">Update</button>
+                                <button type="button" class="btn btn-warning btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Title</div>
+                        <div class="card-body">
+                            <h5 class="card-title">3 Oktober 2010</h5>
+                            <p class="card-text">descripton. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Nesciunt
+                                dolorum ex tempore quis magnam veniam laboriosam accusantium, commodi corporis
+                                blanditiis
+                                itaque? Sint recusandae, fugit expedita harum esse minus! Repellendus, asperiores.</p>
+                            <label for="true">Done</label>
+                            <input type="radio" name="status" value="true" id="true">
+                            <label for="false">Undone</label>
+                            <input type="radio" name="status" value="false" id="false">
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm">Update</button>
+                                <button type="button" class="btn btn-warning btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Title</div>
+                        <div class="card-body">
+                            <h5 class="card-title">3 Oktober 2010</h5>
+                            <p class="card-text">descripton. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Nesciunt
+                                dolorum ex tempore quis magnam veniam laboriosam accusantium, commodi corporis
+                                blanditiis
+                                itaque? Sint recusandae, fugit expedita harum esse minus! Repellendus, asperiores.</p>
+                            <label for="true">Done</label>
+                            <input type="radio" name="status" value="true" id="true">
+                            <label for="false">Undone</label>
+                            <input type="radio" name="status" value="false" id="false">
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm">Update</button>
+                                <button type="button" class="btn btn-warning btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Title</div>
+                        <div class="card-body">
+                            <h5 class="card-title">3 Oktober 2010</h5>
+                            <p class="card-text">descripton. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Nesciunt
+                                dolorum ex tempore quis magnam veniam laboriosam accusantium, commodi corporis
+                                blanditiis
+                                itaque? Sint recusandae, fugit expedita harum esse minus! Repellendus, asperiores.</p>
+                            <label for="true">Done</label>
+                            <input type="radio" name="status" value="true" id="true">
+                            <label for="false">Undone</label>
+                            <input type="radio" name="status" value="false" id="false">
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm">Update</button>
+                                <button type="button" class="btn btn-warning btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Title</div>
+                        <div class="card-body">
+                            <h5 class="card-title">3 Oktober 2010</h5>
+                            <p class="card-text">descripton. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Nesciunt
+                                dolorum ex tempore quis magnam veniam laboriosam accusantium, commodi corporis
+                                blanditiis
+                                itaque? Sint recusandae, fugit expedita harum esse minus! Repellendus, asperiores.</p>
+                            <label for="true">Done</label>
+                            <input type="radio" name="status" value="true" id="true">
+                            <label for="false">Undone</label>
+                            <input type="radio" name="status" value="false" id="false">
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm">Update</button>
+                                <button type="button" class="btn btn-warning btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- form add Todos -->
+    <div class="jumbotron jumbotron-fluid bg-info">
+        <div class="container ">
+            <h1>Add New todos</h1>
+            <form action="/todos" method="POST">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputTitle">Title</label>
+                        <input type="text" class="form-control" id="inputTitle" name="title">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputDescription">Description</label>
+                        <input type="textbox" class="form-control" id="inputDescription" name="descripton">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputDate">Date</label>
+                        <input type="date" class="form-control" id="inputDate" name="due_date">
+                    </div>
+                </div>
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                                    value="option1" checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                    Done
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                                    value="option2">
+                                <label class="form-check-label" for="gridRadios2">
+                                    Undone
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-danger">Add Todo</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
