@@ -7,7 +7,7 @@ function authentication(req,res,next){
     console.log(access_token);
     if(access_token){ 
         req.userData = verify(access_token)
-        // console.log(req.userData,"<<<<<");
+        console.log(req.userData,"<<<<<");
         User.findByPk(req.userData.id) 
         .then(data => {
             if(!data){
