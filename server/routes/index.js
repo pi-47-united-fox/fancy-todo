@@ -3,6 +3,7 @@
 const routes = require("express").Router();
 const todoController = require("../controllers/todoController");
 const userContoller = require("../controllers/userController");
+const jikanController = require("../controllers/jikanController");
 const { authentication, authorization } = require("../middlewares/security");
 
 // test routes
@@ -28,5 +29,8 @@ routes.put("/todos/:id", authorization, todoController.editTodoPUT);
 routes.patch("/todos/:id", authorization, todoController.editTodoPATCH);
 
 routes.delete("/todos/:id", authorization, todoController.deleteTodo);
+
+// third party api
+routes.get("/jikan/search", jikanController.search);
 
 module.exports = routes;

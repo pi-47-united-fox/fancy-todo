@@ -491,3 +491,67 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
+
+### GET /jikan/search
+
+> Search manga through jikan API
+
+_Request Header_
+
+```
+{
+    "access_token": "<access token>",
+    "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+
+```
+{
+    "title": "<search query>"
+}
+```
+
+_Response (200)_
+
+```
+[
+    {
+        "title": "<Manga title>",
+        "image_url": "<Manga image link>",
+        "score": <Manga score>,
+        "synopsis": "<Manga description>"
+    },
+    {
+        "title": "<Manga title>",
+        "image_url": "<Manga image link>",
+        "score": <Manga score>,
+        "synopsis": "<Manga description>"
+    }
+]
+```
+
+_Response (500 - Internal Server Error)_
+
+```
+{
+    "message": "<error messages>"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```
+{
+    "message": "You do not have access"
+}
+```
+
+_Response (404 - Not Found)_
+
+```
+{
+    "message": "Data Not Found"
+}
+```
