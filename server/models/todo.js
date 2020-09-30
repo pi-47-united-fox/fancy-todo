@@ -21,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    due_date: DataTypes.DATE
+    due_date: DataTypes.DATE,
+    UserId: DataTypes.INTEGER,
+    imageurl: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Todo',

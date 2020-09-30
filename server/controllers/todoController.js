@@ -1,4 +1,5 @@
 const {Todo} = require('../models')
+const axios = require('axios')
 
 class TodoController{
     static async getTodoHandler(req,res){
@@ -27,30 +28,32 @@ class TodoController{
         }
     }
 
-    static async createTodoHandler(req,res){
-        const { title,description,status,due_date } = req.body
+    static createTodoHandler(req,res){
+        const query = req.query.pokemon
         const UserId = req.userData.id
-        const newTodo = {
-            title,description,status,due_date,UserId
-        }
 
-        if(!title){
-            res.status(400).json({message:'title tidak boleh kosong'})
-        }else if(!description){
-            res.status(400).json({message:'description tidak boleh kosong'})
-        }else if(!status){
-            res.status(400).json({message:'status tidak boleh kosong'})
-        }else if(!due_date){
-            res.status(400).json({message:'due_date tidak boleh kosong'})
-        }else{
-            try {
-                const createTodo = await Todo.create(newTodo)
-                res.status(201).json({message:'berhasil create',createTodo})
-            } catch (error) {
-                console.log(error)
-                res.status(500).json({error})
-            }
-        }
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`)
+            .then(({data})=>{
+                if(data){
+                    let newData = {
+                        title:data.name,
+                        description:'Hunt this Pokemon in 7 days !',
+                        status:'not catched yet',
+                        due_date:new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                        UserId,
+                        imageurl:data.sprites.front_default
+                    }
+                    return Todo.create(newData)
+                }else{
+                    return res.status(404).json({message:'not found'})
+                }
+            })
+            .then((result2)=>{
+                return res.status(201).json({message:'berhasil create',result2})
+            })
+            .catch(err=>{
+                return res.status(500).json({error})
+            })
     }
 
     static async putTodoHandler(req,res){
