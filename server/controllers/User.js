@@ -4,21 +4,17 @@ const { signToken } = require("../helpers/jwt")
 
 class UserController {
     static register(req, res) {
-        const input = {
+        let newUser = {
             email: req.body.email,
             password: req.body.password
         }
-        User.create(input)
-            .then(data => {
-                res.status(201).json({
-                    id: data.id,
-                    email: data.email
-                })
-            })
-            .catch(err => {
-                res.status(500).json(err)
-            })
-
+        User.create(newUser)
+        .then(result=> {
+            res.status(201).json(result)
+        })
+        .catch(err=> {
+            res.status(500).json(err)
+        })
     }
 
     static async login(req, res) {
@@ -50,7 +46,6 @@ class UserController {
                     access_token
                 })
             }
-
         } catch(err) {
             res.status(500).json(err)
         }

@@ -31,7 +31,7 @@ _Request Body_
   "title": "have a breakfast" ,
   "description": "no carbo",
   "status": false,
-  "due_date": "1 Oktober 2020",
+  "due_date": "1 oct 2020",
 }
 ```
 
@@ -42,7 +42,7 @@ _Response (201 - create)_
   "title": "have a breakfast" ,
   "description": "no carbo",
   "status": false,
-  "due_date": "1 Oktober 2020" ,
+  "due_date": "1 oct 2020" ,
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z"
 }
@@ -74,7 +74,7 @@ _Response (200)_
     "title": "have a breakfast" ,
     "description": "no carbo",
     "status": false,
-    "due_date": "1 Oktober 2020",
+    "due_date": "1 oct 2020",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z"
     },
@@ -83,7 +83,7 @@ _Response (200)_
     "title": "go to office" ,
     "description": "bike to work",
     "status": false,
-    "due_date": "1 Oktober 2020",
+    "due_date": "1 oct 2020",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z"
     }
@@ -118,7 +118,7 @@ _Response (200)_
   "title": "have a breakfast" ,
   "description": "no carbo",
   "status": false,
-  "due_date": "1 Oktober 2020",
+  "due_date": "1 oct 2020",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z"
 }
@@ -156,7 +156,7 @@ _Response (200)_
   "title": "have a breakfast" ,
   "description": "no carbo",
   "status": false,
-  "due_date": "1 Oktober 2020",
+  "due_date": "1 oct 2020",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z"
 }
@@ -188,7 +188,7 @@ _Response (200)_
   "title": "have a breakfast" ,
   "description": "no carbo",
   "status": false,
-  "due_date": "1 Oktober 2020",
+  "due_date": "1 oct 2020",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z"
 }
@@ -233,7 +233,7 @@ _Response (200)_
   "title": "have a breakfast" ,
   "description": "no carbo",
   "status": false,
-  "due_date": "1 Oktober 2020",
+  "due_date": "1 oct 2020",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z"
 }
