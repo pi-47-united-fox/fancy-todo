@@ -52,7 +52,7 @@ class UserController {
                     throw ({ msg: "email or password wrong", statusCode: 400 })
                 } else {
                     let access_token = signToken({ id: user.id, name: user.name, email: user.email })
-                    res.status(200).json(access_token)
+                    res.status(200).json({ access_token })
                 }
             }
         } catch (err) {

@@ -7,8 +7,8 @@ class TodoController {
     static getDataTodo(req, res, next) {
 
         Todo.findAll({ where: { UserId: req.userData.id } })
-            .then(result => {
-                res.status(200).json(result)
+            .then(todo => {
+                res.status(200).json(todo)
             })
             .catch(err => {
                 next(err)
