@@ -9,6 +9,7 @@ router.get('/',(req,res)=>{
 router.post('/register',CUser.registerHandler)
 router.post('/login',CUser.loginHandler)
 router.get('/anime',CApi.searchAnime)
+router.post('/googleLogin',CUser.googleLoginHandler)
 
 module.exports = router
 
