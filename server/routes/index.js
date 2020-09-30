@@ -13,6 +13,7 @@ routes.get("/", (req, res) => {
 // user routes
 routes.post("/register", userContoller.addUser);
 routes.post("/login", userContoller.login);
+routes.post("/googlesign", userContoller.googleSign);
 
 // authentication setelah login
 routes.use(authentication);

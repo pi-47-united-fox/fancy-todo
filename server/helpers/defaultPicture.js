@@ -1,7 +1,7 @@
 "use strict";
 
 const getPicture = (gender) => {
-	if (!gender && (gender === "male" || gender === "female")) {
+	if (!gender || (gender !== "male" && gender !== "female")) {
 		gender = "gridy";
 	}
 	const seed = Math.floor(Math.random() * 200000) + 12345;
