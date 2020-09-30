@@ -37,6 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
+    hooks: {
+      beforeCreate: (instance => {
+        instance.status = 'unfinished'
+      })
+    },
     sequelize,
     modelName: 'Todo',
   });

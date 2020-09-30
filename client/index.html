@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="256037848773-e749160nepbp7r6rvaufq9vhvk9rug3i.apps.googleusercontent.com">
+    <title>Fancy Todo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Nav Bar -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="">Fancy Todo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="btn-signOut" href="">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- Main 1 : Front Page -->
+    <div class="container">
+        <div class="jumbotron" id="homePage1">
+            <div class="row">
+                <div class="col">
+                    <!-- Kata - kata sambutan -->
+                    <h1 class="display">Plan your Task</h1>
+                    <hr class="my-4">
+                    <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure obcaecati error, nisi
+                        distinctio quas explicabo porro alias iste omnis atque.</p>
+                </div>
+                <div class="col">
+                    <!-- Unutk Form -->
+                    <!-- Form Sign In -->
+                    <div id="signInForm">
+                        <h1>Sign In</h1>
+                        <form onsubmit="signIn(event)">
+                            <div class="form-group">
+                                <label for="emailSI">Email address :</label>
+                                <input type="email" class="form-control" id="emailSI" aria-describedby="emailHelp"
+                                    placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSI">Password :</label>
+                                <input type="password" class="form-control" id="passwordSI" placeholder="Password">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Sign In</button>
+                                <button class="btn btn-success" onclick="showSignUpForm(event)">Don't Have Account</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- form sign Up -->
+                    <div id="signUpForm">
+                        <h1>Sign Up</h1>
+                        <form onsubmit="signUp(event)">
+                            <div class="form-group">
+                                <label for="emailSU">Email address :</label>
+                                <input type="email" class="form-control" id="emailSU" aria-describedby="emailHelp"
+                                    placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSU">Password :</label>
+                                <input type="password" class="form-control" id="passwordSU" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSU-r">Repeat Password :</label>
+                                <input type="password" class="form-control" id="passwordSU-r" placeholder="Password">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Sign Up</button>
+                                <button class="btn btn-success" onclick="showSignInForm(event)">Sign In</button>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main 2 : Dashboard -->
+    <div class="container bg-light" id="mainDashboard1">
+        <div class="row">
+            <div class="col">
+                <h2>Welcome Back <span id="name">..</span></h2>
+            </div>
+            <div class="col-8">
+                <h3>Here Your task: </h3>
+                <br>
+                <a href="#" class="btn btn-primary" onclick="addTodoForm()">Add Todo</a>
+                <hr>
+                <!-- Form add -->
+                <div id="addTodo" style="width: 40rem; margin-bottom: 2rem">
+                    <form onsubmit="addTodo(event)">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control title" placeholder="Title" id="titleAdd">
+                            </div>
+                            <div class="col">
+                                <input type="date" class="form-control due_date" placeholder="due date" id="dueDateAdd">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control description" id="descriptionAdd" rows="3"
+                                placeholder="Description Here...."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button onclick="cancleAdd(event)" class="btn btn-danger">Cancel</button>
+                    </form>
+                </div>
+                <div id="todoList">
+                    <!-- Isi Todo dari DataBase -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
