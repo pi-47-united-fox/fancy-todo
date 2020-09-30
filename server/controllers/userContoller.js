@@ -10,8 +10,7 @@ class UserController {
         }
         User.create(newUser)
             .then(result => {
-                console.log(result);
-                res.status(201).json({
+                return res.status(201).json({
                     id: result.id,
                     email: result.email
                 })
