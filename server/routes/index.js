@@ -51,8 +51,14 @@ const authorization = (req, res, next) => {
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 
-router.use('/movies', ApiController.searchMovies)
-router.use('/restaurant', ApiController.searchRestaurant)
+
+
+// router.get('/resto', (req, res) => {
+//     res.status(200).json({ msg: 'masuk' })
+// })
+
+router.get('/movies', ApiController.searchMovies)
+router.get('/resto', ApiController.searchResto)
 
 
 router.use(authentication)

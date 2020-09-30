@@ -26,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
           msg: `validate error`
         }
       }
-    }
+    },
+    UserId: DataTypes.STRING,
+    food: DataTypes.STRING,
+    location: DataTypes.STRING,
+    link: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Todo',

@@ -1,4 +1,4 @@
-const axios = require('axios')
+const axios = require('axios');
 
 const tmdb = axios.create({
     baseURL: 'https://api.themoviedb.org/3',
@@ -7,12 +7,12 @@ const tmdb = axios.create({
     }
 })
 
-const zomato = axios.create({
-    baseURL: 'https://developers.zomato.com/api/v2.1',
-    header: {
-        apikey: 'fb21e803d67c86145e20b125d10b05fa'
-    }
-})
+// const zomato = axios.create({
+//     baseURL: 'https://developers.zomato.com/api/v2.1',
+//     headers: {
+//         'user-key': 'fb21e803d67c86145e20b125d10b05fa'
+//     }
+// })
 
 class ApiController {
     static async searchMovies(req, res, next) {
@@ -34,21 +34,25 @@ class ApiController {
         }
     }
 
-    // http://localhost:3000/restaurant?res_id=16774318
-    static async searchRestaurant(req, res, next) {
-        const query = req.query.res_id
-        try {
-            const restaurant = await zomato.get(`?res_id=${query}`)
-            console.log(restaurant)
-            return res.status(200).json(restaurant)
-
-        } catch (err) {
-            if (err.name == 'Error') {
-                return next(err)
-            } else {
-                return next(err)
+    // https://developers.zomato.com/api/v2.1/search?q=Mie%20Aceh
+    static searchResto(req, res, next) {
+        const query = req.query.search
+        axios({
+            method: 'GET',
+            url: `https://developers.zomato.com/api/v2.1/search?q=${query}`,
+            headers: {
+                'user-key': 'fb21e803d67c86145e20b125d10b05fa'
             }
-        }
+        })
+            .then(({ data }) => {
+                // console.log(data.restaurants)
+                console.log(data.restaurants[0].restaurant.name)
+                return res.status(200).json(data.restaurants)
+            })
+            .catch(err => {
+                // res.status(500).json(err)
+                return next(err)
+            })
     }
 
 }

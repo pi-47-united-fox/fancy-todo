@@ -32,6 +32,15 @@ const errorHandler = (err, req, res, next) => {
             })
             break;
 
+        case 'TypeError':
+            res.status(500).json({
+                name: 'Bad request',
+                message: {
+                    msg: "Converting circular structure to JSON"
+                }
+            })
+            break;
+
         case 'JsonWebTokenError':
             statusCode = 401
             res.status(401).json({
