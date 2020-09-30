@@ -1,3 +1,4 @@
+const weatherApi = require("../helpers/weatherApi");
 const { Todo } = require("../models")
 
 class TodoController {
@@ -12,9 +13,10 @@ class TodoController {
         }
     }
 
-    static postTodo(req,res){
+    static postTodo(req,res,next){
         // console.log(req.userData);
         req.body.UserId = req.userData.id
+        // console.log(new Date(req.body.due_date).getDate(), "<<<<<<<<");
         console.log(req.body);
         Todo.create(req.body)
             .then(result=>{
@@ -22,10 +24,10 @@ class TodoController {
             })
             .catch(err=>{
                 console.log(err);
-                return res.status(500).json({"message":"Internal Server Error"})
+                return next(err)
             })
     }
-    static getTodos(req,res){
+    static async getTodos(req,res){
         console.log(req.userData);
         Todo.findAll({where:{UserId:req.userData.id}})
             .then(result=>{
@@ -36,11 +38,38 @@ class TodoController {
                 return res.status(500).json({"message":"Internal Server Error"})
             })
     }
+    // static getTodos(req,res){
+    //     console.log(req.userData);
+    //     Todo.findAll({where:{UserId:req.userData.id}})
+    //         .then(result=>{
+    //             console.log(result[0].epoch,"<<<<<<<<<");
+    //             return res.status(201).json(result)
+    //         })
+    //         .catch(err=>{
+    //             console.log(err);
+    //             return res.status(500).json({"message":"Internal Server Error"})
+    //         })
+    // }
     static getTodo(req,res){
         Todo.findByPk(req.params.id)
             .then(result=>{
                 console.log(result);
-                if(result){
+                if(result){  
+                    console.log(result.epoch,"<<<<<<<<<", result.due_date,">>>", (new Date(Number(result.due_date)+1)) );
+                    result.epoch = Math.round(result.epoch)
+                    let date = new Date().valueOf()
+                    weatherApi.get(`onecall?dt=${date}`) 
+                        .then(result=>{ 
+                            let dataDaily =result.data.daily 
+                            
+                            console.log(">> ", new Date(1601393169000));
+                            dataDaily.forEach(element => {
+                                console.log("dt : ",element.dt," >> ", new Date(element.dt*1000));
+                            }); 
+                        })
+                        .catch(err=>{
+                            console.log(err);
+                        })
                     return res.status(200).json(result)
                 }else{
                     return res.status(404).json({"message":"Todo Not Found"})
