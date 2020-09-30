@@ -1,8 +1,9 @@
 const axios = require('axios')
+const weatherApi = process.env.WEATHERAPI
 
 class ApiController {
     static currentWeather(req, res, next) {
-        let key  ='792d5bdeb0dcf09189634b39809452ca'
+        let key  = weatherApi
         let city = 'jakarta' //
         axios({
             method: 'GET',
