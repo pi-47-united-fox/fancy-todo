@@ -17,7 +17,7 @@ class TodoController {
         // console.log(req.userData);
         req.body.UserId = req.userData.id
         // console.log(new Date(req.body.due_date).getDate(), "<<<<<<<<");
-        console.log(req.body);
+        // console.log(req.body);
         Todo.create(req.body)
             .then(result=>{
                 return res.status(201).json(result)

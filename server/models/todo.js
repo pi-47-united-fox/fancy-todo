@@ -17,18 +17,46 @@ module.exports = (sequelize, DataTypes) => {
   };
   Todo.init({
     title:{
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+          notEmpty:{
+            msg:"Title cannot be empty"
+          }
+      }
     },
     description:{
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+          notEmpty:{
+            msg:"Description cannot be empty"
+          },
+      }
     },
     status:{
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+          notEmpty:{
+            msg:"status cannot be empty"
+          }, 
+      }
     },
     due_date:{
       type: DataTypes.STRING,
+      allowNull:false,
       validate:{
-        // isAfter: new Date()
+          notEmpty:{
+            msg:"Due date cannot be empty"
+          },
+          checkDate(date){
+            let duedate = new Date(date) 
+            console.log(duedate," ======== ", new Date());
+            if(duedate< new Date()){
+              throw new Error("You can only add upcoming Activity")
+            }
+          } 
       }
     },
     UserId:{
@@ -38,8 +66,10 @@ module.exports = (sequelize, DataTypes) => {
     activityType:{
       type: DataTypes.STRING,
       allowNull:false,
-      isEmpty:{
-
+      validate:{
+        notEmpty:{
+          msg:"Activity cannot be empty"
+        }
       }
     },
   }, {
