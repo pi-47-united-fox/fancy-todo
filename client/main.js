@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    //console.log("ready!");
     if (localStorage.access_token) {
         afterLogin()
     }
@@ -20,16 +19,11 @@ const beforeLogin = () => {
     $(".after-login").hide()
 }
 
-// const addForm = () =>{
-//     $("#btn-add").show()
-
-// }
 
 const loginApp = (event) => {
     event.preventDefault()
     let email = $("#email").val()
     let password = $("#password").val()
-    //console.log(email,password)
 
     //pakai ajax untuk http request ke server
     $.ajax({
@@ -38,12 +32,39 @@ const loginApp = (event) => {
         data: { email, password }
     })
         .done(result => {
-            //console.log(result,'sukses login')
             localStorage.setItem('access_token', result.access_token)
             afterLogin()
         })
         .fail(function (err) {
-            //alert("error")
+            alert(err.responseJSON.message)
+        })
+}
+
+const addHandler = (event) => {
+    event.preventDefault()
+    let obj = {
+        title: $("#title").val(),
+        description: $("#description").val(),
+        due_date: $("#due_date").val()
+    }
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/todos',
+        data: obj,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+        .done(result => {
+            $("#title").val('')
+            $("#description").val('')
+            $("#due_date").val('')
+            fetchListAnime()
+            $(".anime-list").show()
+            $(".add-form").hide()
+
+        })
+        .fail(err => {
             alert(err.responseJSON.message)
         })
 }
@@ -58,7 +79,6 @@ const fetchListAnime = () => {
         }
     })
         .done(result => {
-            //console.log(result)
             $("#anime-list").empty()
             $.each(result, (key, value) => {
                 $("#anime-list").append(`
@@ -67,6 +87,9 @@ const fetchListAnime = () => {
             <td>${value.description}</td>
             <td>${value.status}</td>
             <td>${value.due_date}</td>
+            <td>
+            <button type="button" class="btn btn-danger btn-deleteHandler" id=${value.id}>Delete</button>
+            </td>
           </tr>
           `
                 )
@@ -77,30 +100,30 @@ const fetchListAnime = () => {
         })
 }
 
-function signOut(){
+
+function signOut() {
     localStorage.removeItem('acces_token')
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-      console.log('User signed out.');
+        console.log('User signed out.');
     });
 
 }
 
 $("#btn-logout").click(() => {
     localStorage.clear()
-    //localStorage.removeItem('acces_token')
     signOut()
     $("#email").val('')
     $("#password").val('')
     beforeLogin()
 })
 
-$("#btn-add").click(()=>{
+$("#btn-add").click(() => {
     $(".add-form").show()
     $(".anime-list").hide()
 })
 
-$("#btn-home").click(()=>{
+$("#btn-home").click(() => {
     $(".anime-list").show()
     $(".add-form").hide()
 })
@@ -109,24 +132,21 @@ $("#btn-home").click(()=>{
 
 function onSignIn(googleUser) {
     var google_access_token = googleUser.getAuthResponse().id_token;
-    //console.log(id_token)
 
     $.ajax({
-        method:'POST',
+        method: 'POST',
         url: 'http://localhost:3000/user/googleLogin',
-        headers:{
+        headers: {
             google_access_token
         }
     })
-    .done(result=>{
-        //console.log(result,'xsxsxss')
-        localStorage.setItem('access_token',result.access_token)
-        afterLogin()
-    })
-    .fail(err=>{
-        alert(err)
-    })
+        .done(result => {
+            localStorage.setItem('access_token', result.access_token)
+            afterLogin()
+        })
+        .fail(err => {
+            alert(err)
+        })
 }
 
 
-  
