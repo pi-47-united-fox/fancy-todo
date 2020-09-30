@@ -2,7 +2,9 @@ const {Todo} = require('../models/index')
 
 class CTodo{
     static listHandler(req,res,next){
-        Todo.findAll()
+        Todo.findAll({where:{
+            UserId: +req.userData.id
+        }})
         .then(data=>{
             res.status(200).json(data)
         })
