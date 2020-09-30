@@ -20,8 +20,14 @@ class TodoController {
         })
     }
     static findAllTodo (req, res) {
-        Todo.findAll({order: [['id', 'ASC']]})
+        Todo.findAll({
+            where: {UserId: req.userData.id
+            }
+        })
         .then(result=> {
+            result.sort((a,b)=> {
+                return a.id-b.id
+            })
             res.status(201).json(result)
         })
         .catch(err=> {
