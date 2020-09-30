@@ -6,6 +6,36 @@ $(document).ready(function () {
     }
 })
 
+function hideAll(){ 
+    $('#loader').hide()
+    $('#login-btn').hide()
+    $('#regist-btn').hide()
+    $('#login-container').hide()
+    $('#logout-btn').hide()
+    $('#content-list').val('') 
+    $('#content-list').hide() 
+    $('#container-content').hide()
+    $('#regist-form').hide()
+    $('#login-form').hide()
+    $('#content-form-add').hide()
+}
+//navigation-home
+$('#nav-home-btn').on('click',()=>{
+    console.log("home");
+    hideAll()
+    $('#container-content').show()
+    $('#content-list').show() 
+    $('#logout-btn').show()
+    loadData()
+})
+$('#nav-addTodo-btn').on('click',()=>{
+    console.log("add");
+    hideAll()
+    $('#container-content').show()
+    $('#content-form-add').show()
+    $('#logout-btn').show() 
+})
+
 function afterLogin() {
     console.log("logged in");
     $('#login-btn').hide()
@@ -13,13 +43,15 @@ function afterLogin() {
     $('#login-container').hide()
     $('#logout-btn').show()
     $('#container-content').show()
+    $('#home_menu').show()
     loadData()
 }
 
 function beforeLogin() {
-    console.log("logged out");
+    console.log("logged out"); 
+    $('#home_menu').hide()
     $('#logout-btn').hide()
-    $('#content-list').val('') 
+    $('#content-list').empty()
     $('#container-content').hide()
     $('#login-btn').show()
     $('#regist-btn').show()
@@ -38,14 +70,15 @@ function loadData(){
     })
         .done(data=>{
             $('#loader').hide() 
-            $('#content-list').val('') 
+            $('#content-list').empty()
+            console.log(data);
             data.forEach(ele=>{
                 $('#content-list').append(`
-                <div class="col-3">
-                    <div class="card" style="width: 18rem;">
+                <div class="col mb-3">
+                    <div class="card flex-col" style="width: 300px;">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <h5 class="card-title">${ele.title}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">${ele.due_date}</h6>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                         <a href="#" class="card-link">Card link</a>
                         <a href="#" class="card-link">Another link</a>
@@ -59,12 +92,49 @@ function loadData(){
         .always()
 }
 
+$('#submit-add-input').on('click', (event)=>{
+    event.preventDefault()
+    let title = $('#title-add-input').val()
+    let description = $('#description-add-input').val()
+    let status = "doing"
+    let due_date = $('#dueDate-add-input').val()
+    let activityType = $('#activityType-add-input').val()
+
+    $.ajax({
+        url: `${URL}todos`,
+        method: "POST",
+        headers:{
+            access_token:localStorage.access_token
+        },
+        data: {
+            title,
+            description,
+            status,
+            due_date,
+            activityType
+        }
+    })
+        .done(result => {
+            console.log(result); 
+        })
+        .fail(err => {
+            console.log(err)
+            console.log(err.responseJSON.message);
+        })
+        .always(_ => {
+            $('#title-add-input').val('')
+            $('#description-add-input').val('') 
+            $('#dueDate-add-input').val('')
+            $('#activityType-add-input').val('')
+        })
+})
+
 $('#logout-btn').on('click', () => {
     console.log("process logout");
-    $('#content-list').val("asdsad")
-    // localStorage.clear()
-    // signOut()
-    // beforeLogin()
+    // $('#content-list').val("asdsad")
+    localStorage.clear()
+    signOut()
+    beforeLogin()
 });
 
 // form login
