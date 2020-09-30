@@ -1,8 +1,8 @@
 const axios = require('axios')
 
 class ApiController {
-    static holiday2020(req, res, next) {
-        axios.get(`https://date.nager.at/api/v2/publicholidays/2020/ID`)
+    static getHoliday(req, res, next) {
+        axios.get(`https://calendarific.com/api/v2/holidays?api_key=${process.env.CALENDARIFICAPIKEY}&country=ID&year=2020`)
             .then(({ data }) => {
                 res.status(200).json(data)
             })
@@ -11,15 +11,13 @@ class ApiController {
             })
     }
 
-    static calendarID(req, res, next) {
-        const { year } = req.params
-        axios.get(`https://calendarific.com/api/v2/holidays?api_key=${process.env.CALENDARIFICAPIKEY}&country=ID&year=${year}`)
+    static searchHoliday(req, res, next) {
+        const { country, year } = req.body
+        axios.get(`https://calendarific.com/api/v2/holidays?api_key=${process.env.CALENDARIFICAPIKEY}&country=${country}&year=${year}`)
             .then(({ data }) => {
                 res.status(200).json(data)
             })
-            .catch(err => {
-                return next(err)
-            })
+            .catch(next)
     }
 }
 

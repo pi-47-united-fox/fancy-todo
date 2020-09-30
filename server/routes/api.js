@@ -1,7 +1,8 @@
-const router = require('express').Router()
-const ApiController = require('../controllers/apiController')
+const router = require("express").Router()
+const { Auth, Author } = require('../middleware/Auth')
+const ApiController = require("../controllers/apiController")
 
-router.get('/holiday2020', ApiController.holiday2020)
-router.get('/calendarificID/:year', ApiController.calendarID)
+router.get('/holiday', ApiController.getHoliday)
+router.post('/holiday', ApiController.searchHoliday)
 
 module.exports = router

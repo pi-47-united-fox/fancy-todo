@@ -5,7 +5,7 @@ const errorHandler = (err, req, res, next) => {
         case "SequelizeValidationError":
             res.status(400).json({
                 name: 'Bad Request',
-                message: { message: err.message[0] }
+                message: err.message
             })
             break;
         case "BadRequest":

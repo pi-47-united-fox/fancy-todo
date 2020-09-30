@@ -1,6 +1,8 @@
 const { User } = require('../models/index')
 const { comparePass } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwt')
+const { OAuth2Client } = require('google-auth-library');
+const { use } = require('../routes/user');
 
 class UserController {
     static register(req, res, next) {
@@ -35,12 +37,12 @@ class UserController {
         try {
             if (!user) {
                 return next({
-                    name: "Unauthorized",
+                    name: "BadRequest",
                     message: 'Wrong email/password'
                 })
             } else if (!comparePass(loginData.password, user.password)) {
                 return next({
-                    name: "Unauthorized",
+                    name: "BadRequest",
                     message: 'Wrong email/password'
                 })
             } else {
@@ -55,6 +57,38 @@ class UserController {
                 message: message.err
             })
         }
+    }
+
+    static googleLogin(req, res, next) {
+        const client = new OAuth2Client(process.env.CLIENT_ID);
+        let email = ''
+        client.verifyIdToken({
+                idToken: req.headers.google_access_token,
+                audience: process.env.CLIENT_ID,
+            })
+            .then(ticket => {
+                let payload = ticket.getPayload()
+                email = payload.email
+                return User.findOne({ where: { email } })
+            })
+            .then(user => {
+                if (!user) {
+                    var userObj = {
+                        email: email,
+                        password: 'randompassword'
+                    }
+                    return User.create(userObj)
+                } else {
+                    return user
+                }
+            })
+            .then(user => {
+                const access_token = signToken({ id: user.id, email: user.email })
+                return res.status(201).json({ access_token })
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 }
 
