@@ -5,7 +5,6 @@ const axios = require("axios")
 class TodoController {
     // get/todos
     static getDataTodo(req, res, next) {
-
         Todo.findAll({ where: { UserId: req.userData.id } })
             .then(todo => {
                 res.status(200).json(todo)
@@ -25,6 +24,8 @@ class TodoController {
                 }
             })
                 .then(response => {
+                    // console.log(response)
+                    // res.status(201).json(response.data)
                     let addressResto = response.data.restaurants[0].restaurant.location.address
                     let nameResto = response.data.restaurants[0].restaurant.name
                     let value = {

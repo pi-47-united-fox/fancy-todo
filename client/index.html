@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- client ID goole -->
+    <meta name="google-signin-client_id"
+        content="379987411201-ul04ulrfifhuj899epa2oid6lr8s49nb.apps.googleusercontent.com">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
@@ -26,8 +30,8 @@
                 <li class="nav-item">
                     <button onclick="beforeLogin()" class="btn btn btn-primary" id="loginNav">Login</button>
                 </li>
-                <li class="nav-item">
-                    <button class="btn btn btn-primary ml-auto mr-2" id="logoutNav">Logout</button>
+                <li class="nav-item"></li> <button class="btn btn btn-primary ml-auto mr-2"
+                    id="logoutNav">Logout</button>
                 </li>
             </ul>
         </div>
@@ -42,7 +46,7 @@
     </div>
 
     <!-- head judul -->
-    <div class="jumbotron jumbotron-fluid mt-5">
+    <div class="jumbotron jumbotron-fluid mt-5" id="header">
         <div class="container">
             <h1 class="display-4 text-primary">Wolcome To Fancy Todo Apps</h1>
         </div>
@@ -66,9 +70,17 @@
                         <input type="password" class="form-control" id="inputPassword" name="password">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-danger">Login</button>
+                <div>
+                    <span>
+                        <button type="submit" class="btn btn-danger">Login</button>
+                    </span>
             </form>
+            <span class="my-0">
+                <p>Login With</p>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </span>
         </div>
+    </div>
     </div>
 
     <!-- form Register -->
@@ -105,6 +117,12 @@
         </div>
     </div>
 
+    <!-- form edit Todos -->
+    <div class="jumbotron jumbotron-fluid bg-info " id="editTodo">
+        <div class="container" id="edit-todo">
+
+        </div>
+    </div>
 
     <!-- form add Todos -->
     <div class="jumbotron jumbotron-fluid bg-info " id="addTodo">
@@ -185,10 +203,12 @@
 
 
 
-
+    <!-- script jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
         integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
         crossorigin="anonymous"></script>
+    <!-- script api google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="main.js"></script>
 </body>
 
