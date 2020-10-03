@@ -8,7 +8,7 @@ class jikanController {
 		axios
 			.get(`https://api.jikan.moe/v3/search/manga?q=${title}&limit=12`)
 			.then(({ data }) => {
-				if (data.results.length) {
+				if (data.results) {
 					const results = [];
 					data.results.forEach((el) => {
 						if (el.type === "Manga" && el.score) {
@@ -17,6 +17,7 @@ class jikanController {
 								image_url: el.image_url,
 								score: el.score,
 								synopsis: el.synopsis,
+								img_url: el.image_url
 							});
 						}
 					});

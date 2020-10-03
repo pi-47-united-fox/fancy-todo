@@ -34,6 +34,8 @@ class todoController {
 			status: req.body.status || false,
 			due_date: req.body.due_date,
 			UserId: req.userData.id,
+			img_url: req.body.img_url || "https://avatars.dicebear.com/api/jdenticon/asfv231ra.svg",
+			score: req.body.score || 0,
 		};
 
 		Todo.create(addBody)
@@ -52,6 +54,9 @@ class todoController {
 				description: req.body.description,
 				status: req.body.status,
 				due_date: req.body.due_date,
+				img_url:
+					req.body.img_url || "https://avatars.dicebear.com/api/jdenticon/asfv231ra.svg",
+				score: req.body.score || 0,
 			};
 
 			const isUpdateSuccess = await Todo.update(editBody, {
