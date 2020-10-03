@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="236140828689-surnffqg83gbkki93p3qtfcm987m00fj.apps.googleusercontent.com">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Document</title>
 </head>
@@ -22,6 +24,12 @@
               <a class="nav-link text-white" href="#"> Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
+              <a class="nav-link text-white" href="#" id="btn-register">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#" id="btn-login">Login</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-white" href="#" id="btn-logout">Logout</a>
             </li>
           </ul>
@@ -30,9 +38,27 @@
       <!-- navbar end -->
 
 
-      <!-- content start -->
+      <!--input todo start-->
+      <div class="container mt-5 after-login" style="width: 700px;">
+        <form onsubmit="addPokemon(event)">
+          <div class="form-group">
+          <label for="exampleInputEmail1">Masukkan Nama Pokemon yang ingin kamu tangkap !</label>
+          <div class="d-flex flex-row">
+            <input type="text" class="form-control" id="add-pokemon" style="width: 500px;">
+            <button type="submit" class="btn btn-primary">Add Pokemon</button>
+          </div>
+          <small id="" class="form-text text-muted">Semangat gatcha pokemonnya !</small>
+          </div>
+          
+        </form>
+      </div>
+      <!--input todo end-->
 
-      <div class="container mt-5 after-login">
+
+
+      <!-- content start -->
+      <div class="container mt-5 after-login" id="data-pokemon-home" style="width: 100%;" >
+        <center><h1>List pokemon yang ingin kamu tangkap !</h1></center>
         <div class="row" id="data-pokemon">
 
           </div>
@@ -41,10 +67,28 @@
 
       <!-- content ends -->
 
+      <!-- form register start -->
+      <div class="container before-login mt-5" id="register-form">
+        <h1>Register Your Account Here</h1>
+      <form onsubmit="registerUser(event)">
+          <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="emailregister" aria-describedby="emailHelp">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="passwordregister">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+  </div>
+    <!-- form register ends -->
+
 
 
       <!-- form login start -->
-      <div class="container before-login">
+      <div class="container before-login mt-5" id="login-form">
           <h1>Login for see your target !</h1>
         <form onsubmit="loginApp(event)">
             <div class="form-group">
@@ -57,13 +101,14 @@
             <input type="password" class="form-control" id="password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="g-signin2 mt-3" data-onsuccess="onSignIn"></div>
         </form>
     </div>
-
       <!-- form login ends -->
 
     <!--mendefine CDN JQUERY-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="./main.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>

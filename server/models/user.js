@@ -30,7 +30,12 @@ module.exports = (sequelize, DataTypes) => {
        }
      }
     },
-    password: DataTypes.STRING
+    password: {
+      type: DataTypes.STRING,
+      validate:{
+        len:[3,12]
+      }
+    }
   }, {
     hooks:{
       beforeCreate(user){

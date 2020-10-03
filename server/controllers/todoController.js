@@ -4,7 +4,11 @@ const axios = require('axios')
 class TodoController{
     static async getTodoHandler(req,res){
         try {
-            const todo = await Todo.findAll({where:{UserId:req.userData.id}})
+            const todo = await Todo.findAll({
+                where:{UserId:req.userData.id},
+                order:[['id','asc']]
+
+            })
             res.status(200).json(todo)
             
         } catch (error) {
@@ -29,10 +33,13 @@ class TodoController{
     }
 
     static createTodoHandler(req,res){
-        const query = req.query.pokemon
+        let query = req.query.pokemon
         const UserId = req.userData.id
+        let querytolower = query.toLowerCase()
+        console.log(querytolower)
+        console.log(UserId)
 
-        axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`)
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${querytolower}`)
             .then(({data})=>{
                 if(data){
                     let newData = {
@@ -52,7 +59,8 @@ class TodoController{
                 return res.status(201).json({message:'berhasil create',result2})
             })
             .catch(err=>{
-                return res.status(500).json({error})
+                console.log(err)
+                return res.status(500).json({err})
             })
     }
 
@@ -85,14 +93,18 @@ class TodoController{
     
     static async patchTodoHandler(req,res){
         let id = +req.params.id
+        console.log(id)
         const { status } = req.body
+        console.log(status)
         const newStatus = { status }
 
         if(!status){
             res.status(400).json({message:'status harus ada'})
         }else{
             try {
-                const updatedStatus = await Todo.update(newStatus,{where:{id}})
+                const updatedStatus = await Todo.update(newStatus,{
+                    where:{id},
+                })
                 res.status(201).json({message:'berhasil update status dengan patch',updatedStatus})
             } catch (error) {
                 console.log(error)
