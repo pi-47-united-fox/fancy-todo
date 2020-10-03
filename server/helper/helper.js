@@ -16,7 +16,7 @@ class Helper{
 
     static signToken(payload){
         let token
-        return token = jwt.sign(payload, 'secret')
+        return token = jwt.sign(payload, process.env.SECRET)
     }
 
 }

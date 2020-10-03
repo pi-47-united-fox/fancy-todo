@@ -46,7 +46,7 @@ class CTodo{
         }
     }
 
-    static async putHandler(req,res){
+    static async putHandler(req,res,next){
         try{
             const inputBody = {
                 title: req.body.title,
@@ -60,22 +60,18 @@ class CTodo{
             }})
 
             if(!resultPut[0]){
-                res.status(404).json({message:'Not found'})
+                next({name: 'Not Found', message: 'Data not found!'})
             }
             else{
                 res.status(200).json(await Todo.findByPk(+req.params.id))
             }
         }   
         catch(err){
-            if (err.name === "SequelizeValidationError") {
-				res.status(400).json(err.errors);
-			} else {
-				res.status(500).json({ message: err });
-			}
+            next(err)
         }
     }
 
-    static async patchHandler(req,res){
+    static async patchHandler(req,res,next){
         try{
             const inputBody = { status: req.body.status, UserId: req.userData.id}
             
@@ -91,11 +87,7 @@ class CTodo{
             }
         }
         catch(err){
-            if (err.name === "SequelizeValidationError") {
-				res.status(400).json(err.errors);
-			} else {
-				res.status(500).json({ message: err });
-			}
+            next(err)
         }
 
     }
@@ -108,7 +100,7 @@ class CTodo{
                 res.status(200).json({message: "todo success to delete"})
             } 
             else{
-                res.status(404).json({message: "Not found"})
+                next({name: 'Not Found', message: 'Data not found!'})
             }
 
         }

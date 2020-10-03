@@ -12,11 +12,20 @@ const afterLogin = () => {
     $(".after-login").show()
     $(".before-login").hide()
     $(".add-form").hide()
+    $("#jumbotron_edit_form").hide()
 }
 
 const beforeLogin = () => {
     $(".before-login").show()
     $(".after-login").hide()
+    $(".add-form").hide()
+    $("#jumbotron_edit_form").hide()
+}
+
+const hideAll = () => {
+    $(".before-login").hide()
+    $(".add-form").hide()
+
 }
 
 
@@ -69,6 +78,121 @@ const addHandler = (event) => {
         })
 }
 
+const removeAnime = (id, event) => {
+    console.log(id)
+    event.preventDefault()
+    $.ajax({
+        method: 'DELETE',
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+        .done((data) => {
+           // console.log(data)
+            // console.log(result)
+            afterLogin()
+        })
+        .fail((err) => {
+            console.log(err)
+            console.log('Error.')
+        })
+        .always(() => {
+            $('#add-form').trigger("reset")
+        })
+}
+
+const updateAnime = (id,event) =>{
+    event.preventDefault()
+    $(".anime-list").hide()
+    $("#jumbotron_edit_form").show()
+    $.ajax({
+        method: 'GET',
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+    .done(result =>{
+        let data = result
+        console.log(data)
+        $('#editAnimeForm').empty()
+        $('#editAnimeForm').append(`
+        <form>
+            <h3>Edit your Anime Todos</h3>
+            <div class="form-group">
+                <label for="edit-title">Title</label>
+                <input type="text" class="form-control" id="edit-title" value ="${data.title}">
+            </div>
+            <div class="form-group">
+                <label for="edit-description">Description</label>
+                <input type="text" class="form-control" id="edit-description" value ="${data.description}">
+            </div>
+            <div class="form-group">
+                <label for="edit-date">Date</label>
+                <input type="date" class="form-control" id="edit-due_date" value ="${data.due_date.substring(0, 10)}">
+            </div>
+            <div class="form-group">
+              <label for="edit-status">Travel Status</label>
+              <select class="form-control" id="edit-status">
+                <option>Please select one</option>
+                <option value="On Progress" ${data.status === "On Progress" ? "selected" : ""}>On Progress</option>
+                <option value="Watched" ${data.status === "Watched" ? "selected" : ""}>Watched</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="putAnime(${data.id}, event)">Update</button>
+            <button type="button" class="btn btn-danger" onclick="afterLogin()">Cancel</button>
+        </form>
+        `)
+    })
+}
+
+const putAnime = (id,event) => {
+    event.preventDefault()
+    let title = $('#edit-title').val()
+    let description = $('#edit-description').val()
+    let due_date = $('#edit-due_date').val()
+    let status = $('#edit-status').val()
+    $.ajax({
+        method: 'PUT',
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.access_token
+        },
+        data: {
+            title,
+            description,
+            due_date,
+            status
+        }
+    })
+        .done(() => {
+            afterLogin()
+        })
+        .fail((err) => {
+            console.log(err)
+        })
+}
+
+const searchHandler = (event) =>{
+    event.preventDefault()
+    let input = $('#search').val()
+    $.ajax({
+        method: 'GET',
+        url: `http://localhost:3000/todos/anime?search=${input}`,
+        headers: {
+            access_token: localStorage.access_token
+        },
+    })
+        .done(() => {
+            $('#search').val('')
+            afterLogin()
+        })
+        .fail((err) => {
+            console.log(err)
+        })
+}
+
 
 const fetchListAnime = () => {
     $.ajax({
@@ -86,9 +210,10 @@ const fetchListAnime = () => {
             <th scope="row">${value.title}</th>
             <td>${value.description}</td>
             <td>${value.status}</td>
-            <td>${value.due_date}</td>
+            <td>${value.due_date.substring(0, 10)}</td>
             <td>
-            <button type="button" class="btn btn-danger btn-deleteHandler" id=${value.id}>Delete</button>
+            <button type="button" class="btn btn-primary" onclick="updateAnime(${value.id}, event)">Edit</button>
+            <button type="button" class="btn btn-danger" onclick="if (confirm('Are you sure?')) { return removeAnime(${value.id}, event) }">Delete</button>
             </td>
           </tr>
           `

@@ -1,254 +1,444 @@
 
-Fancy todo app is a newer and fancier way to arrange todo list inputted by users. This app has the following features:
+Anime Todo App
 ```json
-    RESTful endpoint for todo's CRUD operation.
+    RESTful endpoint for Anime Todo app CRUD operation.
     JSON-formatted response.
 
  
 RESTful Endpoints
 
-    GET /todos
-    POST /todos
-    GET /todos/:id
-    PUT /todos/:id
-    PATCH /todos/:id
-    DELETE /todos/:id
+## POST /register
+## POST /login
+## POST /googleLogin
+## GET  /anime
 
-GET /todos
+## GET /travel 
+## POST /travel
+## GET /travel/:id
+## PUT /travel/:id
+## DELETE /travel/:id
 
-    Get all todos
 
-Request Header
+##POST /register 
 
-{
-  "access_token": "<access_token>"
-}
+        Request Header
 
-Request Body
+            Not Needed
 
-not needed
+        Request Body
 
-Response (200)
+        {
+            "email": "ridwan@mail.com",
+            "password": 123456, 
+        }
 
-[
-    {
-        "id": 1,
-        "title": "Boku No Hero Academia",
-        "description": "nonton habis kelar tugas",
-        "status": "unwatched",
-        "due_date": "2020-10-10",
-    },
-    {
-        "id": 2,
-        "title": "Naruto",
-        "description": "anime tentang ninja",
-        "status": "unwathched",
-        "due_date": "2020-10-10"
-    }
-]
+        Response (200)
 
-Response (400 - Bad Request)
+        {
+            "id": 1,
+            "name": "Ridwan",
+            "email": "ridwan@mail.com",
+        }
 
-{
-  "message": "Invalid request."
-}
+        Response (400 - Bad Request)
 
-Response (500 - Internal Server Error)
+        {
+        "message": "Invalid request."
+        }
 
-{
-  "message": "Internal Server Error."
-}
+        Response (500 - Internal Server Error)
 
-POST /todos
+        {
+        "message": "Internal Server Error."
+        }
 
-    Create a new todo
+##POST /login 
 
-Request Header
+        Request Header
 
-{
-  "access_token": "<your access token>"
-}
+            Not Needed
 
-Request Body
+        Request Body
 
-{
-    "title": "One Piece",
-    "description": "anime bajak laut",
-    "status": "unwatched",
-    "due_date": "2020-10-10",
+        {
+            "email": "ridwan@mail.com",
+            "password": 123456, 
+        }
+
+        Response (200)
+
+        {
+            "access_token"
+        }
+
+        Response (400 - Bad Request)
+
+        {
+        "message": "Invalid request."
+        }
+
+        Response (500 - Internal Server Error)
+
+        {
+        "message": "Internal Server Error."
+        }
+
+
+##POST /googleLogin
+
+        Request Header
+
+            Not Needed
+
+        Request Body
+
+            Not Needed
+
+        Response (200)
+
+        {
+            "access_token"
+        }
     
-}
+        Response (404 - Unauthorized)
 
-Response (201 - Created)
+        {
+        "message": "you are not authorized"
+        }
 
-{
-    "id": <given by the system>,
-    "title": "One Piece",
-    "description": "anime bajak laut",
-    "status": "unwatched",
-    "due_date": "2020-10-10",
-    "UserId": "given by access token.id"
-}
+        Response (500 - Internal Server Error)
 
-Response (500 - Internal Server Error)
+        {
+        "message": "Internal Server Error."
+        }
 
-{
-  "message": "Internal Server Error."
-}
+## GET  /anime
 
-GET /todos/:id
+        Request Header
 
-    Get a particular todo from a given id
+          {
+            "access_token"
+          }
 
-Request Header
+        Request Body
 
-{
-  "access_token": "<your access token>"
-}
+            Not Needed
 
-Request Params
+        Response (200)
 
-{
-    "id": 1
-}
+        {
+            "title": "Naruto",
+            "description": "Anime Naruto",
+            "due_date": "2020-11-20",
+            "status": "On Progress"
+        }
 
-Response (200)
+        Response (404 - Not Found)
 
-{
-    "id": 1,
-    "title": "Make a todo app",
-    "description": "Make a fancy app for the first portofolio",
-    "status": "on progress",
-    "due_date": "3 October 2020"
-}
+        {
+        "message": "not found"
+        }
 
-Response (404)
+        Response (500 - Internal Server Error)
 
-{
-  "message": "Error. Not found."
-}
+        {
+        "message": "Internal Server Error."
+        }
 
-PUT /todos/:id
 
-    Update the whole attributes of a particular todo from a given id
+##GET /todos
 
-Request Header
 
-{
-  "access_token": "<your access token>"
-}
+        Request Header
 
-Request Params
+        {
+        "access_token": "<access_token>"
+        }
 
-{
-    "id": 1
-}
+        Request Body
 
-Request Body
+        not needed
 
-{
-    "title": "Create a todo app",
-    "description": "Create a fancy todo app this week!",
-    "status": "done",
-    "due_date": "2 October 2020"
-}
+        Response (200)
 
-Response (200)
+        [
+            {
+                "id":1,
+                "title": "Naruto",
+                "description": "Anime Naruto",
+                "due_date": "2020-11-20",
+                "status": "On Progress"
+            },
+            {
+                "id":2,
+                "title": "One Piece",
+                "description": "Anime one piece",
+                "due_date": "2020-11-20",
+                "status": "On Progress"
+            }
+        ]
 
-{
-    "id": 1,
-    "title": "Create a todo app",
-    "description": "Create a fancy todo app this week!",
-    "status": "done",
-    "due_date": "2 October 2020"
-}
+        Response (401)
+        {
+        "message": "Unauthorized"
+        }
+        Response (404 - not Found)
+        {
+        "message": "Not Found"
+        }
+        Response (500 - Internal Server Error)
 
-Response (400)
+        {
+        "message": "Internal Server Error."
+        }
 
-{
-  "message": "Validation error."
-}
+##POST /todos
 
-Response (500 - Internal Server Error)
 
-{
-  "message": "Internal Server Error."
-}
+        Request Header
 
-PATCH /todos/:id
+        {
+        "access_token": "<your access token>"
+        }
 
-    Update the whole attributes of a particular todo from a given id
+        Request Body
 
-Request Header
+        {
+            "title": "Naruto",
+            "description": "Anime Naruto",
+            "due_date": "2020-11-20",
+            "status": "On Progress"
+        }
 
-{
-  "access_token": "<your access token>"
-}
+        Response (201 - Created)
 
-Request Params
+        {
+            "id":1,
+            "title": "Naruto",
+            "description": "Anime Naruto",
+            "due_date": "2020-11-20",
+            "status": "On Progress",
+            "UserId": "given by access token.id"
+        }
 
-{
-    "id": 1
-}
+        Response (400)
+        {
+        "message": "Validation Error"
+        }
+        Response (401)
+        {
+        "message": "Unauthorized"
+        }
+        Response (500 - Internal Server Error)
+        {
+        "message": "Internal Server Error."
+        }
 
-Request Body
+## GET /todos/:id
 
-{
-    "status": "on progress",
-}
 
-Response (200)
+        Request Header
 
-{
-    "id": 1,
-    "title": "Create a todo app",
-    "description": "Create a fancy todo app this week!",
-    "status": "on progress",
-    "due_date": "3 October 2020"
-}
+        {
+        "access_token": "<your access token>"
+        }
 
-Response (400)
+        Request Params
 
-{
-  "message": "Validation error."
-}
+        {
+            "id": 1
+        }
 
-Response (500 - Internal Server Error)
+        Response (200)
 
-{
-  "message": "Internal Server Error."
-}
+        {
+            "id":1,
+            "title": "Naruto",
+            "description": "Anime Naruto",
+            "due_date": "2020-11-20",
+            "status": "On Progress",
+            "UserId": "given by access token.id"
+        }
 
-DELETE /todos/:id
+        Response (401)
+        {
+        "message": "Unauthorized"
+        }
+        Response (404)
+        {
+        "message": "Error. Not found."
+        }
+        Response (500 - Internal Server Error)
+        {
+        "message": "Internal Server Error."
+        }
 
-    Delete a particular todo from a given id
+##PUT /todos/:id
 
-Request Header
+        Request Header
 
-{
-  "access_token": "<your access token>"
-}
+        {
+        "access_token": "<your access token>"
+        }
 
-Request Params
+        Request Params
 
-{
-    "id": 1
-}
+        {
+            "id": 1
+        }
 
-Response (200)
+        Request Body
 
-{
-    "message": "A todo has been deleted successfully."
-}
+        {
+            "title": "Boruto",
+            "description": "Anime Baruto",
+            "due_date": "2020-11-20",
+            "status": "On Progress",
+            "UserId": "given by access token.id"
+        }
 
-Response (404)
+        Response (200)
 
-{
-  "message": "Error. Not found."
-}
+        {
+            "id": 1,
+            "title": "Boruto",
+            "description": "Anime Baruto",
+            "due_date": "2020-11-20",
+            "status": "On Progress",
+            "UserId": "given by access token.id"
+        }
 
-Response (500 - Internal Server Error)
+        Response (400)
+        {
+        "message": "Validation Error"
+        }
 
-{
-  "message": "Internal Server Error."
-}
+        Response (401)
+        {
+        "message": "Unauthorized"
+        }
+
+        Response (404)
+
+        {
+        "message": "Error. Not found."
+        }
+
+        Response (403)
+
+        {
+        "message": "You dont have access"
+        }
+
+        Response (500 - Internal Server Error)
+        {
+        "message": "Internal Server Error."
+        }
+
+##PATCH /todos/:id
+
+        Request Header
+
+        {
+        "access_token": "<your access token>"
+        }
+
+        Request Params
+
+        {
+            "id": 1
+        }
+
+        Request Body
+
+        {
+            "status": "Watched",
+        }
+
+        Response (200)
+
+        {
+            "id": 1,
+            "title": "Boruto",
+            "description": "Anime Baruto",
+            "due_date": "2020-11-20",
+            "status": "Watched",
+            "UserId": "given by access token.id"
+        }
+
+        Response (400)
+        {
+        "message": "Validation Error"
+        }
+
+        Response (401)
+        {
+        "message": "Unauthorized"
+        }
+
+        Response (404)
+
+        {
+        "message": "Error. Not found."
+        }
+
+        Response (403)
+
+        {
+        "message": "You dont have access"
+        }
+
+        Response (500 - Internal Server Error)
+        {
+        "message": "Internal Server Error."
+        }
+
+
+
+##DELETE /todos/:id
+
+
+        Request Header
+
+        {
+        "access_token": "<your access token>"
+        }
+
+        Request Params
+
+        {
+            "id": 1
+        }
+
+        Response (200)
+        {
+            "message": "Anime has been deleted successfully."
+        }
+
+        Response (400)
+        {
+        "message": "Validation Error"
+        }
+
+        Response (401)
+        {
+        "message": "Unauthorized"
+        }
+
+        Response (404)
+
+        {
+        "message": "Error. Not found."
+        }
+
+        Response (403)
+
+        {
+        "message": "You dont have access"
+        }
+
+        Response (500 - Internal Server Error)
+        {
+        "message": "Internal Server Error."
+        }
+

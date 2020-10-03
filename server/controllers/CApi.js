@@ -14,7 +14,7 @@ class CApi{
             //res.status(200).json(data)
             let title = data.results[0].title
             let description = data.results[0].synopsis
-            let due_date = req.body.due_date
+            let due_date = Date.now()
             let UserId = +req.userData.id
             let obj = {
                 title,

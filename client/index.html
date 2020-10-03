@@ -9,7 +9,7 @@
         content="321191066324-10iavk72tkhqsovavovuuucnt823u6np.apps.googleusercontent.com">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Anime Todo App</title>
 </head>
 
 <body>
@@ -47,9 +47,9 @@
                     <a class="nav-link" id="btn-logout" href="#">Logout</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <form class="form-inline my-2 my-lg-0" id="search-form" onsubmit="searchHandler(event)">
+                <input class="form-control mr-sm-2" id="search" type="search" placeholder="e.g: One Piece" aria-label="Search">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </nav>
@@ -73,6 +73,13 @@
             <button type="submit" class="btn btn-primary btn-save-addHandler">Save</button>
         </form>
     </div>
+
+    <!-- form edit travel -->
+    <div class="jumbotron" id="jumbotron_edit_form">
+        <div class="container" id="editAnimeForm">
+        </div>
+    </div>
+
     <!--Content-->
     <div class="container after-login anime-list">
         <table class="table table-hover">

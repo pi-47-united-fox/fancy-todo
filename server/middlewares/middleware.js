@@ -4,7 +4,7 @@ const {User,Todo} = require('../models/index')
 const authentication = (req,res,next) =>{
     const {access_token} = req.headers
     if(access_token){
-        const decode = jwt.verify(access_token, 'secret')
+        const decode = jwt.verify(access_token, process.env.SECRET)
         req.userData = decode
         User.findByPk(req.userData.id)
         .then(data=>{
@@ -28,19 +28,21 @@ const authorization = (req,res,next)=>{
     const userData = +req.userData.id
     Todo.findByPk(id)
     .then(data =>{
-        console.log(data)
+        //console.log(data)
         if(!data){
             res.status(404).json({message: 'Data Todo not found'})
         }
-        else if(userData !== data.id){
+        else if(userData !== data.UserId){
+            console.log(userData,data.UserId)
             res.status(403).json({message: 'You dont have access'})
         }
         else{
+            console.log(userData,data.UserId)
             next()
         }
     })
     .catch(err=>{
-        res.status(500).json({message : err.message})
+        next(err)
     })
 
 }

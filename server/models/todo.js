@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks:{
       beforeCreate(instance, options){
-        instance.status = "on progress"
+        instance.status = "On Progress"
       }
     },
     sequelize,
