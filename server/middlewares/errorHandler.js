@@ -22,6 +22,10 @@ const errorHandler = (err, req, res, next) => {
 			statusCode = 404;
 			message = "Data Not Found";
 			break;
+		case "Forbidden":
+			statusCode = 403;
+			message = "Access is denied";
+			break;
 	}
 
 	res.status(statusCode).json({ message });

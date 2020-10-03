@@ -46,7 +46,7 @@ const login = (event) => {
 			afterLogin();
 		})
 		.fail(({ responseJSON }) => {
-			$("#loginError").append(responseJSON.message);
+			errHandler(responseJSON);
 			beforeLogin();
 		});
 };
@@ -68,7 +68,7 @@ $(document).ready(() => {
 		localStorage.clear();
 		signOut();
 		beforeLogin();
-		$("#user-profile-picture").empty()
+		$("#user-profile-picture").empty();
 	});
 });
 
@@ -101,12 +101,12 @@ const register = (event) => {
 		method: "POST",
 		data: userData,
 	})
-		.done((result) => {
+		.done(() => {
 			$("#registerForm").remove();
 			beforeLogin();
 		})
-		.fail((err) => {
-			console.log(err);
+		.fail(({ responseJSON }) => {
+			errHandler(responseJSON);
 		});
 };
 
@@ -145,8 +145,8 @@ const showAllTodo = () => {
 				`);
 			});
 		})
-		.fail((err) => {
-			console.log(err);
+		.fail(({ responseJSON }) => {
+			errHandler(responseJSON);
 		});
 };
 
@@ -162,8 +162,8 @@ const deleteTodo = (event, id) => {
 		.done(() => {
 			showAllTodo();
 		})
-		.fail((err) => {
-			console.log(err);
+		.fail(({ responseJSON }) => {
+			errHandler(responseJSON);
 		});
 };
 
@@ -183,8 +183,8 @@ const changeStatusTodo = (event, id, status) => {
 		.done(() => {
 			showAllTodo();
 		})
-		.fail((err) => {
-			console.log(err);
+		.fail(({ responseJSON }) => {
+			errHandler(responseJSON);
 		});
 };
 
@@ -240,13 +240,13 @@ const searchManga = (event) => {
 				`);
 			});
 		})
-		.fail((err) => {
-			console.log(err);
+		.fail(({ responseJSON }) => {
+			errHandler(responseJSON);
 		});
 };
 
 const addManga = (event, title, description, img_url, score) => {
-	console.log("ahahhahahah")
+	console.log("ahahhahahah");
 	event.preventDefault();
 	$.ajax({
 		url: "http://localhost:3000/todos",
@@ -266,7 +266,14 @@ const addManga = (event, title, description, img_url, score) => {
 		.done(() => {
 			showAllTodo();
 		})
-		.fail((err) => {
-			console.log(err);
+		.fail(({ responseJSON }) => {
+			errHandler(responseJSON);
 		});
+};
+
+const errHandler = ({ message }) => {
+	$("#error-message").append(`<p class="text-center" style="color: red">${message}</p>`);
+	setTimeout(() => {
+		$("#error-message").empty();
+	}, 3000);
 };
