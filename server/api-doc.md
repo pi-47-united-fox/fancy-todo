@@ -7,13 +7,109 @@ This app has the following features:
 &nbsp;
 
 ## RESTful Endpoints
+- POST /login
+- POST /register
+- POST /googleLogin
 - GET /todos
 - POST /todos
 - GET /todos/:id
 - PUT /todos/:id
 - PATCH /todos/:id
 - DELETE /todos/:id
+- PATCH /todos/:id/music
 
+### POST /register 
+
+_Request Header_
+```
+Not Needed
+```
+_Request Body_
+```json
+    {
+        "email": "safrul@mail.com",
+        "password": 123456, 
+    }
+```
+_Response (200)_
+```json
+    {
+        "id": 1,
+        "email": "safrul@mail.com",
+    }
+```
+_Response (400 - Bad Request)_
+```json
+    {
+    "message": "Invalid request."
+    }
+```
+_Response (500 - Internal Server Error)_
+```json
+    {
+    "message": "Internal Server Error."
+    }
+```
+### POST /login 
+
+_Request Header_
+```
+Not Needed
+```
+_Request Body_
+```json
+  {
+      "email": "safrul@mail.com",
+      "password": 123456, 
+  }
+```
+_Response (200)_
+```json
+  {
+    "access_token"
+  }
+```
+_Response (400 - Bad Request)_
+```json
+  {
+  "message": "Invalid request."
+  }
+```
+Response (500 - Internal Server Error)
+```json
+  {
+  "message": "Internal Server Error."
+  }
+```
+
+### POST /googleLogin
+
+_Request Header_
+```
+Not Needed
+```
+_Request Body_
+```
+Not Needed
+```
+_Response (200)_
+```json
+{
+  "access_token"
+}
+```
+_Response (404 - Unauthorized)_
+```json
+{
+  "message": "you are not authorized"
+}
+```
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error."
+}
+```
 ### GET /todos
 > Get all todos
 
@@ -185,7 +281,7 @@ _Response (500 - Internal Server Error)_
 ```
 
 ### PATCH /todos/:id
-> Update the whole attributes of a particular todo from a given id
+> Update only 'status' attributes of a particular todo from a given id
 
 _Request Header_
 ```json
@@ -261,6 +357,55 @@ _Response (404)_
 ```json
 {
   "message": "Error. Not found."
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error."
+}
+```
+### PATCH /todos/:id/music
+> Update only 'track' attributes of a particular todo from a given id
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```json
+{
+    "id": 1
+}
+```
+
+_Request Body_
+```json
+{
+    "track": "retrieved from 3rd party API",
+}
+```
+
+_Response (200)_
+```json
+{
+    "id": 1,
+    "title": "Create a todo app",
+    "description": "Create a fancy todo app this week!",
+    "track": "retrieved from 3rd party API",
+    "status": "on progress",
+    "due_date": "3 October 2020"
+}
+```
+
+_Response (400)_
+```json
+{
+  "message": "Validation error."
 }
 ```
 

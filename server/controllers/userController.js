@@ -1,3 +1,4 @@
+const { OAuth2Client } = require('google-auth-library')
 const { User } = require('../models/index.js')
 const { comparePassword } = require('../helpers/bcrypt.js')
 const { signToken } = require('../helpers/jwt.js')
@@ -8,7 +9,15 @@ class UserController {
             email : req.body.email,
             password: req.body.password
         }
-        User.create(obj)
+        User.findOne({where: {email: obj.email}})
+            .then(user => {
+                if(user){
+                    next({name:"Non unique email", message: "Email already registered!"})
+                }
+                else{
+                    return User.create(obj)
+                }
+            })
             .then(result => {
                 res.status(201).json({
                     id: result.id,
@@ -62,6 +71,41 @@ class UserController {
             // res.status(500).json({message: err.message})
             next(err)
         }
+    }
+
+    static googleLogin(req, res, next){
+        const client = new OAuth2Client(process.env.CLIENT_ID)
+        let email = ''
+        client.verifyIdToken({
+            idToken: req.headers.google_access_token,
+            audience: process.env.CLIENT_ID
+        })
+            .then(ticket => {
+                let payload = ticket.getPayload()
+                email = payload['email']
+                return User.findOne({
+                    where: { email }
+                })
+            })
+            .then(user => {
+                if(!user){
+                    let userObj = {
+                        email: email,
+                        password: 'randompassword'
+                    }
+                    return User.create(userObj)
+                }
+                else{
+                    return user
+                }
+            })
+            .then(user => {
+                const access_token = signToken({id: user.id, email: user.email})
+                return res.status(201).json({ access_token })
+            })
+            .catch(err => {
+                next(err)
+            })
     }
 }
 

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google sign in client ID -->
+    <meta name="google-signin-client_id" content="411524848726-8596p4ossfobk8fd2c3sv0acalu7mpvj.apps.googleusercontent.com">
     <!-- require CSS from bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -39,7 +41,11 @@
             <div id="headlogin">
                 <h1 class="text-center">Login to your account</h1>
             </div>
-            <div class="container rounded border border-dark w-50 mt-3">
+            <div class="container rounded border border-dark mt-3">
+                <!-- error message -->
+                <div class="container" id="login_error_message">
+                    
+                </div>
                 <form onsubmit="login(event)">
                     <div class="form-group mt-3">
                         <small id="errorHandler" class="form-text text-muted"></small>
@@ -55,10 +61,10 @@
                     <button type="submit" class="btn btn-primary mb-3">Login</button>
                     <small>Or click here to <a href="#" onclick="showRegisterForm()">register</a>.</small>
                 </form>
-                <!-- <span class="my-0">
-                    <p>Login With</p>
+                <div class="mb-3">
+                    <p>Or login with</p>
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                </span> -->
+                </div>
 
             </div>
         </div>
@@ -69,6 +75,9 @@
         <div class="container mx-auto px-5 w-50">
             <h1 class="text-center">Register</h1>
             <div class="container rounded border border-dark w-50 mt-3">
+                <div class="container" id="register_error_message">
+                    
+                </div>
                 <form onsubmit="register(event)" id="registerForm">
                     <div class="form-group mt-3">
                         <small id="errorHandler" class="form-text text-muted"></small>
@@ -147,6 +156,8 @@
 
     <!-- Define CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <!-- script api google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="./main.js"></script>
 </body>
 </html>

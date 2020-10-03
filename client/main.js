@@ -55,12 +55,13 @@ function showLoginForm(){
 $("#logout").click(function (){
     localStorage.removeItem('access_token')
     beforeLogin()
-    // signOut() //google sign out
+    signOut() //google sign out
 })
 
 function showAddForm(){
     $("#contentTodos").hide()
     $("#jumbotron_addTodoForm").show()
+    
 }
 
 // user login
@@ -85,9 +86,9 @@ function login(event) {
         })
         .fail(err => {
             // console.log('Error')
-            afterLogin()
-            $("#error_message").empty()
-            $("#error_message").append(`
+            beforeLogin()
+            $("#login_error_message").empty()
+            $("#login_error_message").append(`
             <p>${err.responseJSON.message}</p>
             `)
         })
@@ -115,11 +116,11 @@ function register(event) {
             // console.log(result)
             beforeLogin()
         })
-        .fail(() => {
+        .fail(err => {
             // console.log('Error')
-            afterLogin()
-            $("#error_message").empty()
-            $("#error_message").append(`
+            showRegisterForm()
+            $("#register_error_message").empty()
+            $("#register_error_message").append(`
             <p>${err.responseJSON.message}</p>
             `)
         })
@@ -147,7 +148,7 @@ function fetchTodo() {
                 <div class="col-4 mb-2">
                     <div class="card text-dark border-dark" style="width: 18rem;">
                     <div class="card-header"><h3>${value.title}</h3></div>
-                    <img src="http://www.diegomallien.com/wp-content/uploads/2017/03/Meaning-of-travelling-300x167.jpg"></img>
+                    <img src="https://i.pinimg.com/564x/83/01/aa/8301aa7d789494566ea9ea1e229c5a36.jpg"></img>
                     <div class="card-body">
                         <p class="card-text">Description: ${value.description}<p>
                         <p class="card-text">Status: ${value.status}</p>
@@ -177,8 +178,8 @@ function addTodo(event){
     event.preventDefault()
     let title = $("#title").val()
     let description = $("#description").val()
-    let status = $("status").val()
-    let due_date = $("date").val()
+    let status = $("#status").val()
+    let due_date = $("#date").val()
     $.ajax({
         method: 'POST',
         url: 'http://localhost:3000/todos',
@@ -401,4 +402,39 @@ function removeTodo(id, event){
             <p>${err.responseJSON.message}</p>
             `)
         })
+}
+
+function onSignIn(googleUser) {
+    // var profile = googleUser.getBasicProfile();
+    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    // console.log('Name: ' + profile.getName());
+    // console.log('Image URL: ' + profile.getImageUrl());
+    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    var google_access_token = googleUser.getAuthResponse().id_token;
+    // console.log(google_access_token)
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/googleLogin',
+        headers:{
+            google_access_token
+        }
+    })
+        .done(result => {
+            localStorage.setItem("access_token", result.access_token)
+            afterLogin()
+        })
+        .fail(err => {
+            beforeLogin()
+            $("#login_error_message").empty()
+            $("#login_error_message").append(`
+            <p>${err.responseJSON.message}</p>
+            `)
+        })
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
 }
