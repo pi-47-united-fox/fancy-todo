@@ -135,57 +135,115 @@ function loadData(){
             $('.loader').hide() 
             $('#content-list').empty()
             $('#content-list-current').empty()
+            $('#content-list-history').empty()
             console.log(data);
             let count = 0
             data.forEach(ele=>{
                 let newDate = new Date(ele.due_date) 
                 if(newDate.getDate() == currentDate.getDate() && newDate.getMonth() == currentDate.getMonth()){
-                    count++
-                    console.log("todays activity :", count);
-
-                    $('#content-list-current').append(`  
-                        <div class="col-8 mt-3">
-                            <div class="card flex-col"  >
-                                <div class="card-body" id="todo-card-${ele.id}">
-                                    <h5 class="card-title">${ele.title}</h5> 
-                                    <p class="card-text">${ele.description}</p>
-                                    <a href="#" class="card-link" onClick="deleteTodo(${ele.id})">Delete</a>
-                                    <a href="#" class="card-link" onClick="editTodo(${ele.id})">Edit Todo</a>
+                    if(ele.status !== 'Done'){ 
+                        count++
+                        console.log("todays activity :", count); 
+                        $('#content-list-current').append(`  
+                            <div class="col-8 mt-3">
+                                <div class="card flex-col"  >
+                                    <div class="card-body" id="todo-card-${ele.id}">
+                                        <h5 class="card-title">${ele.title}</h5> 
+                                        <p class="card-text">${ele.description}</p>
+                                        <p class="card-text">Status :${ele.status}</p>
+                                        <p class="card-text">Activity Type :${ele.activityType}</p>
+                                        <a class="btn btn-primary" onClick="editStatus(${ele.id})">DONE</a>
+                                        <a href="#" class="card-link" onClick="deleteTodo(${ele.id})">Delete</a>
+                                        <a href="#" class="card-link" onClick="editTodo(${ele.id})">Edit Todo</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `) 
+                        `) 
+                    }
                 }
-                console.log("epoch time : ",ele.epoch);
-                $('#content-list').append(`
-                <div class="col mb-3">
+
+                if(ele.status == 'Done'){ 
+                    $('#content-list-history').append(`
+                    <div class="col mb-3">
                     <div class="card flex-col"  ">
                     <div class="card-body" id="todo-card-${ele.id}">
-                        <h5 class="card-title">${ele.title}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">
-                                ${days[newDate.getDay()]} - 
-                                ${newDate.getDate()} 
-                                ${months[newDate.getMonth()]} 
+                    <h5 class="card-title">${ele.title}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                    ${days[newDate.getDay()]} - 
+                    ${newDate.getDate()} 
+                    ${months[newDate.getMonth()]} 
                                 ${newDate.getFullYear()}</h6>
-                        <p class="card-text">${ele.description}</p> 
-                        <p class="card-text">Activity Type :${ele.activityType}</p>
-                        <a href="#" class="card-link" onClick="deleteTodo(${ele.id})">Delete</a>
-                        <a href="#" class="card-link" onClick="editTodo(${ele.id})">Edit Todo</a>
-                    </div>
-                    </div>
-                </div>
-                `)
+                                <p class="card-text">${ele.description}</p> 
+                                <p class="card-text">Status :${ele.status}</p>
+                                <p class="card-text">Activity Type :${ele.activityType}</p>
+                                <a href="#" class="card-link" onClick="deleteTodo(${ele.id})">Delete</a>
+                                <a href="#" class="card-link" onClick="editTodo(${ele.id})">Edit Todo</a>
+                                </div>
+                                </div>
+                                </div>
+                                `)
+
+                }else{
+
+                    console.log("epoch time : ",ele.epoch);
+                    $('#content-list').append(`
+                    <div class="col mb-3">
+                    <div class="card flex-col"  ">
+                    <div class="card-body" id="todo-card-${ele.id}">
+                    <h5 class="card-title">${ele.title}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                    ${days[newDate.getDay()]} - 
+                    ${newDate.getDate()} 
+                    ${months[newDate.getMonth()]} 
+                                ${newDate.getFullYear()}</h6>
+                                <p class="card-text">${ele.description}</p> 
+                                <p class="card-text">Status :${ele.status}</p>
+                                <p class="card-text">Activity Type :${ele.activityType}</p>
+                                <a href="#" class="card-link" onClick="deleteTodo(${ele.id})">Delete</a>
+                                <a href="#" class="card-link" onClick="editTodo(${ele.id})">Edit Todo</a>
+                                </div>
+                                </div>
+                                </div>
+                                `)
+                }
             })
             if(count==0){ 
                 $('#content-list-current').append(`
-                <h4 class="mt-3">You have no schedule today</h4> <br>
-                <a class="btn btn-primary mt-4" onClick="addFormPage()">add new Activity</a>
+                    <h4 class="mt-3">You have no schedule today</h4> <br>
+                    <a class="btn btn-primary mt-4" onClick="addFormPage()">add new Activity</a>
                 `)
-                
+            }else{
+
+                $('#content-list-current').append(` 
+                <div class="col-8 mt-3">
+                    <a class="btn btn-primary mt-4" style="max-height:50px;" onClick="addFormPage()">add new Activity</a>
+                </div>
+                    `)
             }
         })
         .fail()
         .always()
+}
+
+function editStatus(todoId){
+    
+    if(confirm("have done this activity ?")){ 
+        console.log("changing status:",todoId);
+        $.ajax({
+            url:`${URL}todos/${todoId}`,
+            method:'PATCH',
+            headers:{
+                access_token:localStorage.access_token
+            }
+        })
+            .done(result=>{
+                console.log(result);
+                loadData()
+            })
+            .fail(err=>{
+                console.log(err);
+            })
+    }
 }
 
 function deleteTodo(todoId){

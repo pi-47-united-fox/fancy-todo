@@ -101,21 +101,18 @@ class TodoController {
         Todo.findByPk(req.params.id)
             .then(result=>{ 
                 if(result){  
-                    Todo.update(req.body,{where:{id:req.params.id}})
+                    return Todo.update({status:"Done"},{where:{id:req.params.id}})
                 }else{
                     res.status(404).json({"message":"Todo Not Found"})
                 }
             }) 
             .then(data=>{ 
                 if(data){
-                    Todo.findByPk(req.params.id)
+                    return res.status(200).json(data)
                 }else{ 
                     return res.status(500).json({"message":"Internal Server Error"}) 
                 }
-            }) 
-            .then(data=>{
-                return res.status(200).json(data)
-            })
+            })  
             .catch(err=>{
                 console.log(err);
                 return res.status(500).json({"message":"Internal Server Error"})
