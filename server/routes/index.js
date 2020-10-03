@@ -19,7 +19,7 @@ route.get('/todos/:id', authorization, TodoController.getTaskById)
 route.put('/todos/:id', authorization, TodoController.updateTask)
 route.patch('/todos/:id', authorization, TodoController.modifyTaskStatus)
 route.delete('/todos/:id', authorization, TodoController.deleteTask)
-route.patch('/todos/:id/music', authorization, ApiController.addMusic)
+route.put('/todos/:id/music', authorization, ApiController.addMusic)
 
 
 module.exports = route

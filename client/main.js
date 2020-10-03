@@ -148,13 +148,15 @@ function fetchTodo() {
                 <div class="col-4 mb-2">
                     <div class="card text-dark border-dark" style="width: 18rem;">
                     <div class="card-header"><h3>${value.title}</h3></div>
-                    <img src="https://i.pinimg.com/564x/83/01/aa/8301aa7d789494566ea9ea1e229c5a36.jpg"></img>
+                    <img src="https://steelcase-res.cloudinary.com/image/upload/c_fill,dpr_auto,q_70,h_656,w_1166/v1583265056/www.steelcase.com/2020/03/03/20-0136082-CROP.jpg" class="img-thumbnail"></img>
                     <div class="card-body">
+                        <button type="button" class="btn btn-dark" onclick="updateTrack(${value.id}, event)">Track</button>
                         <p class="card-text">Description: ${value.description}<p>
+                        <p class="card-text">Track: ${(!value.track) ? "Click 'track' to add music" : value.track}<p>
                         <p class="card-text">Status: ${value.status}</p>
                         <p class="card-text">Due date: ${(value.due_date).substring(0, 10)}<p>
                         <button type="button" class="btn btn-primary" onclick="updateTodo(${value.id}, event)">Edit</button>
-                        <button type="button" class="btn btn-primary" onclick="patchTodo(${value.id}, event)">Status</button>
+                        <button type="button" class="btn btn-info" onclick="patchTodo(${value.id}, event)">Status</button>
                         <button type="button" class="btn btn-danger" onclick="removeTodo(${value.id}, event)">Delete</button>
                         </div>
                     </div>
@@ -241,7 +243,7 @@ function updateTodo(id, event){
                     <label for="edit-status">Status</label>
                     <select class="form-control" id="edit-status">  
                         <option>Please select one</option>
-                        <option value="On Progress" ${data.status === "On progress" ? "selected" : ""}>On progress</option>
+                        <option value="On progress" ${data.status === "On progress" ? "selected" : ""}>On progress</option>
                         <option value="Cancel" ${data.status === "Cancel" ? "selected" : ""}>Cancel</option>
                         <option value="Done" ${data.status === "Done" ? "selected" : ""}>Done</option>
                     </select>
@@ -331,7 +333,7 @@ function patchTodo(id, event){
                     <label for="modify-status">Status</label>
                     <select class="form-control" id="modify-status">  
                         <option>Please select one</option>
-                        <option value="On Progress" ${data.status === "On progress" ? "selected" : ""}>On progress</option>
+                        <option value="On progress" ${data.status === "On progress" ? "selected" : ""}>On progress</option>
                         <option value="Cancel" ${data.status === "Cancel" ? "selected" : ""}>Cancel</option>
                         <option value="Done" ${data.status === "Done" ? "selected" : ""}>Done</option>
                     </select>
@@ -360,7 +362,7 @@ function patchToDb(id, event){
     event.preventDefault()
     let status = $("#modify-status").val()
     $.ajax({
-        method: 'PUT',
+        method: 'PATCH',
         url: `http://localhost:3000/todos/${id}`,
         headers: {
             access_token: localStorage.access_token
@@ -404,6 +406,31 @@ function removeTodo(id, event){
         })
 }
 
+// update track
+function updateTrack(id, event){
+    event.preventDefault()
+    $.ajax({
+        method: 'PUT',
+        url: `http://localhost:3000/todos/${id}/music`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+        .done(() => {
+            afterLogin()
+            $("#error_message").empty()
+        })
+        .fail(err => {
+            // console.log(err)
+            afterLogin()
+            $("#error_message").empty()
+            $("#error_message").append(`
+            <p>${err.responseJSON.message}</p>
+            `)
+        })
+}
+
+// social login
 function onSignIn(googleUser) {
     // var profile = googleUser.getBasicProfile();
     // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.

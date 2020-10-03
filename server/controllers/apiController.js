@@ -20,30 +20,27 @@ class ApiController{
     }
 
     static addMusic(req, res, next){
-        let desc = null
+        // let desc = null
         Todo.findByPk(+req.params.id)
             .then(data => {
                 // console.log(data)
                 const query = data.title
-                desc = data.description
+                // desc = data.description
                 // console.log(query)
                 return deezer.get(`/search?q=${query}`)
 
             })
             .then(({ data }) => {
-                let dailyTrack = `Here are some music for you:`
-                let suffix = ''
+                let dailyTrack = ''
                 data.data.forEach((el, index) => {
-                    if(index < 2){
-                        suffix += ` \n${el.title}: ${el.link}`
+                    if(index < 3){
+                        dailyTrack += ` \n${el.title}: ${el.link}`
                     }
             
                 })
-                dailyTrack += suffix
-                desc += `\n${dailyTrack}`
-                // console.log(desc)
+                console.log(dailyTrack)
                 let obj = {
-                    description: desc
+                    track: dailyTrack
                 }
 
                 return Todo.update(obj, {
@@ -53,6 +50,7 @@ class ApiController{
                 })
             })
             .then(result => {
+                console.log(result)
                 res.status(200).json(result)
             })
             .catch(err => {

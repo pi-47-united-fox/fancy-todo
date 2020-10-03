@@ -16,7 +16,7 @@ This app has the following features:
 - PUT /todos/:id
 - PATCH /todos/:id
 - DELETE /todos/:id
-- PATCH /todos/:id/music
+- PUT /todos/:id/music
 
 ### POST /register 
 
@@ -366,7 +366,7 @@ _Response (500 - Internal Server Error)_
   "message": "Internal Server Error."
 }
 ```
-### PATCH /todos/:id/music
+### PUT /todos/:id/music
 > Update only 'track' attributes of a particular todo from a given id
 
 _Request Header_

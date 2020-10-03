@@ -48,6 +48,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: {
       type: DataTypes.INTEGER
+    },
+    track: {
+      type: DataTypes.TEXT
     }
   }, {
     sequelize,
