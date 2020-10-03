@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken')
 
 class Jwt {
-    static generate(id, email) {
+    static generate(id, email, loc, bg) {
         return jwt.sign({
             id: id,
-            email: email
+            email: email,
+            location: loc,
+            bg_img: bg
         }, process.env.SECRET)
     }
 

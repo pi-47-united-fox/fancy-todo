@@ -2,14 +2,24 @@
 Fancy Todo App is an application to manage your task. This app has :
 
 - RESTful endpoint for Todo's CRUD operation
-- RESTful endpoint for Users's CR operation
+- RESTful endpoint for Users's CRU operation
 - JSON formatted response
 
-<!-- &nbsp; -->
-<!-- ---
-# TOC
-
---- -->
+- [x] TODO
+    - [x] GET /todos
+    - [x] GET /todos/:id
+    - [x] POST /todos/
+    - [x] PUT /todos/:id
+    - [x] PATCH /todos/:id
+    - [x] DELETE /todos/:id
+- [x] USER
+    - [x] POST /register
+    - [x] POST /login
+    - [x] GET /fetch
+    - [x] PUT /edit
+- [x] API
+    - [x] POST /bg
+    - [x] GET /w
 
 &nbsp;
 
@@ -319,11 +329,7 @@ _Request Body_
 _Response (202 - OK)_
 ```json
 {
-  "id": 4,
-  "email": "random-sample-mail@mail.com",
-  "password": "$2a$10$9rtP9xtcj9y0fNb6GdCWy.ZdHbOQwE.ysvQm8JgfJWtuugNhnoXxS",
-  "updatedAt": "2020-09-28T13:30:00.213Z",
-  "createdAt": "2020-09-28T13:30:00.213Z"
+  "message": "Succes Created"
 }
 ```
 
@@ -357,7 +363,9 @@ _Request Body_
 _Response (202 - OK)_
 ```json
 {
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYW5kb20tc2FtcGxlLW1haWxAbWFpbC5jb20iLCJpYXQiOjE2MDEyOTk2ODN9.16x-3S2zGwLkBhB0IK44fr9fIpgO_i4iozPadlsIKdA"
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYW5kb20tc2FtcGxlLW1haWxAbWFpbC5jb20iLCJpYXQiOjE2MDEyOTk2ODN9.16x-3S2zGwLkBhB0IK44fr9fIpgO_i4iozPadlsIKdA",
+    "user_name": "<user LogedIn username>",
+    "bg-image" : "<url background>"
 }
 ```
 
@@ -365,6 +373,94 @@ _Response (400 - Bad Request)_
 ```json
 {
   "message": "Invalid email or password"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+--- 
+
+### GET /fetch
+> Get user data (which id from saved UserData - autentication)
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+<!-- b. _Request Body_
+```json
+not needed
+``` -->
+
+_Response (200)_
+```json
+[
+  {
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYW5kb20tc2FtcGxlLW1haWxAbWFpbC5jb20iLCJpYXQiOjE2MDEyOTk2ODN9.16x-3S2zGwLkBhB0IK44fr9fIpgO_i4iozPadlsIKdA",
+    "user_name": "<user LogedIn username>",
+    "bg-image" : "<url background>"
+  }
+]
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error "
+}
+```
+
+
+---
+
+### PUT /edit
+
+> Replace logedin user (data)
+
+<!-- _Request Params_
+```json
+{
+  
+}
+``` -->
+
+_Request Body_
+```json
+{
+  "user_name": "<user LogedIn username>",
+  "email": "random-sample-mail@mail.com",
+  "location": "location",
+  "bg-image" : "<url background>"
+}
+```
+
+_Response (200 - OK)_
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYW5kb20tc2FtcGxlLW1haWxAbWFpbC5jb20iLCJpYXQiOjE2MDEyOTk2ODN9.16x-3S2zGwLkBhB0IK44fr9fIpgO_i4iozPadlsIKdA",
+    "user_name": "<user LogedIn username>",
+    "bg-image" : "<url background>"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Validation Error"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Error Not Found"
 }
 ```
 

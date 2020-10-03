@@ -19,6 +19,7 @@ $('#btn-signOut').click(function () {
     // tampilkan HomePage1
     localStorage.removeItem('access_token')
     signOut()
+    $('body').removeAttr('style')
     userLogedOut()
 })
 
@@ -38,66 +39,98 @@ function showSignInForm(e) {
 
 function userLogedIn() {
     fetchTodo()
+    fetchWeather()
+    fetchUserData()
     $('#homePage1').hide();
     $('#mainDashboard1').show();
     $('#addTodo').hide();
-    $('#btn-signOut').show();
+    $('.user-logedin-nav').show();
+    $('#halo-name').text(localStorage.user_name);
 };
 
 function userLogedOut() {
     $('#mainDashboard1').hide();
-    $('#btn-signOut').hide()
+    $('.user-logedin-nav').hide()
     $('#homePage1').show();
 };
 
 function signIn(e) {
     e.preventDefault()
+
     var email = $('#emailSI').val();
     var password = $('#passwordSI').val();
-    // console.log (email, password)
+    // validasi ke 2 sebelum hit ke server
+    if (email == '' || password == '') {
+        // Diisi sesuatu notifikasi
+        console.log ('HOHOHOHOOHO')
 
-    // Unutk submit ke server pakai AJAX (HTTP Request)
-    $.ajax({
-        method: "POST",
-        url: serverURL + "/login",
-        data: {
-            email, password
-        }
-    }).done(result => {
-        // console.log(result, 'Success LogedIn');
-        // localStorage.access_token = result.access_token
-        localStorage.setItem('access_token', result.access_token)
-        userLogedIn()
-    }).fail(err => {
-        console.log(err)
-    })
+    } else {
+        // Unutk submit ke server pakai AJAX (HTTP Request)
+        $.ajax({
+            method: "POST",
+            url: serverURL + "/login",
+            data: {
+                email, password
+            }
+        }).done(result => {
+            // console.log(result, 'Success LogedIn');
+            // localStorage.access_token = result.access_token
+            localStorage.setItem('access_token', result.access_token)
+            localStorage.setItem('user_name', result.user_name)
+            userLogedIn()
+        }).fail(err => {
+            $('#wrong-pw').remove();
+            $("#showNotifLogin").append(`
+            <div class="alert alert-warning" id="wrong-pw" role="alert">
+            ${err.responseJSON.message}
+            </div>
+            `);
+            // console.log(err.responseJSON.message)
+        })
+    }
 };
 
 // SIGN UP
 
 function signUp(e) {
-    // e.preventDefault()
+
+    
+
+    e.preventDefault()
     var email = $('#emailSU').val();
     var password = $('#passwordSU').val();
-    // console.log (email, password)
+    var password_n = $('#passwordSU-2nd').val();
+    // validasi ke 2 sebelum hit ke server
+    if (email == '' || password == '') {
+        // Diisi sesuatu notifikasi
+        console.log ('HOHOHOHOOHO')
+    } else if (password !== password_n) {
+        $('#wrong-pw-2').remove();
+        $("#notifikasiSignUp").append(`
+        <div class="alert alert-warning" id="wrong-pw-2" role="alert">
+        Password Tidak Sama
+        </div>
+        `);
+    } else {
+        // Unutk submit ke server pakai AJAX (HTTP Request)
+        $.ajax({
+            method: "POST",
+            url: serverURL + "/register",
+            data: {
+                email, password
+            }
+        }).done(result => {
+            // console.log(result, 'Success LogedIn');
+            // localStorage.access_token = result.access_token
+            // localStorage.setItem('access_token', result.access_token)
+            showSignInForm(e)
+        }).fail(err => {
+            console.log(err)
+        }).always(() => {
+    
+        })
+    }
 
-    // Unutk submit ke server pakai AJAX (HTTP Request)
-    $.ajax({
-        method: "POST",
-        url: serverURL + "/register",
-        data: {
-            email, password
-        }
-    }).done(result => {
-        // console.log(result, 'Success LogedIn');
-        // localStorage.access_token = result.access_token
-        // localStorage.setItem('access_token', result.access_token)
-        showSignInForm(e)
-    }).fail(err => {
-        console.log(err)
-    }).always(() => {
-
-    })
 };
 
 
@@ -319,6 +352,7 @@ function changeStatus(id, status) {
 
 // GOOGLE ==============================================
 function onSignIn(googleUser) {
+
     // var profile = googleUser.getBasicProfile();
     // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     // console.log('Name: ' + profile.getName());
@@ -326,7 +360,7 @@ function onSignIn(googleUser) {
     // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
     var {id_token} = googleUser.getAuthResponse();
-    // console.log (id_token)
+    console.log (id_token)
 
     $.ajax({
         method: "POST",
@@ -335,6 +369,7 @@ function onSignIn(googleUser) {
             google_access_token: id_token
         }
     }).done(result => {
+        console.log (result)
         localStorage.setItem('access_token', result.access_token)
         userLogedIn()
         console.log(result)
@@ -348,4 +383,102 @@ function signOut() {
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
+}
+
+
+// 3rd Party API ==================================
+function fetchWeather () {
+    $.ajax({
+        method: "GET",
+        url: serverURL + "/w",
+        headers: {
+            access_token: localStorage.access_token
+        }
+    }).done (result => {
+        // console.log (result)
+        $('#cuaca').empty();
+        $('#cuaca').append(`
+        <div class="weather-card card" data-toggle="tooltip" data-placement="top" title="Untuk mengubah lokasi buka pengaturan user"> <span class="weather-icon icon"><img class="img-fluid" src="${result.current.weather_icons[0]}" /></span>
+            <div class="weather-title title">
+                <p>${result.location.name}</p>
+            </div>
+            <div class="weather-temp">${result.current.temperature}<sup>&deg;</sup></div>
+            <div class="weather-row row">
+                <div class="weather-col-4 col-4">
+                    <div class="weather-header header">General</div>
+                    <div class="weather-value value">${result.current.weather_descriptions[0]}</div>
+                </div>
+                <div class="weather-col-4 col-4">
+                    <div class="weather-header header">Cloud</div>
+                    <div class="weather-value value">${result.current.cloudcover}</div>
+                </div>
+                <div class="weather-col-4 col-4">
+                    <div class="weather-header header">Pressure</div>
+                    <div class="weather-value value">${result.current.pressure}</div>
+                </div>
+            </div>
+        </div>
+        `);
+    }).fail (err => {
+        console.log (err)
+    }).always (() => {
+        console.log ('masuk Weather Ajax')
+    })
+}
+
+// TO EDIT USER DATA
+function fetchUserData () {
+    $.ajax({
+        method: 'GET',
+        url: serverURL + "/fetch",
+        headers: {
+            access_token: localStorage.access_token
+        }
+    }).done (result => {
+        // console.log (result)
+        $('#user_nameEd').val(localStorage.user_name);
+        $('#emailEd').val(result.email);
+        $('#locationEd').val(result.location);
+        if (result.bg_img !== 'no_image') {
+            $('body').attr('style', `background: url(${result.bg_img}); background-size: cover;`)
+        }
+    }).fail (err => {
+        console.log (err)
+    }).always (() => {
+        console.log ('masuk fetchUserData')
+    })
+}
+
+function saveEdit (event) {
+    event.preventDefault()
+    var user_name = $('#user_nameEd').val();
+    var email = $('#emailEd').val();
+    var location = $('#locationEd').val();
+    var bg_keyname = $('#bgKeynameEd').val();
+    // 
+    $.ajax({
+        method: "PUT",
+        url: serverURL + '/edit',
+        headers: {
+            access_token: localStorage.access_token
+        },
+        data : {
+            user_name,
+            email,
+            location,
+            bg_keyname
+        }
+    }).done (result => {
+        console.log ('SUCCESS, save edit')
+        // localStorage.removeItem('access_token')
+        localStorage.setItem('access_token', result.access_token)
+        // localStorage.removeItem('user_name')
+        // localStorage.setItem('user_name', result.user_name)
+        userLogedOut()
+        userLogedIn()
+    }).fail (err => {
+        console.log ('MASUK Error EDIT',err)
+    }).always (() => {
+        console.log ('masuk save edit')
+    })
 }

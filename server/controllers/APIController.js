@@ -1,24 +1,28 @@
 const axios = require('axios')
 
 class APIController {
-    static searchImage (req, res, next) {
-        const { q } = req.query
+
+    // ! MOVED TO USER EDIT / REPLACE CONTROLLER
+    static async searchImage (req, res, next) {
+        console.log ('masuk searchImage')
+        const { img_title } = req.body
         // return console.log ('>>>>', q)
         const key = process.env.API_KEY_PIXABAY
-        axios({
+        await axios({
             method: 'GET',
-            url: `https://pixabay.com/api/?key=${key}&q=${q}`
-        }).then(( { data } ) => {
+            url: `https://pixabay.com/api/?key=${key}&q=${encodeURIComponent(img_title)}`
+        }).then(( {data} ) => {
             return res.status(200).json(data)
         }).catch((err) => {
             return next(err)
         })
     }
 
-    static getWeather (req, res, next) {
-        const location = req.body.location  || 'Jakarta'
+    static async getWeather (req, res, next) {
+        const location = req.userData.location
         const key = process.env.API_KEY_WEATHERSTACK
-        axios({
+        console.log (location, key)
+        await axios({
             method: 'GET',
             url: `http://api.weatherstack.com/current?access_key=${key}&query=${location}`
         }).then(( { data } ) => {

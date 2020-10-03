@@ -39,13 +39,40 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     bg_img: DataTypes.STRING,
-    location: DataTypes.STRING
+    location: DataTypes.STRING,
+    user_name: DataTypes.STRING
   }, {
     hooks: {
       beforeCreate: (instance) => {
+        // FOR PASSWORD
         instance.password = BcriptJs.makeHash(instance.password)
+
+        // FOR API - WEATHER AND BACKGROUND IMAGE
         instance.location = 'Jakarta'
         instance.bg_img   = 'no_image'
+
+        // FOR USERNAME
+        instance.user_name = instance.email.split('@')[0]
+      },
+      afterCreate: (instance) => {
+          instance = instance.dataValues
+          // console.log (instance)
+          const today = new Date()
+          const tomorrow = new Date(today)
+          tomorrow.setDate(tomorrow.getDate() + 1)
+          sequelize.models.Todo.create
+          ({
+            title: 'Selamat Datang',
+            description: 'Ini adalah contoh catatan di Fancy app todo. Kamu bisa menambah, mengedit, dan Menghapus, serta dapat mengubah status todomu menjadi selesai atau belum selesai. Kamu juga bisa mengubah tampilan latar belakang, ataupun lokasi Cuaca di User Setting. Merubah tampilan membutuhkan log out dan login ulang untuk hasil yang maksimal. Terimaksih',
+            status : 'finished',
+            due_date: tomorrow,
+            UserId: instance.id
+          }).then((result) => {
+            console.log ('Berhasil')
+          }).catch((err) => {
+            console.log ('gagasl')
+            
+          });
       }
     },
     sequelize,

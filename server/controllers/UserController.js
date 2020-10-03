@@ -2,6 +2,8 @@ const { User }       = require('../models')
 const BcriptJs       = require('../helper/bcryptjs')
 const Jwt            = require('../helper/jwt')
 const {OAuth2Client} = require('google-auth-library')
+const axios = require('axios')
+
 
 class UserController {
     static registerC (req, res, next) {
@@ -9,7 +11,10 @@ class UserController {
             email: req.body.email,
             password: req.body.password
         }).then((result) => {
-            return res.status(201).json(result)
+            // console.log ("register", result)
+            return res.status(201).json({
+                message: 'Success Created'
+            })
         }).catch((err) => {
             // console.log (err)
             // return res.status(400).json({
@@ -25,15 +30,19 @@ class UserController {
                 email: req.body.email
             }
         }).then((result) => {
+            // console.log(result.location, 'dari login')
             // check password dengan compare bcrypt
             if (BcriptJs.check(req.body.password, result.password)) {
                 // console.log ('masuk')
                 // encoding data user menggunakan JWT
+                console.log (result.location)
                 let access_token = Jwt.generate(
                     result.id,
-                    result.email
+                    result.email,
+                    result.location,
+                    result.bg_img
                 )
-                res.status(200).json({access_token})
+                res.status(200).json({access_token, user_name: result.user_name, bg_img: result.bg_img})
             } else {
                 // return res.status(400).json({message : 'Invalid email or password'})
                 return next({
@@ -74,11 +83,12 @@ class UserController {
                     email
                 }
             }).then((user) => {
+
                 if (!user) {
                     console.log ('masuk : berarti user belum ada di DB')
                     return User.create({
-                        email: req.body.email,
-                        password: 'User Dont Have A Password - So This is randomly generated - 12312389234234qjkernudfaisdu'
+                        email: email,
+                        password: 'User Dont Have A Password - So This is randomly generated'
                     })
                 } else {
                     return user
@@ -86,16 +96,62 @@ class UserController {
             }).then (user => {
                 const access_token = Jwt.generate(
                     user.id,
-                    user.email
+                    user.email,
+                    user.location,
+                    user.bg_img
                 )
                 console.log ('masuk : Berarti user udah ada di DB ')
-                return res.status(201).json({access_token})
+                return res.status(201).json({access_token, user_name: user.user_name, bg_img: user.bg_img})
             }).catch((err) => {
                 console.log (err)
             });
         } catch (error) {
             console.log(error)
         }
+    }
+
+    static getUserDataById (req, res, next) {
+        console.log(req.userData)
+        return res.status(200).json(req.userData)
+    }
+
+    static async replaceUserByIdC (req, res, next) {
+        // SEARCH IMAGE BY KEY NAME
+        console.log ('MASUK 1')
+        const { bg_keyname } = req.body
+        // return console.log ('>>>>', q)
+        const key = process.env.API_KEY_PIXABAY
+        let bg_img = ''
+        await axios({
+            method: 'GET',
+            url: `https://pixabay.com/api/?key=${key}&q=${bg_keyname}`
+        }).then(( { data } ) => {
+            console.log ("PPIXABAY AMAN")
+            bg_img = data.hits[0].largeImageURL
+        }).catch((err) => {
+            return next(err)
+        })
+        
+        
+        await User.update({
+            user_name: req.body.user_name,
+            email: req.body.email,
+            location: req.body.location,
+            bg_img
+        },{ 
+            where: {id: req.userData.id},
+            returning: true
+        }).then((result) => {
+            let access_token = Jwt.generate(
+                result.id,
+                result.email,
+                result.location
+            )
+            console.log ("USER UPDATE AMAN")
+            res.status(200).json({access_token, user_name: result.user_name, bg_img: result.bg_img})
+        }).catch((err) => {
+            next(err)
+        });
     }
 }
 

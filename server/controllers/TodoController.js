@@ -19,7 +19,10 @@ class TodoController {
         Todo.findAll({
             where: {
                 UserId: req.userData.id
-            }
+            },
+            order: [
+                ['updatedAt', 'DESC']
+            ]
         }).then((result) => {
                 return res.status(200).json(result)
             }).catch((err) => {
