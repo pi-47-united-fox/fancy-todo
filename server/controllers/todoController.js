@@ -35,7 +35,7 @@ class todoController {
 			due_date: req.body.due_date,
 			UserId: req.userData.id,
 			img_url: req.body.img_url || "https://avatars.dicebear.com/api/jdenticon/asfv231ra.svg",
-			score: req.body.score || 0,
+			score: req.body.score || 0.01,
 		};
 
 		Todo.create(addBody)

@@ -14,6 +14,7 @@ const beforeLogin = () => {
 const afterLogin = () => {
 	$(".before-login").hide();
 	$(".after-login").show();
+	showAllTodo();
 };
 
 const hideall = () => {
@@ -21,6 +22,7 @@ const hideall = () => {
 	$(".after-login").hide();
 };
 
+// LOGIN AND LOGOUT
 const login = (event) => {
 	event.preventDefault();
 	$("#loginError").remove();
@@ -44,6 +46,19 @@ const login = (event) => {
 		});
 };
 
+const onSignIn = (googleUser) => {
+	const token = googleUser.getAuthResponse().id_token;
+	console.log(token);
+	$.ajax({
+		method: "POST",
+		url: "http://localhost:3000/googlesign",
+		data: { token },
+	}).done(({ access_token }) => {
+		localStorage.access_token = access_token;
+		afterLogin();
+	});
+};
+
 $(document).ready(() => {
 	$("#logout").click(() => {
 		localStorage.clear();
@@ -59,6 +74,7 @@ const signOut = () => {
 	});
 };
 
+// TO HIDE AND SHOW REGISTER
 $(document).ready(() => {
 	$("#registerShow").click(() => {
 		hideall();
@@ -90,15 +106,80 @@ const register = (event) => {
 		});
 };
 
-const onSignIn = (googleUser) => {
-	const token = googleUser.getAuthResponse().id_token;
-	console.log(token);
+const showAllTodo = () => {
 	$.ajax({
-		method: "POST",
-		url: "http://localhost:3000/googlesign",
-		data: { token },
-	}).done(({ access_token }) => {
-		localStorage.access_token = access_token;
-		afterLogin();
-	});
+		url: "http://localhost:3000/todos",
+		method: "GET",
+		headers: {
+			access_token: localStorage.access_token,
+		},
+	})
+		.done((result) => {
+			$("#main-page-title").text("My Manga List");
+			$(".row").empty();
+			result.forEach((el) => {
+				const status = el.status ? "Finished" : "Reading";
+				$(".row").append(`
+				<div class="card m-1" style="width: 17rem" d="todos-${el.id}">
+					<img class="card-img-top" style="height: 20rem" src="${el.img_url}" alt="manga cover ${el.title}" />
+					<div class="card-body">
+						<h5 class="card-title">${el.title}</h5>
+						<p class="card-text">${el.description}</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">Due Date: ${el.due_date}</li>
+						<li class="list-group-item">Status: ${status}</li>
+						<li class="list-group-item">Rating: ${el.score}</li>
+					</ul>
+					<div class="card-body">
+						<button class="btn btn-outline-secondary" 
+							type="button" onclick="deleteTodo(event, ${el.id})">Delete</button>
+						<button class="btn btn-outline-secondary" 
+							type="button" onclick="changeStatusTodo(event, ${el.id}, ${el.status})">Change Status</button>
+					</div>
+				</div>
+				`);
+			});
+		})
+		.fail((err) => {
+			console.log(err);
+		});
+};
+
+const deleteTodo = (event, id) => {
+	event.preventDefault();
+	$.ajax({
+		url: `http://localhost:3000/todos/${id}`,
+		method: "DELETE",
+		headers: {
+			access_token: localStorage.access_token,
+		},
+	})
+		.done(() => {
+			showAllTodo();
+		})
+		.fail((err) => {
+			console.log(err);
+		});
+};
+
+const changeStatusTodo = (event, id, status) => {
+	event.preventDefault();
+	$.ajax({
+		url: `http://localhost:3000/todos/${id}`,
+		method: "PATCH",
+		headers: {
+			Content_Type: "application/json",
+			access_token: localStorage.access_token,
+		},
+		data: {
+			status: (status) ? false : true
+		}
+	})
+		.done(() => {
+			showAllTodo();
+		})
+		.fail((err) => {
+			console.log(err);
+		});
 };

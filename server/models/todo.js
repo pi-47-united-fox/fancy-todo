@@ -78,9 +78,24 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			img_url: {
 				type: DataTypes.STRING,
+				validate: {
+					isUrl: {
+						msg: "Image url is Invalid",
+					},
+				},
 			},
-			img_url: {
+			score: {
 				type: DataTypes.REAL,
+				validate: {
+					min: {
+						args: 0.01,
+						msg: "Score is Invalid",
+					},
+					max: {
+						args: 10,
+						msg: "Score is Invalid",
+					},
+				},
 			},
 		},
 		{

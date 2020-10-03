@@ -5,6 +5,7 @@ const { User, Todo } = require("../models");
 
 const authentication = (req, res, next) => {
 	const { access_token } = req.headers;
+	console.log(access_token)
 	if (access_token) {
 		req.userData = verifyToken(access_token);
 		User.findByPk(req.userData.id)
