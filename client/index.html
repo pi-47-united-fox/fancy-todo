@@ -7,7 +7,7 @@
 			name="google-signin-client_id"
 			content="132785609217-p8o1kih4sapc7uhkntmrdbq878popn47.apps.googleusercontent.com"
 		/>
-		<title>Document</title>
+		<title>Fancy Todo</title>
 		<link
 			rel="stylesheet"
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -40,12 +40,13 @@
 						>
 					</li>
 				</ul>
-				<form class="form-inline my-2 my-lg-0">
+				<form class="form-inline my-2 my-lg-0" onsubmit="searchManga(event)">
 					<input
 						class="form-control mr-sm-2"
 						type="search"
 						placeholder="Search"
 						aria-label="Search"
+						id="search-manga"
 					/>
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
 						Search

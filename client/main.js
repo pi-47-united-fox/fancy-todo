@@ -40,7 +40,6 @@ const login = (event) => {
 			afterLogin();
 		})
 		.fail(({ responseJSON }) => {
-			console.log(responseJSON.message);
 			$("#loginError").append(responseJSON.message);
 			beforeLogin();
 		});
@@ -48,7 +47,6 @@ const login = (event) => {
 
 const onSignIn = (googleUser) => {
 	const token = googleUser.getAuthResponse().id_token;
-	console.log(token);
 	$.ajax({
 		method: "POST",
 		url: "http://localhost:3000/googlesign",
@@ -97,7 +95,6 @@ const register = (event) => {
 		data: userData,
 	})
 		.done((result) => {
-			console.log(result);
 			$("#registerForm").remove();
 			beforeLogin();
 		})
@@ -120,7 +117,7 @@ const showAllTodo = () => {
 			result.forEach((el) => {
 				const status = el.status ? "Finished" : "Reading";
 				$(".row").append(`
-				<div class="card m-1" style="width: 17rem" d="todos-${el.id}">
+				<div class="card m-1" style="width: 17rem" id="todos-${el.id}">
 					<img class="card-img-top" style="height: 20rem" src="${el.img_url}" alt="manga cover ${el.title}" />
 					<div class="card-body">
 						<h5 class="card-title">${el.title}</h5>
@@ -173,8 +170,90 @@ const changeStatusTodo = (event, id, status) => {
 			access_token: localStorage.access_token,
 		},
 		data: {
-			status: (status) ? false : true
-		}
+			status: status ? false : true,
+		},
+	})
+		.done(() => {
+			showAllTodo();
+		})
+		.fail((err) => {
+			console.log(err);
+		});
+};
+
+const searchManga = (event) => {
+	event.preventDefault();
+	const title = $("#search-manga").val();
+
+	$.ajax({
+		url: "http://localhost:3000/jikan/search",
+		method: "POST",
+		headers: {
+			access_token: localStorage.access_token,
+		},
+		data: { title },
+	})
+		.done((result) => {
+			$("#main-page-title").text("Search Result");
+			$(".row").empty();
+			result.forEach((el) => {
+				$(".row").append(`
+				<div class="card m-1" style="width: 17rem">
+					<img class="card-img-top" style="height: 20rem" src="${el.image_url}" alt="manga cover ${el.title}" />
+					<div class="card-body">
+						<h5 class="card-title">${el.title}</h5>
+						<p class="card-text">${el.synopsis}</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">Rating: ${el.score}</li>
+						<li class="list-group-item">Status: <br>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="status-${el.title}" value="true">
+								<label class="form-check-label" for="status-${el.title}">Finished</label>
+					  		</div>
+					  		<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="status-${el.title}" value="false">
+								<label class="form-check-label" for="status-${el.title}">Reading</label>
+					  		</div>
+						</li>
+						<li class="list-group-item">Due Date: 
+							<input type="date" class="form-control-inline" id="dueDate-${el.title}">
+						</li>
+					</ul>
+					<div class="card-body">
+						<button 
+							class="btn btn-outline-secondary" 
+							type="button" 
+							onclick="addManga(event, '${el.title}', '${el.synopsis}', '${el.image_url}', '${el.score}')"
+						>
+							Add to List
+						</button>
+					</div>
+				</div>
+				`);
+			});
+		})
+		.fail((err) => {
+			console.log(err);
+		});
+};
+
+const addManga = (event, title, description, img_url, score) => {
+	event.preventDefault();
+	$.ajax({
+		url: "http://localhost:3000/todos",
+		method: "POST",
+		headers: {
+			access_token: localStorage.access_token,
+		},
+		data: {
+			title,
+			description,
+			img_url,
+			score,
+			status: $(`input[name="status-${title}"]:checked`).val(),
+			due_date: $(`input[id="dueDate-${title}"]`).val(),
+		},
 	})
 		.done(() => {
 			showAllTodo();

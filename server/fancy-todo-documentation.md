@@ -492,7 +492,7 @@ _Response (500 - Internal Server Error)_
 
 ---
 
-### GET /jikan/search
+### POST /jikan/search
 
 > Search manga through jikan API
 

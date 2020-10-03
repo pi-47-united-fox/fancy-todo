@@ -31,6 +31,6 @@ routes.patch("/todos/:id", authorization, todoController.editTodoPATCH);
 routes.delete("/todos/:id", authorization, todoController.deleteTodo);
 
 // third party api
-routes.get("/jikan/search", jikanController.search);
+routes.post("/jikan/search", jikanController.search);
 
 module.exports = routes;

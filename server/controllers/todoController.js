@@ -28,6 +28,7 @@ class todoController {
 	}
 
 	static addTodo(req, res, next) {
+		console.log(req.body)
 		const addBody = {
 			title: req.body.title,
 			description: req.body.description,
