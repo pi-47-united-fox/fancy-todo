@@ -5,3 +5,38 @@ body{
 .btn-block{
     height: 55px;
 }
+
+.border{
+    -webkit-box-shadow: 17px 32px 18px -20px rgba(15,15,15,1);
+    -moz-box-shadow: 17px 32px 18px -20px rgba(15,15,15,1);
+    box-shadow: 17px 32px 18px -20px rgba(15,15,15,1);
+}
+.border:hover{
+    opacity: inherit;
+    -moz-transform: scale(1.2);
+-webkit-transform: scale(1.2);
+-o-transform: scale(1.2);
+-ms-transform: scale(1.2);
+transform: scale(1.2);
+
+}
+
+.btn-sm {
+    width: 15x;
+    height: 35px;
+    padding: 3px;
+}
+.card-footer{
+    padding: 5px;
+    margin-top: 5px;
+}
+
+#jumbotodo{
+background-image: url("./asset/bg1.jpg");
+}
+
+.ProfileName{
+    padding: 3px;
+    border-radius: 3px;
+    padding-left: 20px;
+}

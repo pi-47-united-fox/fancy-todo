@@ -1,13 +1,14 @@
-const { Todo } = require("../models")
+const { Todo, User } = require("../models")
 const axios = require("axios")
 
 
 class TodoController {
     // get/todos
     static getDataTodo(req, res, next) {
-        Todo.findAll({ where: { UserId: req.userData.id } })
+        let name = req.userData
+        Todo.findAll({ include: [User] })
             .then(todo => {
-                res.status(200).json(todo)
+                res.status(200).json({ todo, name })
             })
             .catch(err => {
                 next(err)
@@ -24,8 +25,6 @@ class TodoController {
                 }
             })
                 .then(response => {
-                    // console.log(response)
-                    // res.status(201).json(response.data)
                     let addressResto = response.data.restaurants[0].restaurant.location.address
                     let nameResto = response.data.restaurants[0].restaurant.name
                     let value = {
@@ -71,7 +70,6 @@ class TodoController {
             .catch(err => {
                 next(err)
             })
-
     }
     //Put /todos/:id
     static updateTodoById(req, res, next) {
@@ -100,7 +98,6 @@ class TodoController {
 
     //Patch /todos/:id
     static changeStatusTodo(req, res, next) {
-
         let value = {
             status: req.body.status
         }
@@ -122,7 +119,6 @@ class TodoController {
 
     //DELETE /todos/:id
     static deleteTodoById(req, res, next) {
-
         Todo.destroy({
             where: {
                 id: req.params.id
@@ -137,7 +133,6 @@ class TodoController {
                 next(err)
             })
     }
-
 }
 
 module.exports = TodoController

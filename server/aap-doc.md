@@ -300,13 +300,16 @@ _Response (500 - Bad Request)_
 
 > Create new asset
 
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
+_Request Body_
+```json
 
+{
+    "name" : "<your_name>",
+    "email" : "<your_email>",
+    "password":"<your_password>"  
+}
+
+```
 
 _Response (200)_
 ```json
@@ -331,13 +334,15 @@ _Response (404)_
 
 > Create new asset
 
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
+_Request Body_
+```json
 
+{
+    "email" : "<your_email>",
+    "password":"<your_password>"  
+}
+
+```
 
 _Response (201)_
 ```json
@@ -355,6 +360,26 @@ _Response (400 )_
   "message": "error"
 }
 ```
+
+### POST /googlelogin
+
+_Response (201)_
+```json
+
+{
+    "accesToken" : "<your access token>"
+},
+
+
+```
+
+_Response (400 )_
+```json
+{
+  "message": "error"
+}
+```
+
 
 
 
