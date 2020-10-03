@@ -2,7 +2,6 @@ const { User } = require('../models/index')
 const { comparePass } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwt')
 const { OAuth2Client } = require('google-auth-library');
-const { use } = require('../routes/user');
 
 class UserController {
     static register(req, res, next) {

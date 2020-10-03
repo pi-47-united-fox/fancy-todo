@@ -53,6 +53,33 @@ function loginApp(event) {
         })
 }
 
+function editTodo(event) {
+    event.preventDefault()
+    let title = $('#editTitle').val()
+    let description = $('#editDescription').val()
+    let status = $('#editStatus').val()
+    let due_date = $('#editDue_date').val()
+    $.ajax({
+            method: 'PUT',
+            url: `${baseUrl}/todos/${id}`,
+            headers: {
+                access_token: localStorage.access_token
+            },
+            data: {
+                title,
+                description,
+                due_date
+            }
+        })
+        .done(result => {
+            console.log(result);
+            getTodos()
+        })
+        .fail(function(error) {
+            console.log(error);
+        })
+}
+
 function deleteTodo(id) {
     $.ajax({
             method: 'DELETE',
@@ -69,24 +96,6 @@ function deleteTodo(id) {
             console.log(error);
         })
 }
-
-function editTodo(id) {
-    $.ajax({
-            method: 'DELETE',
-            url: `${baseUrl}/todos/${id}`,
-            headers: {
-                access_token: localStorage.access_token
-            }
-        })
-        .done(result => {
-            console.log(result);
-            getTodos()
-        })
-        .fail(function(error) {
-            console.log(error);
-        })
-}
-
 
 function getTodos() {
     $.ajax({
@@ -131,29 +140,29 @@ function getTodos() {
 function createTodo(event) {
     event.preventDefault()
     let title = $('#create-title').val()
-    let status = $('#create-status').val()
     let description = $('#create-description').val()
+    let status = $('#create-status').val()
     let due_date = $('#create-due_date').val()
 
     $.ajax({
             method: 'POST',
             url: baseUrl + '/todos',
             headers: {
-                access_token: localStorage.token
+                access_token: localStorage.access_token
             },
             data: {
                 title,
-                status,
                 description,
+                status,
                 due_date
             }
         })
         .done(data => {
             $('#create-title').val('')
-            $('#create-status').val('')
             $('#create-description').val('')
+            $('#create-status').val('')
             $('#create-due_date').val('')
-            dashboard()
+            getTodos()
         })
         .fail(err => {
             console.log(err);
@@ -183,6 +192,7 @@ $(".register-btn").click(function() {
 $(".btn-add").click(() => {
     $(".create").show()
     $(".dashboard").hide()
+    $(".user-todo-list").show()
 })
 
 function dashboard() {
@@ -196,6 +206,7 @@ function dashboard() {
     $(".register-btn").hide()
     $(".btn-login").hide()
     $(".create").hide()
+    $(".edit").hide()
 }
 
 function loginPage() {
@@ -208,6 +219,7 @@ function loginPage() {
     $(".register-btn").show()
     $(".btn-login").hide()
     $(".create").hide()
+    $(".edit").hide()
 }
 
 function registerBtn() {
@@ -216,6 +228,7 @@ function registerBtn() {
     $('.after-login').hide()
     $('.register-btn').hide()
     $(".create").hide()
+    $(".edit").hide()
 }
 
 $.ajax({

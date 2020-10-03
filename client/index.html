@@ -127,6 +127,35 @@
         </div>
     </div>
 
+    <!--EDIT-->
+    <div class="container edit">
+        <h1>Edit Your Holiday Plan</h1>
+        <form id="btn-add" onsubmit="editTodo(event)">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" id="editTitle" value="title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" id="editDescription" rows="3" value="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <input type="text" class="form-control" id="editStatus" value="status">
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" class="form-control" id="editDue_date" value="due_date">
+            </div>
+            <button type="submit" class="btn btn-primary btn-edit" onclick="dashboard()">Save</button>
+        </form>
+        <div id="user-todo-list">
+            <h5 id="titleDate" class="d-flex justify-content-center text-center">Rekomendasi tanggal buat liburanmu</h5>
+            <div class="row d-flex justify-content-center" id="holiday"></div>
+        </div>
+    </div>
+
+
     <!--CONTENT-->
     <div class="container dashboard mt-8 justify-content-center">
         <div class="table-wrapper">
