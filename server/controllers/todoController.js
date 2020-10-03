@@ -6,7 +6,7 @@ class TodoController {
     static getAllTodo(req,res,next){
         Todo.findAll({
             where: {
-                UserId: req.userData.id
+                UserId: +req.userData.id
             }
         })
         .then(data => {
@@ -44,6 +44,7 @@ class TodoController {
                 status: req.body.status,
                 due_date: req.body.due_date,
                 artist: response.data.data[0].artist.name,
+                
                 song: response.data.data[0].title,
                 link: response.data.data[0].link,
                 image: response.data.data[0].artist.picture_big,

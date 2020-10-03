@@ -1,10 +1,10 @@
 const { User } = require('../models')
-
 const { comparePassword } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwt')
+const { OAuth2Client } = require('google-auth-library')
 
 class UserController {
-    static register(req,res){
+    static register(req,res,next){
         const input = {
             email: req.body.email,
             password: req.body.password
@@ -20,7 +20,7 @@ class UserController {
             next(err)
         })
     }
-    static async login (req,res){
+    static async login (req,res,next){
         const input = {
             email: req.body.email,
             password: req.body.password
@@ -42,47 +42,51 @@ class UserController {
                     message: "Wrong email/password"
                 })
             } else {
-                const access_token = signToken(user.email)
+                const access_token = signToken({
+                    id: user.id,
+                    email: user.email
+                })
                 res.status(200).json({
-                    access_token: access_token
+                    access_token,
+                    UserId: user.id,
+                    message:'User berhasil login'
                 })
             }
         } catch (err){
             next(err)
         }
     }
-    static googleLogin(req,res){
-        //buat instance dari oauth client
+    static googleLogin(req,res,next){
+        console.log('masuk googlelogin server')
         const client = new OAuth2Client(process.env.CLIENT_ID)
-        let email = ''
+        let emailGoogle
         client.verifyIdToken({
             idToken: req.headers.google_access_token,
             audience: process.env.CLIENT_ID
         })
-        .then(ticket => {
-            let payload = ticket.getPayload()
-            email = payload['email']
+        .then(({payload}) => {
+            emailGoogle = payload.email
             return User.findOne({
-                where: {email}
+                where: {email:emailGoogle}
             })
         })
-        .then(user => {
-            if(!user){
-                var userObj = {
-                    email: email,
+        .then(resultuser => {
+            if(!resultuser){
+                var userGoogle = {
+                    email: emailGoogle,
                     password: 'randompassword'
                 }
-                return User.create(userObj)
+                return User.create(userGoogle)
             } else {
-                return user
+                return resultuser
             }
         })
         .then(user => {
-            const access_token = generateToken({
+            const access_token = signToken({
                 id: user.id,
                 email: user.email
             })
-            return res.status(200).json({access_token})
+            return res.status(200).json({access_token,UserId: user.id,message:'berhasil login'})
         })
         .catch(err => {
             next(err)

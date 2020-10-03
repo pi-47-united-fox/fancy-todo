@@ -7,7 +7,7 @@ const authentication = (req,res,next) => {
     const decoded = verifyToken(req.headers.access_token)
     User.findOne({
         where: {
-            email: decoded
+            email: decoded.email
         }
     })
     .then(user => {
