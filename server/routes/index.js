@@ -1,6 +1,7 @@
 const router = require("express").Router()
-const todoController = require("../controllers/todoController")
-const userController = require("../controllers/userController")
+const TodoController = require("../controllers/todoController")
+const UserController = require("../controllers/userController")
+const GuardianController = require("../controllers/guardianController")
 const { verifyToken } = require("../helpers/jwt")
 const { User, Todo } = require("../models/index")
 
@@ -27,7 +28,7 @@ const authorization = (req, res, next) => {
     const targetId = +req.params.id
     Todo.findByPk(targetId)
         .then(todo => {
-            // console.log(req.userData, todo)
+            // console.log(req.userData, "<< Login")
             if(!todo) {
                 res.status(404).json( {message: "Todo Not Found"} )
             } else if(req.userData.id !== todo.UserId) {
@@ -39,27 +40,36 @@ const authorization = (req, res, next) => {
 }
 
 
-router.get('/', todoController.homeHandler)
+router.get('/', TodoController.homeHandler)
 
 // User route
-router.post('/register', userController.register)
+router.post('/register', UserController.register)
 
-router.post('/login', userController.login)
+router.post('/login', UserController.login)
+
+router.post('/googlelogin', UserController.googleLogin)
+
 
 router.use(authentication)
-router.get('/todos', todoController.findAllTodos)
+router.get('/todos', TodoController.findAllTodos)
 
-router.post('/todos', todoController.addTodo)
+router.post('/todos', TodoController.addTodo)
 
-router.get('/todos/:id', authorization, todoController.findTodoById)
+router.get('/dashboard', TodoController.findAllTodoById)
 
-router.delete('/todos/:id', authorization, todoController.deleteTodo)
+router.get('/todos/:id', authorization, TodoController.findTodoById)
 
-router.put('/todos/:id', authorization, todoController.replaceTodo)
+router.delete('/todos/:id', authorization, TodoController.deleteTodo)
 
-router.patch('/todos/:id', authorization, todoController.modifyTodo)
+router.put('/todos/:id', authorization, TodoController.replaceTodo)
 
-// router.get('/users/:id', authorization, todoController.findAllTodoById)
+router.patch('/todos/:id', authorization, TodoController.modifyTodo)
+
+// router.get('/users/:id', authorization, TodoController.findAllTodoById)
+
+
+
+router.post('/dowrite', GuardianController.addTaskRewriteArticle)
 
 
 

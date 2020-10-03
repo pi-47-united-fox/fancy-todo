@@ -1,6 +1,6 @@
 const { Todo } = require("../models/index")
 
-class todoController {
+class TodoController {
     static homeHandler(req, res) {
         res.send("Welcome to your TODO list")
     }
@@ -28,7 +28,8 @@ class todoController {
                 res.status(201).json(data)
             })
             .catch(err => {
-                next(err)
+                res.json(err)
+                // next(err)
             })
     }
 
@@ -106,7 +107,7 @@ class todoController {
     static modifyTodo(req, res, next) {
         let targetId = req.params.id
         Todo.update({
-            status: req.body.status,
+            status: "Completed",
         },{
             where: {
                 id: targetId
@@ -119,9 +120,9 @@ class todoController {
             })
         })
         .catch(err => {
-            res.status(500).json(err)
+            next(err)
         })
     }
 }
 
-module.exports = todoController
+module.exports = TodoController

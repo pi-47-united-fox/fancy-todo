@@ -3,6 +3,9 @@ const app = express()
 const port = 3000
 const routes = require("./routes/index")
 const errorsHandler = require("./middlewares/errorsHandler")
+const cors = require("cors")
+
+app.use(cors())
 
 // body parser
 app.use(express.urlencoded( { extended:true } ))
