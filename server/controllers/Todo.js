@@ -1,5 +1,5 @@
 'use strict'
-const {Todo} = require('../models/index.js') 
+const {Todo} = require('../models/index.js')
 
 class TodoController {
     static createTodo (req, res) {

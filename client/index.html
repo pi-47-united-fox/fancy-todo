@@ -67,6 +67,7 @@
           </div>
         </div>
       </div>
+      <!--login-app-->
       <div class="container mt-5 before-login">
         <form onsubmit="loginApp(event)">
             <div class="form-group">
@@ -74,7 +75,7 @@
               <input 
               type="email" 
               class="form-control" 
-              id="email" 
+              id="emailLogin" 
               aria-describedby="emailHelp">
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
@@ -83,11 +84,35 @@
               <input 
               type="password" 
               class="form-control" 
-              id="password">
+              id="passwordLogin">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="container">
+              <p>Don't have account? <a href="#" id="a-register">Register here</a></p>
+          </div>
           </form>
       </div>
+
+<!--register form-->
+<div class="container mt-5 register">
+  <form onsubmit="registerApp(event)">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input 
+        type="email" 
+        class="form-control" 
+        id="emailRegister">
+      </div>
+      <div class="form-group">
+        <label for="Password">Password</label>
+        <input 
+        type="password" 
+        class="form-control" 
+        id="passwordRegister">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
      
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="main.js"></script>

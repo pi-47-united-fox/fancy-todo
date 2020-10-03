@@ -11,7 +11,14 @@ class UserController {
         User.create(newUser)
         .then(result=> {
             res.status(201).json(result)
+            return User.findAll({where: {
+                email:req.body.email
+            }
         })
+        .then(result => {
+            res.status(400).json('your email has been already.')
+        })
+})
         .catch(err=> {
             res.status(500).json(err)
         })

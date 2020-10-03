@@ -8,7 +8,6 @@ const {authentication, authorization} = require('../middlewares/authentication-a
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.get ('/music',ApiController.searchMusic)
-router.get ('/ghibli',ApiController.showGhibli)
 router.get ('/earthquake',ApiController.earthquake)
 router.use(authentication)
 router.get('/todos', TodoController.findAllTodo)
