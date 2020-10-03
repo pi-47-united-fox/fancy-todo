@@ -66,13 +66,15 @@ class UserController {
     static googleLogin(req, res) {
         const CLIENT_ID = "639126342145-10qrf40f8aett5k1kmphduh1d73g7055.apps.googleusercontent.com"
         const client = new OAuth2Client(CLIENT_ID)
+        let email
+
         client.verifyIdToken({
             idToken: req.headers.google_accesss_token,
             audience: CLIENT_ID
         })
         .then(ticket => {
-            const payload = ticket.getPayload()
-            let email = payload.email
+            let payload = ticket.getPayload()
+            email = payload.email
             return User.findOne({
                 where: {
                     email: email
@@ -83,7 +85,7 @@ class UserController {
         .then(user => {
             if (!user) {
                 let userObj = {
-                    email: user.email,
+                    email: email,
                     password: "randompassword"
                 }
                 return User.create(userObj)
@@ -92,9 +94,9 @@ class UserController {
             }
         })
         .then(user => {
-            let token  = signToken({id: user.id, email: user.email})
-            req.status(200).json({
-                access_token: token
+            let access_token  = signToken({id: user.id, email: user.email})
+            return res.status(200).json({
+                access_token
             })
         })
         .catch(err => {

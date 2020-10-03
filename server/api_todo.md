@@ -6,6 +6,14 @@
 ` - PUT /todos/:id `
 ` - PATCH /todos/:id `
 
+` - GET /dashboard `
+` - POST /login `
+` - POST /register `
+
+
+
+
+
 
 ## GET /todos
 - Request header:
@@ -136,7 +144,7 @@ id = +req.params.id
 }
 
 
-## PUT /todos:id
+## PUT /todos/:id
 - Request header:
 {
     "access_token": "<your access token>"
@@ -173,7 +181,7 @@ id = +req.params.id
 }
 
 
-## PATCH /todos:id
+## PATCH /todos/:id
 - Request header:
 {
     "access_token": "<your access token>"

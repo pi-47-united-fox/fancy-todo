@@ -1,30 +1,44 @@
-
 $(document).ready(() => {
     if(!localStorage.access_token) {
         hideAll()
         $("#login-form").show()
+        $("#btn-logout").hide()
+        $("#btn-nav-my-todo-list").hide()
+        $("#btn-add-todo-form").hide()
+
     } else {
-        afterLogin()
+        hideAll()
+        backToHome()
+
+        $("#btn-login").hide()
+        $("#btn-register").hide()
+
+
+
     }
 })
 
-function afterLogin() {
-    $('.after-login').show()
-    $('.before-login').hide()
-}
+// function afterLogin() {
+//     $('.after-login').show()
+//     $('.before-login').hide()
+// }
 
-function beforeLogin() {
-    $('.after-login').hide()
-    $('.before-login').show()
-}
+// function beforeLogin() {
+//     $('.after-login').hide()
+//     $('.before-login').show()
+// }
 
 function hideAll() {
-    $('.after-login').hide()
-    $('.before-login').hide()
+    // $('.after-login').hide()
+    // $('.before-login').hide()
     $('#todo-list-dashboard').hide()
     $('#todo-list-form').hide()
     $('#view-todo-details').hide()
-    $("#view-todo-details").hide()
+    $("#login-form").hide()
+    $("#signup-form").hide()
+    $("#edit-form").hide()
+
+
 
 
 }
@@ -54,7 +68,12 @@ function loginApp(event) {
     .done(result => {
         localStorage.setItem('access_token', `${result.access_token}`)
         console.log("Success")
-        afterLogin()
+        backToHome()
+
+        $("#btn-logout").show()
+        $("#btn-nav-my-todo-list").show()
+        $("#btn-add-todo-form").show()
+
     })
     .fail(error => {
         console.log(error)
@@ -106,19 +125,19 @@ function register(event) {
 
 // Sign in with google
 function onSignIn(googleUser) {
-    var id_token = googleUser.getAuthResponse().id_token;
-    console.log(id_token)
+    var google_access_token = googleUser.getAuthResponse().id_token;
+    // console.log(id_token)
 
     $.ajax({
         method: "POST",
         url: 'http://localhost:3000/googlelogin',
         headers : {
-            google_access_token : id_token
+            google_access_token
         }
     })
     .done(result => {
-        localStorage.setItem('access_token', result.access_token)
-        afterLogin()
+        localStorage.setItem('access_token', result)
+        backToHome()
     })
     .fail(err => {
         console.log(err)
@@ -139,6 +158,12 @@ $("#btn-logout").click(()=> {
     signOutAll()
     hideAll()
     $("#login-form").show()
+
+    $("#btn-login").show()
+    $("#btn-register").show()
+    $("#btn-logout").hide()
+    $("#btn-nav-my-todo-list").hide()
+    $("#btn-add-todo-form").hide()
 })
 
 
@@ -154,7 +179,7 @@ $("#btn-nav-my-todo-list").click(() => {
 })
 
 // Add new todo list
-// -> Add tradional todo list
+// -> Add traditional todo list
 function addTodoListItem(event) {
     event.preventDefault()
     let title = $("#titleInputAddTask").val()
@@ -173,6 +198,8 @@ function addTodoListItem(event) {
     })
     .done(result => {
         console.log(result)
+        hideAll()
+        backToHome()
     })
     .fail(err => {
         console.log(err)
@@ -191,7 +218,7 @@ function addTodoWrite(event) {
     .done(result => {
         console.log(result)
         hideAll()
-        $("#todo-list-dashboard").show()
+        backToHome()
     })
     .fail(err => {
         console.log(err)
@@ -213,12 +240,12 @@ function viewAllTodosOfUser() {
             <div class="todo-list-item">
                 <div class="card" style="width: 30rem;">
                     <div class="card-body">
-                    <h5 class="card-title">${value.title}</h5>
+                    <h5 class="card-title"><b>${value.title}</b></h5>
                     <h6 class="card-subtitle mb-2 text-muted">${value.due_date} (${value.status})</h6>
                     <p class="card-text">${value.description}</p>
 
                     <button type="button" class="btn btn-primary btn-sm" onclick="viewTodoItemById(${value.id})">View</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Edit</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="showEditForm(${value.id})">Edit</button>
                     <button type="button" class="btn btn-success btn-sm" onclick="completeTodoItem(${value.id})">Complete</button>
                     <button type="button" class="btn btn-danger btn-sm" onclick="deleteTodoItem(${value.id})">Delete</button>
 
@@ -251,7 +278,7 @@ function viewTodoItemById(id) {
           <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
               <li class="nav-item">
-                <a class="nav-link" href="#" onclick="showEditForm(${result})">Edit</a>
+                <a class="nav-link" href="#" onclick="showEditForm(${result.id})">Edit</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" onclick="deleteTodoItem(${result.id})">Delete</a>
@@ -310,47 +337,58 @@ function completeTodoItem(id) {
 }
 
 // edit todo show form
-function showEditForm(object){
-    console.log(object)
+function showEditForm(id){
     hideAll()
-    $("#edit-form-update").append(`
-    <br>
-    <h1>Edit Task</h1>
-    <div class="card">
-      <div class="card-body">
-        <div>
-          <p><b>Please update the data</b><p>
-          <form onsubmit="editTodoListItem(event)">
-            <div class="form-group">
-              <label for="titleInputEditTask">Title</label>
-              <input type="text" class="form-control" name="titleInputEditTask" id="titleInputEditTask" value=${object.title}>
-            </div>
-  
-            <div class="form-group">
-              <label for="descriptionInputEditTask">Description</label>
-              <textarea class="form-control" id="descriptionInputEditTask" rows="3" value=${object.description}></textarea>
-            </div>
+    $.ajax({
+        method: "GET",
+        url: `http://localhost:3000/todos/${id}`,
+        headers: { access_token: localStorage.access_token }
+    })
+    .done(object => {
+        let date = object.due_date.substring(0, 10)
 
-            <div class="form-group">
-              <label for="statusInputEditTask">Status</label>
-              <input type="text" class="form-control" name="statusInputEditTask" id="statusInputEditTask" value=${object.status}>
-            </div>
-  
-            <div class="form-group">
-              <label for="dueDateInputEditTask">Due Date</label>
-              <input type="date" class="form-control" name="dueDateInputEditTask" id="dueDateInputEditTask" value=${object.due_date}>
-            </div>
-            
-            <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn">Update task</button>
-          </form>
-
-        </div>
-      </div>
-    </div>
+        $("#edit-form-update").append(`
+        <br>
+        <h1>Edit Task</h1>
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <p><b>Please update the data</b><p>
+              <form onsubmit="editTodoListItem(event)">
+                <div class="form-group">
+                  <label for="titleInputEditTask">Title</label>
+                  <input type="text" class="form-control" name="titleInputEditTask" id="titleInputEditTask" value=${object.title}>
+                </div>
+      
+                <div class="form-group">
+                  <label for="descriptionInputEditTask">Description</label>
+                  <textarea class="form-control" id="descriptionInputEditTask" rows="3">${object.description}</textarea>
+                </div>
     
-    `)
-    $("#edit-form-update").show()
+                <div class="form-group">
+                  <label for="statusInputEditTask">Status</label>
+                  <input type="text" class="form-control" name="statusInputEditTask" id="statusInputEditTask" value=${object.status}>
+                </div>
+      
+                <div class="form-group">
+                  <label for="dueDateInputEditTask">Due Date</label>
+                  <input type="date" class="form-control" name="dueDateInputEditTask" id="dueDateInputEditTask" value=${date}>
+                </div>
+                
+                <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn">Update task</button>
+              </form>
+    
+            </div>
+          </div>
+        </div>
+        
+        `)
+        $("#edit-form-update").show()
 
+    })
+    .fail(err => {
+        console.log(err)
+    })
 
 }
 
@@ -364,7 +402,7 @@ function editTodoListItem(event) {
     let due_date = $("#dueDateInputEditTask").val()
 
     $.ajax({
-        method: "UPDATE",
+        method: "PUT",
         url: 'http://localhost:3000/todos',
         headers: {access_token: localStorage.access_token},
         data: {
