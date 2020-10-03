@@ -9,9 +9,9 @@ router.use(authentication)
 router.get('/weather', weatherController.currentWeather)
 router.get('/', taskController.findAll)
 router.post('/', taskController.create)
-router.get('/:id', authorization, taskController.findByid)
+router.get('/:id', taskController.findByid)
 router.put('/:id', authorization, taskController.editById)
-router.patch('/:id', taskController.editStatus)
+router.patch('/:id', authorization, taskController.editStatus)
 router.delete('/:id', authorization, taskController.deleteById)
 
 

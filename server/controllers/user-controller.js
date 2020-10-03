@@ -19,10 +19,12 @@ class UserController {
             })
     }
     static login(req, res, next) {
+        console.log('ini login controller');
         let user = {
             email: req.body.email,
             password: req.body.password
         }
+        console.log(user);
         User.findOne({
             where: {
                 email: user.email
