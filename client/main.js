@@ -9,9 +9,14 @@ $(document).ready(() => {
 //VIEW --------------------------------------
 
 const loginPage = () => {
+    console.log('ini login page');
+
     $('#loginPage').show()
     $('#registerPage').hide()
-    $('#todo').hide()
+    $('#homePage').show()
+    $('#sideNav').hide()
+
+    
 
 
 }
@@ -19,7 +24,7 @@ const loginPage = () => {
 const registerPage = () => {
     $('#loginPage').hide()
     $('#registerPage').show()
-    $('#todo').hide()
+    // $('#todo').hide()
 
 
 }
@@ -69,6 +74,7 @@ $('#btn-login').on('click', (event) => {
 
 //logout BUTTON
 $('#btn-logout').click(() => {
+    console.log('apa gitu');
     // localStorage.removeItem('access_token')
     $('#emailLogin').val('')
     $('#passwordLogin').val('')
@@ -83,7 +89,14 @@ $('#btn-addTodo').on('click', (event) => {
 
 })
 
-//DELETE todo BUTTON
+
+//Edit todo BUTTON
+// $('#btn-addTodo').on('click', (event) => {
+//     event.preventDefault()
+//     addTodo()
+
+// })
+
 
 
 
@@ -165,9 +178,9 @@ const fetchData = () => {
                     <p class="card-text">${data.description}</p>
                 </div>
                 <div class="cardButton">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-whatever="@mdo">Edit</a>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#edit" onClick="edit(${data.id})">Edit</a>
                     <a href="#" class="btn btn-danger" id="btn-delete" onclick="deleteTodo(${data.id})">delete</a>
-            </div>
+                </div>
                 `)
 
             });
@@ -176,6 +189,69 @@ const fetchData = () => {
             console.log('error', error);
         })
 }
+
+
+// GET EDIT 
+const edit = (id) => {
+    console.log('ini edit', id);
+    let title = $('#title').val()
+    let description = $('#description').val()
+    let due_date = $('#dueDate').val()
+    console.log(title, description, due_date);
+
+    $.ajax({
+        method: "GET",
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+        .done(result => {
+            console.log(result);
+            $('#editTitle').val(result.title)
+            $('#editDescription').val(result.description)
+            $('#editDueDate').val(result.due_date)
+            homePage()
+        })
+        .fail(err => {
+            $('#title').val('')
+            $('#description').val('')
+            $('#due_date').val('')
+        })
+}
+
+// //POST EDIT
+// const edit = (id) => {
+//     let title = $('#title').val()
+//     let description = $('#description').val()
+//     let due_date = $('#dueDate').val()
+//     console.log(title, description, due_date);
+
+//     $.ajax({
+//         method: "POST",
+//         url: `http://localhost:3000/todos/`,
+//         headers: {
+//             access_token: localStorage.getItem('access_token')
+//         },
+//         data: {
+//             title,
+//             description,
+//             due_date
+//         }
+//     })
+//         .done(result => {
+//             $('#title').val('')
+//             $('#description').val('')
+//             $('#due_date').val('')
+//             homePage()
+//         })
+//         .fail(err => {
+//             $('#title').val('')
+//             $('#description').val('')
+//             $('#due_date').val('')
+//         })
+
+// }
 
 //CREATE TODO
 const addTodo = () => {
@@ -216,13 +292,10 @@ function deleteTodo(id) {
     console.log(id);
 
     $.ajax({
-        url: `${URL}http://localhost:3000/todos/${id}`,
+        url: `http://localhost:3000/todos/${id}`,
         method: "DELETE",
         headers: {
             access_token: localStorage.getItem('access_token')
-        },
-        params: {
-            id: id
         }
     })
         .done(result => {

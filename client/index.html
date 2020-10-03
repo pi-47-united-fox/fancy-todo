@@ -11,17 +11,14 @@
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
 
-    <title>Document</title>
+    <title>Fancy todo</title>
 </head>
 
 <body>
-    <div id="todo">
-
-    </div>
 
     <!-- list todo -->
     <div id="homePage">
-        <div class="sidenav" id="sideNav" style="display: none;">
+        <div class="sidenav" id="sideNav">
             <a href="#addTodo" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Todo</a>
             <a href="" id="btn-logout" style="margin-top: 50px;">logout</a>
         </div>
@@ -65,15 +62,16 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- //EDIT MODAL -->
-            </center>
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <!-- //EDIT MODAL -->
+        <center>
+            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModa"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Create Todo</h5>
+                            <h5 class="modal-title" id="exampleModa">Edit Todo</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -82,69 +80,73 @@
                             <form>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">Title:</label>
-                                    <input type="text" class="form-control" id="title">
+                                    <input type="text" class="form-control" id="editTitle">
                                 </div>
                                 <div class="form-group">
                                     <label for="message-text" class="col-form-label">Description:</label>
-                                    <textarea class="form-control" id="description"></textarea>
+                                    <textarea class="form-control" id="editDescription" value=""></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">Due Date:</label>
-                                    <input type="date" class="form-control" id="dueDate">
+                                    <input type="date" class="form-control" id="editDueDate" value="${data.due_date}">
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="">Close</button>
-                            <button type="submit" class="btn btn-primary" id="btn-addTodo">Create Todo</button>
+                            <button type="submit" class="btn btn-primary" id="btn-addTodo">Edit Todo</button>
                         </div>
                     </div>
                 </div>
 
             </div>
+        </center>
 
 
-            <!-- Login Form -->
-            <div id="loginPage" style="display: none;">
-                <div class="container">
-                    <div class="row no-gutters">
-                        <div class="col-lg-5">
-                            <img src="./assets/pc1.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="col-lg-7 px-5">
-                            <form id="login" method="POST">
-                                <h1 class="font-weight-bold py-3">Fancy todo</h1>
-                                <h4>Sign into your account</h4>
-                                <div class="form-row">
-                                    <div class="col-log-7">
-                                        <input type="email" class="form-control my-3 p-4" placeholder="Email-Addres"
-                                            name="" id="emailLogin" />
-                                    </div>
+
+        <!-- Login Form -->
+        <div id="loginPage">
+            <div class="container">
+                <div class="row no-gutters">
+                    <div class="col-lg-5">
+                        <img src="./assets/pc1.jpg" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-7 px-5">
+                        <form id="login" method="POST">
+                            <h1 class="font-weight-bold py-3">Fancy todo</h1>
+                            <h4>Sign into your account</h4>
+                            <div class="form-row">
+                                <div class="col-log-7">
+                                    <input type="email" class="form-control my-3 p-4" placeholder="Email-Addres" name=""
+                                        id="emailLogin" />
                                 </div>
-                                <div class="form-row">
-                                    <div class="col-log-7">
-                                        <input type="password" class="form-control my-3 p-4" placeholder="********"
-                                            name="" id="passwordLogin" />
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-log-7">
-                                        <button type="submit" class="btn1 mt-3 mb-5" id="btn-login">Login</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <p>Don't have account? <a href="#" id="a-register">Register here</a></p>
-                            <div class="googleIcon">
-                                <img src="./assets/google logo.svg" class="iconGoogle" onclick="">
                             </div>
+                            <div class="form-row">
+                                <div class="col-log-7">
+                                    <input type="password" class="form-control my-3 p-4" placeholder="********" name=""
+                                        id="passwordLogin" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-log-7">
+                                    <button type="submit" class="btn1 mt-3 mb-5" id="btn-login">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                        <p>Don't have account? <a href="#" id="a-register">Register here</a></p>
+                        <div class="googleIcon">
+                            <img src="./assets/google logo.svg" class="iconGoogle" onclick="">
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            nlnsklnskns
+        </div>
 
-
-            <!-- REgister Form -->
-            <div id="registerPage" style="display: none;"">
+        <!-- REgister Form -->
+        <div id="registerPage">
             <div class=" container">
                 <div class="row no-gutters">
                     <div class="col-lg-5">
