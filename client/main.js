@@ -127,8 +127,8 @@ const showAllTodo = () => {
 				<div class="card m-1" style="width: 17rem" id="todos-${el.id}">
 					<img class="card-img-top" style="height: 20rem" src="${el.img_url}" alt="manga cover ${el.title}" />
 					<div class="card-body">
-						<h5 class="card-title">${el.title}</h5>
-						<p class="card-text">${el.description}</p>
+						<h5 class="card-title" style="height: 2rem">${el.title}</h5>
+						<p class="card-text" style="height: 12rem">${el.description}</p>
 					</div>
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item">Due Date: ${el.due_date}</li>
@@ -204,12 +204,18 @@ const searchManga = (event) => {
 			$("#main-page-title").text("Search Result");
 			$(".row").empty();
 			result.forEach((el) => {
+				// have to remove qoute's, need better solution
+				for (let i = 0; i < el.synopsis.length; i++) {
+					if (el.synopsis[i] === '"') {
+						el.synopsis = el.synopsis.slice(0, i) + el.synopsis.slice(i + 1)
+					}
+				}
 				$(".row").append(`
 				<div class="card m-1" style="width: 17rem">
 					<img class="card-img-top" style="height: 20rem" src="${el.image_url}" alt="manga cover ${el.title}" />
 					<div class="card-body">
-						<h5 class="card-title">${el.title}</h5>
-						<p class="card-text">${el.synopsis}</p>
+						<h5 class="card-title" style="height: 3rem">${el.title}</h5>
+						<p class="card-text" style="height: 12rem">${el.synopsis}</p>
 					</div>
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item">Rating: ${el.score}</li>
@@ -231,7 +237,7 @@ const searchManga = (event) => {
 						<button 
 							class="btn btn-outline-secondary" 
 							type="button" 
-							onclick="addManga(event, '${el.title}', '${el.synopsis}', '${el.image_url}', '${el.score}')"
+							onclick="addManga(event, '${el.title}', '${el.synopsis}', '${el.image_url}', ${el.score})"
 						>
 							Add to List
 						</button>
@@ -246,7 +252,6 @@ const searchManga = (event) => {
 };
 
 const addManga = (event, title, description, img_url, score) => {
-	console.log("ahahhahahah");
 	event.preventDefault();
 	$.ajax({
 		url: "http://localhost:3000/todos",
