@@ -9,7 +9,7 @@
     <title>Fancy To do</title>
 </head>
 <body>
-    <!-- nav bar -->
+    <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
         <button class="nav-link btn btn-dark text-white" type="button">Fancy Todo</button>
         <div class="collapse navbar-collapse" id="navbarText">
@@ -34,53 +34,114 @@
     </nav>
 
     <!-- form login -->
-    <div class="jumbotron jumbotron-fluid mt-5 bg-transparent" id="loginForm">
+    <div class="jumbotron jumbotron-fluid mt-5 bg-white" id="loginForm">
         <div class="container mx-auto px-5 w-50">
             <div id="headlogin">
                 <h1 class="text-center">Login to your account</h1>
             </div>
-            <form onsubmit="login(event)">
-                <div class="form-group">
-                    <small id="errorHandler" class="form-text text-muted"></small>
-                    <label for="input_email">Email address</label>
-                    <input type="email" class="form-control" id="input_email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                        else.</small>
-                </div>
-                <div class="form-group">
-                    <label for="input_password">Password</label>
-                    <input type="password" class="form-control" id="input_password">
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <small>Or click here to <a href="#" onclick="showRegisterForm()">register</a>.</small>
-            </form>
-            <!-- <span class="my-0">
-                <p>Login With</p>
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            </span> -->
+            <div class="container rounded border border-dark w-50 mt-3">
+                <form onsubmit="login(event)">
+                    <div class="form-group mt-3">
+                        <small id="errorHandler" class="form-text text-muted"></small>
+                        <label for="input_email">Email address</label>
+                        <input type="email" class="form-control" id="input_email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_password">Password</label>
+                        <input type="password" class="form-control" id="input_password">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3">Login</button>
+                    <small>Or click here to <a href="#" onclick="showRegisterForm()">register</a>.</small>
+                </form>
+                <!-- <span class="my-0">
+                    <p>Login With</p>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </span> -->
+
+            </div>
         </div>
     </div>
 
     <!-- form register -->
-    <div class="jumbotron jumbotron-fluid mt-5" id="register">
-        <div class="container-sm mt-5 mx-auto px-5 w-50">
+    <div class="jumbotron jumbotron-fluid mt-5 bg-white" id="register">
+        <div class="container mx-auto px-5 w-50">
             <h1 class="text-center">Register</h1>
-            <form onsubmit="register(event)" id="registerForm">
-                <div class="form-group">
-                    <small id="errorHandler" class="form-text text-muted"></small>
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                        else.</small>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password">
-                </div>
+            <div class="container rounded border border-dark w-50 mt-3">
+                <form onsubmit="register(event)" id="registerForm">
+                    <div class="form-group mt-3">
+                        <small id="errorHandler" class="form-text text-muted"></small>
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+    
+                    <button type="submit" class="btn btn-primary mb-3">Register</button>
+                    <small>Have an account? Login <a href="#" onclick="showLoginForm()">here</a>.</small>
+                </form>
 
-                <button type="submit" class="btn btn-primary">Register</button>
-                <small>If you already have an account, login <a href="#" onclick="showLoginForm()">here</a>.</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Todos -->
+    <div class="jumbotron mt-5 bg-transparent" id="contentTodos">
+        <div class="container">
+            <div class="mb-5">
+                <h1 class="text-dark bg-transparent">Your Todos: </h1>
+                <!-- error message -->
+                <div class="container" id="error_message">
+                    
+                </div>
+            </div>
+            <div class="row mt-3" id="todos">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- form add Todo -->
+    <div class="jumbotron bg-white" id="jumbotron_addTodoForm">
+        <div class="container ">
+            <form id="addTodoForm" onsubmit="addTodo(event)">
+                <h3>What do you want to do?</h3>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="e.g. Cooking Nasi Goreng">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" placeholder="e.g. Prepare Nasi Goreng for my lonely self">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status">  
+                        <option>Please select one</option>
+                        <option value="On Progress">On Progress</option>
+                        <option value="Cancel">Cancel</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Due Date</label>
+                    <input type="date" class="form-control" id="date">
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="">Add</button>
+                <button type="submit" class="btn btn-danger" onclick="afterLogin()">Cancel</button>
             </form>
+        </div>
+
+    </div>
+
+    <!-- form edit Todo -->
+    <div class="jumbotron" id="jumbotron_editTodoForm">
+        <div class="container" id="editTodoForm">
         </div>
     </div>
 
