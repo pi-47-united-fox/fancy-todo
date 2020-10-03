@@ -1,14 +1,14 @@
 const axios = require('axios')
 const { Todo } = require('../models/index')
 
-const deeezer = axios.create({
+const deezer = axios.create({
     baseURL: `https://api.deezer.com`
 })
 
 class ApiController{
     static searchMusic(req, res, next){
         const query = req.query.search
-        deeezer.get(`/search?q=${query}`)
+        deezer.get(`/search?q=${query}`)
             .then(({ data }) => {
                 // console.log(result.data.data)
                 res.status(200).json(data)
@@ -27,7 +27,7 @@ class ApiController{
                 const query = data.title
                 desc = data.description
                 // console.log(query)
-                return deeezer.get(`/search?q=${query}`)
+                return deezer.get(`/search?q=${query}`)
 
             })
             .then(({ data }) => {

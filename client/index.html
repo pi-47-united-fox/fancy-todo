@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- require CSS from bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Fancy To do</title>
+</head>
+<body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
+        <button class="nav-link btn btn-dark text-white" type="button">Fancy Todo</button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="HomeNav"
+                        onclick="afterLogin()">Home</button>
+                </li>
+                <li class="nav-item active">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="RegisterNav"
+                        onclick="showRegisterForm()">Register</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="NewTodoNav"
+                        onclick="showAddForm()">Create To do</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="logout">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- form login -->
+    <div class="jumbotron jumbotron-fluid mt-5 bg-transparent" id="loginForm">
+        <div class="container mx-auto px-5 w-50">
+            <div id="headlogin">
+                <h1 class="text-center">Login to your account</h1>
+            </div>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <small id="errorHandler" class="form-text text-muted"></small>
+                    <label for="input_email">Email address</label>
+                    <input type="email" class="form-control" id="input_email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="input_password">Password</label>
+                    <input type="password" class="form-control" id="input_password">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <small>Or click here to <a href="#" onclick="showRegisterForm()">register</a>.</small>
+            </form>
+            <!-- <span class="my-0">
+                <p>Login With</p>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </span> -->
+        </div>
+    </div>
+
+    <!-- form register -->
+    <div class="jumbotron jumbotron-fluid mt-5" id="register">
+        <div class="container-sm mt-5 mx-auto px-5 w-50">
+            <h1 class="text-center">Register</h1>
+            <form onsubmit="register(event)" id="registerForm">
+                <div class="form-group">
+                    <small id="errorHandler" class="form-text text-muted"></small>
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Register</button>
+                <small>If you already have an account, login <a href="#" onclick="showLoginForm()">here</a>.</small>
+            </form>
+        </div>
+    </div>
+
+    <!-- Define CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>
+</body>
+</html>
