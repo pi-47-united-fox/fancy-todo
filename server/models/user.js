@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "Email is Required",
+        },
+        unique: {
+            args: true,
+            msg: 'Email address already in use!'
         }
       },
     },
