@@ -9,7 +9,7 @@ Fancy Todo App is an application to manage your activity. This app has :
 
 
 ### POST /todos
-> Get all assets
+> Create New Asset
 
 _Request Header_
 ```
@@ -64,7 +64,7 @@ _Response (500 - Bad Request)_
 ---
 ### GET /todos
 
-> Create new asset
+> Get All Asset
 
 _Request Header_
 ```
@@ -107,7 +107,7 @@ _Response (500 - Bad Request)_
 }
 ```
 ### GET /todos/:id
-> Get all assets
+> Get Asset By Id
 
 _Request Header_
 ```
@@ -146,7 +146,7 @@ _Response (404)_
 ```
 ---
 ### PUT /todos/:id
-> Get all assets
+> Edit Asset by Id
 
 _Request Header_
 ```
@@ -204,7 +204,7 @@ _Response (500 - Bad Request)_
 ```
 
 ### PATCH /todos/:id
-> Get all assets
+> Edit Asset Status by Id
 
 _Request Header_
 ```
@@ -261,7 +261,7 @@ _Response (500 - Bad Request)_
 ---
 ### DELETE /todos/:id
 
-> Create new asset
+> Delete Asset by Id
 
 _Request Header_
 ```
@@ -298,7 +298,7 @@ _Response (500 - Bad Request)_
 ---
 ### POST /register
 
-> Create new asset
+> Create New User
 
 _Request Body_
 ```json
@@ -332,7 +332,7 @@ _Response (404)_
 ---
 ### POST /login
 
-> Create new asset
+> Login to App
 
 _Request Body_
 ```json
@@ -362,6 +362,7 @@ _Response (400 )_
 ```
 
 ### POST /googlelogin
+> login via google account
 
 _Response (201)_
 ```json
