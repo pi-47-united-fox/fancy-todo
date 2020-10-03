@@ -37,12 +37,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
     <title>Document</title>
 </head>
 
-<body>
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body>  
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container">
 
             <a class="navbar-brand" href="#">Fancy Todo</a>
@@ -52,25 +54,22 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" id="home_menu">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#home" id="nav-home-btn">Home <span
+                    <li class="nav-item ">
+                        <a class="nav-link " href="#home" id="nav-home-btn">Home <span
                                 class="sr-only">(current)</span></a>
-                    </li>
-                    <div id="nav-home">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#addTodo" id="nav-addTodo-btn">Add new Todo<span
-                                    class="sr-only"></span></a>
-                        </li>
-                    </div>
+                    </li> 
+                    <li class="nav-item " >
+                        <a class="nav-link " href="#addTodo" id="nav-addTodo-btn">Add new Todo<span class="sr-only"></span></a>
+                    </li> 
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item active" id="log-nav">
                         <a class="nav-link" href="#login" style="display: none;" id="login-btn">Login <span
                                 class="sr-only"></span></a>
                         <a class="nav-link" href="#logout" style="display: none;" id="logout-btn">Logout <span
                                 class="sr-only"></span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="regist-nav">
                         <a class="nav-link" href="#register" style="display: none;" id="regist-btn">Register <span
                                 class="sr-only"></span></a>
                     </li>
@@ -102,7 +101,8 @@
 
                     <div class="form-group">
                         <button type="submit" id="login-form-btn" class="btn btn-primary">Login</button>
-                        <div class="g-signin2 float-right" data-onsuccess="onSignIn"></div>
+                        <div class="g-signin2 float-right" data-onsuccess="onSignIn"></div><br>
+                        dont have an account? <a href="#" onclick="registPage()"> regist here</a>
                     </div>
                 </form>
 
@@ -123,25 +123,132 @@
                         <label for="pass-form-regist">Password</label>
                         <input type="password" class="form-control" id="pass-form-regist" aria-describedby="passHelp">
                     </div>
-                    <button type="submit" id="regist-form-btn" class="btn btn-primary">Register</button>
+                    <div class="form-group">
+                        <button type="submit" id="regist-form-btn" class="btn btn-primary">Register</button>
+                        <div class="g-signin2 float-right" data-onsuccess="onSignIn"></div><br>
+                        already have an account? <a href="#" onclick="loginPage()"> login here</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
+    <div class="popup-form"  style="background-color: whitesmoke; display: none;">
+        <center> 
+            <hr>
+            <div class="container row  justify-content-center">
+                <form> 
+                    <h2>Edit Todo</h2>
+                    <hr>
+                    <div class="form-group">
+                        <input type="number" class="form-control" style="display: none;" id="id-edit-input" value="">
+                        <input type="text" class="form-control" style="display: none;" id="status-edit-input" value="">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="title-edit-input">Activity Title</label>
+                            <input type="text" class="form-control" id="title-edit-input" placeholder="Morning Run">
+                        </div>
+                        <div class="form-group ml-2">
+                          <label for="dueDate-edit-input">Due Date</label>
+                          <input type="date" class="form-control" id="dueDate-edit-input" >
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="description-edit-input">Description</label>
+                        <textarea class="form-control" id="description-edit-input" rows="3"></textarea>
+                    </div>
+    
+                    <div class="form-row"> 
+                        <div class="form-group"> 
+                            <label for="activityType-edit-input">Activity Type :</label>
+                            <select class="type-select" id="activityType-edit-input" required>
+                                <option selected value="Outdoor">Outdoor</option>
+                                <option selected value="Indoor">Indoor</option>
+                            </select>
+                        </div> <hr>
+                        <button class="btn btn-primary ml-5" style="width: 100px;" id="submit-edit-input" > Submit </button>
+                        <button class="btn btn-danger ml-1" style="width: 75px;" id="cancel-edit-input" > Cancel </button>
+                    </div> 
+                </form>
+            </div>
+            <hr>
+            
+        </center>
+    </div>
+    <div class="loader" style="background-color: whitesmoke; display:none">
+        <center> 
+            <img src="http://www.lettersmarket.com/uploads/lettersmarket/blog/loaders/common_blue/ajax_loader_blue_512.gif"
+            style="margin: 100px;" width="100px" alt="">
+        </center>
+    </div>
 
     <!-- Home -->
     <div class="container " id="container-content" style="display: none;">
-        <div class="row justify-content-center" style="background-color: whitesmoke;">
-            <img src="http://www.lettersmarket.com/uploads/lettersmarket/blog/loaders/common_blue/ajax_loader_blue_512.gif"
-                style="margin: 100px;" width="100px" id="loader" alt="">
-        </div>
-        <div class="row row-cols-1 row-cols-md-3 justify-content-around" id="content-list" style="background-color: whitesmoke;">
+        <div class="row"> 
 
+            <div class="col-8 border" > 
+                <div class="row container justify-content-center mt-3" id="addFormContainer" style="display: none;">
+                    <form><h2>Add Activity</h2>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="title-add-input">Activity Title</label>
+                                <input type="text" class="form-control" id="title-add-input" placeholder="Morning Run">
+                            </div>
+                            <div class="form-group ml-2">
+                              <label for="dueDate-add-input">Due Date</label>
+                              <input type="date" class="form-control" id="dueDate-add-input" >
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="description-add-input">Description</label>
+                            <textarea class="form-control" id="description-add-input" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-row"> 
+                            <div class="form-group"> 
+                                <label for="activityType-add-input">Activity Type :</label>
+                                <select class="type-select" id="activityType-add-input" required>
+                                    <option selected value="Outdoor">Outdoor</option>
+                                    <option selected value="Indoor">Indoor</option>
+                                </select>
+                            </div> 
+                            <button class="btn btn-primary ml-5" style="width: 100px;" id="submit-add-input" > Submit </button>
+                            <button class="btn btn-danger ml-1" style="width: 100px;" onclick="hideFormAdd()" > Cancel </button>
+                        </div> <br><br><hr>
+                    </form>
+                </div>
+                <h3>Todays Schedule :</h3>
+                <div class="row  justify-content-around" id="content-list-current"  >
+                    <h4>You have no schedule today</h4>
+                </div>
+                <hr>
+                <div class="row row-cols-1 row-cols-md-2 justify-content-around" id="content-list" style="background-color: whitesmoke;">
+                    
+                </div>
+            </div>
+            <div class="col-3 justify-content-center mt-2" > 
+                <div id="weatherContainer">
+                    <h4>Today's Weather</h4>
+                    <div id="card-weather-current">
+                        <h5 id="weather-currentdate-label"> </h5>
+                        <h6 id="weather-current-label">Rain <p id="weather-day-label">heavy intensity rain</p></h6> 
+                    </div>
+                    <hr>
+                    <h5>Forecast :</h5>
+                    <div id="card-weather-forecast" style="margin-left: 10px;"> 
+                        <div id="loader-img" style="display:none" >
+                            <img src="http://www.lettersmarket.com/uploads/lettersmarket/blog/loaders/common_blue/ajax_loader_blue_512.gif"
+                            style="margin: 100px;"  width="100px" alt="">
+                        </div>
+                    </div>
+                    
+                </div>
+                <a href="#" class="btn btn-primary " onclick="loadWeather()">Reload Weather</a>
+            </div>
         </div>
             <!-- Form add Todo -->
-        <div class="row mt-5 justify-content-center" style="display: none;" id="content-form-add">
-            
+        <!-- <div class="row mt-5 justify-content-center" style="display:none" id="content-form-add"> 
             <form><h2>Add Activity</h2>
                 <hr>
                 <div class="form-row">
@@ -171,9 +278,8 @@
                 </div>
 
 
-            </form>
-
-        </div>
+            </form> 
+        </div> -->
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+.loader{
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	background: #21242d url('https://github.com/Zanadh/zanadh.github.io/blob/master/img/fox-loader2.gif') no-repeat center;
+	z-index: 999;
+}
+
+#popup-form{ 
+    position: fixed;
+    /* display: none; */
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(243, 132, 57, 0.7);
+	z-index: 999;
+}
+
+
+h1,h2,h3,h4,a,p {
+    font-family: 'Varela Round', sans-serif; 
+    /* color: white;  */
+}

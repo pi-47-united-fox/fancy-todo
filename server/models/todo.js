@@ -51,9 +51,14 @@ module.exports = (sequelize, DataTypes) => {
             msg:"Due date cannot be empty"
           },
           checkDate(date){
-            let duedate = new Date(date) 
-            console.log(duedate," ======== ", new Date());
-            if(duedate< new Date()){
+            let duedate = new Date(date)
+            let currentDate = new Date()
+            console.log((new Date(duedate)).getDate() ,"<", currentDate.getDate() ,"\n", (new Date(duedate)).getMonth() ,"<", currentDate.getMonth() ,"\n ", (new Date(duedate)).getFullYear() ,"<", currentDate.getFullYear());
+
+            if((new Date(duedate)).getDate() < currentDate.getDate() ||
+              (new Date(duedate)).getMonth() < currentDate.getMonth() ||
+              (new Date(duedate)).getFullYear() < currentDate.getFullYear()
+            ){
               throw new Error("You can only add upcoming Activity")
             }
           } 
@@ -75,9 +80,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks:{
       afterFind(todo, options){ 
-        if(typeof todo == Array){
+        // console.log(todo,"length<<<<<<<<<<<");
+        if(todo.length){
           todo.forEach(ele=>{
             ele.epoch = dateToEpoch(ele.due_date)
+            // console.log(ele);
           })
         }else{
           todo.epoch = dateToEpoch(todo.due_date)
