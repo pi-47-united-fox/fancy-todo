@@ -32,7 +32,10 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: {
           args: true,
           msg: `fill with correct email format`
-        }
+        },
+        notEmpty: {
+          msg: `fill with email`
+        },
       }
     },
     password: {

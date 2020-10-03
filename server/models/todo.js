@@ -15,8 +15,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `title can be empty!`
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `description can be empty!`
+        }
+      }
+    },
     status: DataTypes.BOOLEAN,
     due_date: {
       type: DataTypes.DATE,
@@ -28,9 +42,30 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     UserId: DataTypes.STRING,
-    food: DataTypes.STRING,
-    location: DataTypes.STRING,
-    link: DataTypes.STRING
+    food: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `food can be empty!`
+        }
+      }
+    },
+    location: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `loacation can be empty!`
+        }
+      }
+    },
+    link: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `Price can be empty!`
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Todo',

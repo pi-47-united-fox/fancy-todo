@@ -51,7 +51,7 @@ const authorization = (req, res, next) => {
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 
-
+router.post('/googleLogin', UserController.googleLogin)
 
 // router.get('/resto', (req, res) => {
 //     res.status(200).json({ msg: 'masuk' })

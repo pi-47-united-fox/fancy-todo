@@ -1,6 +1,5 @@
 const { Todo } = require('../models')
 const axios = require('axios');
-const MoviesControllers = require('./movieController');
 class TodoControllers {
 
     static createData(req, res) {
@@ -22,9 +21,9 @@ class TodoControllers {
             status: false,
             due_date: new Date(),
             UserId: req.userData.id,
-            food: 'foodName',
-            location: 'location',
-            link: 'link'
+            food: req.body.food,
+            location: req.body.location,
+            link: req.body.link
         }
         // return
         // })
@@ -107,7 +106,8 @@ class TodoControllers {
             }
         })
             .then(data => {
-                return res.status(200).json({ msg: `todo sucess to delete` })
+                console.log(data)
+                return res.status(200).json({ msg: `todo sucess to delete`, data })
             })
             .catch(err => {
                 return res.status(500).json(err)

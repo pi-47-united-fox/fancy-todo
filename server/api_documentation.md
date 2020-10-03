@@ -62,7 +62,7 @@ _Response (500 - INTERNAL SERVER ERROR)_
 _Request Header_
 ```json
 {
-  "access_token": "<your access token>"
+  "access_token": "<your access token>",
 }
 ```
 
@@ -359,3 +359,133 @@ _Response (500 - INTERNAL SERVER ERROR)_
   "message": "errors status code 500"
 }
 ```
+
+### GET //resto?search=query
+
+> Get all assets
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>",
+  "api-key" : "<api key for access>"
+}
+```
+
+_Request Body_
+```
+    not needed
+```
+
+_Response (200)_
+```json
+[
+  {
+   "restaurant": {
+            "R": {
+                "has_menu_status": {
+                    "delivery": -1,
+                    "takeaway": -1
+                },
+                "res_id": 7411048,
+                "is_grocery_store": false
+            },
+            "apikey": "fb21e803d67c86145e20b125d10b05fa",
+            "id": "7411048",
+            "name": "Mie Cakalang",
+            "url": "https://www.zomato.com/jakarta/mie-cakalang-lebak-bulus?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+            "location": {
+                "address": "Pasar Karinda, Jl. Karang Tengah Raya No. 4, Lebak Bulus, Jakarta",
+                "locality": "Pasar Karinda, Lebak Bulus",
+                "city": "Jakarta",
+                "city_id": 74,
+                "latitude": "-6.3059770000",
+                "longitude": "106.7820940000",
+                "zipcode": "",
+                "country_id": 94,
+                "locality_verbose": "Pasar Karinda, Lebak Bulus, Jakarta"
+            },
+            "switch_to_order_menu": 0,
+            "cuisines": "Bakmi, Manado",
+            "timings": "10 AM to 8 PM",
+            "average_cost_for_two": 75000,
+            "price_range": 1,
+            "currency": "IDR",
+            "highlights": [
+                "Breakfast",
+                "Dinner",
+                "No Alcohol Available",
+                "Takeaway Available",
+                "Lunch",
+                "Cash",
+                "Indoor Seating"
+            ],
+            "offers": [],
+            "opentable_support": 0,
+            "is_zomato_book_res": 0,
+            "mezzo_provider": "OTHER",
+            "is_book_form_web_view": 0,
+            "book_form_web_view_url": "",
+            "book_again_url": "",
+            "thumb": "https://b.zmtcdn.com/data/pictures/8/7411048/9a398cf86f23d2c35db2345318db48b1.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A",
+            "user_rating": {
+                "aggregate_rating": "3.4",
+                "rating_text": "Average",
+                "rating_color": "CDD614",
+                "rating_obj": {
+                    "title": {
+                        "text": "3.4"
+                    },
+                    "bg_color": {
+                        "type": "lime",
+                        "tint": "500"
+                    }
+                },
+                "votes": 10
+            },
+            "all_reviews_count": 4,
+            "photos_url": "https://www.zomato.com/jakarta/mie-cakalang-lebak-bulus/photos?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1#tabtop",
+            "photo_count": 30,
+            "menu_url": "https://www.zomato.com/jakarta/mie-cakalang-lebak-bulus/menu?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1&openSwipeBox=menu&showMinimal=1#tabtop",
+            "featured_image": "https://b.zmtcdn.com/data/pictures/8/7411048/9a398cf86f23d2c35db2345318db48b1.jpg",
+            "has_online_delivery": 0,
+            "is_delivering_now": 0,
+            "store_type": "",
+            "include_bogo_offers": true,
+            "deeplink": "zomato://restaurant/7411048",
+            "is_table_reservation_supported": 0,
+            "has_table_booking": 0,
+            "events_url": "https://www.zomato.com/jakarta/mie-cakalang-lebak-bulus/events#tabtop?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+            "phone_numbers": "021 7693029, 0816 985415, 0812 89692511",
+            "all_reviews": {
+                "reviews": [
+                    {
+                        "review": []
+                    },
+                    {
+                        "review": []
+                    },
+                    {
+                        "review": []
+                    },
+                    {
+                        "review": []
+                    }
+                ]
+            },
+            "establishment": [
+                "Quick Bites"
+            ],
+            "establishment_types": []
+        }
+    },
+]
+```
+
+_Response (500 - Internal Server Errors)_
+```json
+{
+  "message": "errors status code 500"
+}
+```
+---
