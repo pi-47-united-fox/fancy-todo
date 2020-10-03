@@ -15,6 +15,10 @@ const afterLogin = () => {
 	$(".before-login").hide();
 	$(".after-login").show();
 	showAllTodo();
+	$("#user-profile-picture").append(`
+		<img src="${localStorage.profile_pic}" width="30"
+		height="30" class="d-inline-block align-top" alt=""> Hey ${localStorage.userName}, Welcome back
+	`);
 };
 
 const hideall = () => {
@@ -33,9 +37,11 @@ const login = (event) => {
 		method: "POST",
 		data: { email, password },
 	})
-		.done(({ access_token }) => {
+		.done(({ access_token, userName, profile_pic }) => {
 			$("registerEmail").val();
 			localStorage.access_token = access_token;
+			localStorage.userName = userName;
+			localStorage.profile_pic = profile_pic;
 			$("#loginForm")[0].reset();
 			afterLogin();
 		})
@@ -62,6 +68,7 @@ $(document).ready(() => {
 		localStorage.clear();
 		signOut();
 		beforeLogin();
+		$("#user-profile-picture").empty()
 	});
 });
 
@@ -239,6 +246,7 @@ const searchManga = (event) => {
 };
 
 const addManga = (event, title, description, img_url, score) => {
+	console.log("ahahhahahah")
 	event.preventDefault();
 	$.ajax({
 		url: "http://localhost:3000/todos",

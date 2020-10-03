@@ -470,7 +470,9 @@ _Response (201 - Created)_
 
 ```
 {
-    "access_token": "<generated accesss token>"
+    "access_token": "<generated accesss token>",
+    "useName": "<user first name + user last name>",
+    "profilePic": "<user link to profile picture>"
 }
 ```
 

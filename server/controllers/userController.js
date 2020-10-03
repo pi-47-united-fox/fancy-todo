@@ -36,7 +36,11 @@ class userController {
 			.then((data) => {
 				if (data && checkPassword(userBody.password, data.password)) {
 					const access_token = loginToken({ id: data.id, email: data.email });
-					res.status(201).json({ access_token });
+					res.status(201).json({
+						access_token,
+						userName: `${data.first_name} ${data.last_name}`,
+						profile_pic: data.profile_pic,
+					});
 				} else {
 					res.status(401).json({ message: "Invalid email or password" });
 				}
