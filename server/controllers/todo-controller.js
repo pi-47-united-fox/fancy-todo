@@ -42,6 +42,7 @@ class TodoController {
             })
     }
     static editById(req, res, next) {
+        console.log(req.body, '<-----ini dari edit controller');
         let obj = {
             title: req.body.title,
             description: req.body.description,
@@ -49,6 +50,7 @@ class TodoController {
             due_date: req.body.due_date,
 
         }
+        // console.log(obj);
         Todo.update(obj, {
             where: {
                 id: req.params.id

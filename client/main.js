@@ -13,10 +13,10 @@ const loginPage = () => {
 
     $('#loginPage').show()
     $('#registerPage').hide()
-    $('#homePage').show()
+    $('#homePage').hide()
     $('#sideNav').hide()
 
-    
+
 
 
 }
@@ -24,7 +24,6 @@ const loginPage = () => {
 const registerPage = () => {
     $('#loginPage').hide()
     $('#registerPage').show()
-    // $('#todo').hide()
 
 
 }
@@ -34,9 +33,8 @@ const homePage = () => {
     $('#registerPage').hide()
     $('#homePage').show()
     $('#sideNav').show()
-
-
     fetchData()
+    weather()
 
 
 }
@@ -73,7 +71,8 @@ $('#btn-login').on('click', (event) => {
 
 
 //logout BUTTON
-$('#btn-logout').click(() => {
+$('#btn-logout').click((event) => {
+    event.preventDefault()
     console.log('apa gitu');
     // localStorage.removeItem('access_token')
     $('#emailLogin').val('')
@@ -90,12 +89,13 @@ $('#btn-addTodo').on('click', (event) => {
 })
 
 
-//Edit todo BUTTON
-// $('#btn-addTodo').on('click', (event) => {
-//     event.preventDefault()
-//     addTodo()
+// Edit todo BUTTON
+$('#btn-updateTodo').on('click', (event) => {
+    event.preventDefault()
+    updateTodo()
 
-// })
+
+})
 
 
 
@@ -108,7 +108,7 @@ const userRegister = () => {
     let email = $('#emailRegister').val()
     let password = $('#passwordRegister').val()
 
-    console.log(email, password);
+    // console.log(email, password);
     $.ajax({
         method: 'POST',
         url: 'http://localhost:3000/register',
@@ -166,16 +166,28 @@ const fetchData = () => {
     })
         .done(result => {
             console.log(result);
+            $('#list').empty()
             result.forEach(data => {
+                let check
+                if (data.status === false) {
+                    check = ''
+                } else {
+                    check = 'checked'
+                }
                 $('#list').append(`
                 <div class="card " id="card">
                 <div class="header">
                     <div>
                         <h5 class="card-title">${data.title}</h5>
+                        <h7>${data.due_date}</h7>
                     </div>
                 </div>
                 <div class="card-body" >
                     <p class="card-text">${data.description}</p>
+                </div>
+                <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" ${check}>
+                <label class="form-check-label" for="exampleCheck1">Complite?</label>
                 </div>
                 <div class="cardButton">
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#edit" onClick="edit(${data.id})">Edit</a>
@@ -211,7 +223,8 @@ const edit = (id) => {
             $('#editTitle').val(result.title)
             $('#editDescription').val(result.description)
             $('#editDueDate').val(result.due_date)
-            homePage()
+            $('#idedited').val(result.id)
+
         })
         .fail(err => {
             $('#title').val('')
@@ -220,38 +233,39 @@ const edit = (id) => {
         })
 }
 
-// //POST EDIT
-// const edit = (id) => {
-//     let title = $('#title').val()
-//     let description = $('#description').val()
-//     let due_date = $('#dueDate').val()
-//     console.log(title, description, due_date);
+//POST EDIT
+const updateTodo = () => {
+    let title = $('#editTitle').val()
+    let description = $('#editDescription').val()
+    let due_date = $('#editDueDate').val()
+    let id = $('#idedited').val()
+    console.log(`berhasil edit ${id}`);
+    console.log(`berhasil edit ${title}`);
 
-//     $.ajax({
-//         method: "POST",
-//         url: `http://localhost:3000/todos/`,
-//         headers: {
-//             access_token: localStorage.getItem('access_token')
-//         },
-//         data: {
-//             title,
-//             description,
-//             due_date
-//         }
-//     })
-//         .done(result => {
-//             $('#title').val('')
-//             $('#description').val('')
-//             $('#due_date').val('')
-//             homePage()
-//         })
-//         .fail(err => {
-//             $('#title').val('')
-//             $('#description').val('')
-//             $('#due_date').val('')
-//         })
 
-// }
+    console.log(title, description, due_date);
+
+    $.ajax({
+        method: "PUT",
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        },
+        data: {
+            title: title,
+            description: description,
+            due_date: due_date
+        }
+    })
+        .done(result => {
+            console.log(result);
+            homePage()
+        })
+        .fail(err => {
+            console.log(err);
+        })
+
+}
 
 //CREATE TODO
 const addTodo = () => {
@@ -276,6 +290,7 @@ const addTodo = () => {
             $('#title').val('')
             $('#description').val('')
             $('#due_date').val('')
+            fetchData()
             homePage()
         })
         .fail(err => {
@@ -306,3 +321,28 @@ function deleteTodo(id) {
             console.log(err)
         })
 }
+
+
+
+const weather = () => {
+    $('#weather-location-label').empty()
+    $.ajax({
+        method: "GET",
+        url: `http://localhost:3000/todos/weather`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        },
+
+    })
+        .done(response => {
+
+            $('#weather-location-label').append(`
+            <h2>${response.temp}&#8451;</h2>
+            ${response.location}
+            `)
+
+        })
+        .fail(err => {
+            console.log(err);
+        })
+} 

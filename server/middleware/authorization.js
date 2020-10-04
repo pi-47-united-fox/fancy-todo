@@ -1,6 +1,7 @@
 const { Todo, User } = require('../models')
 
 const authorization = (req, res, next) => {
+    console.log(req.userData);
     const { id } = req.params
     const userData = req.userData.id
     Todo.findByPk(id)
