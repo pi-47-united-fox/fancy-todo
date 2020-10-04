@@ -14,7 +14,7 @@ class ApiController {
                 temp:  (Math.floor(5/9*(data.main.temp-32))),
                 location : data.name
             }
-            console.log(weather);
+            console.log(weather)
            
             return res.status(200).json(weather)
         })
