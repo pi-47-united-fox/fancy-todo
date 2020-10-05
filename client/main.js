@@ -101,7 +101,6 @@ $('#btn-updateTodo').on('click', (event) => {
 
 
 
-
 //ACTION---------------------------------------------------------
 
 const userRegister = () => {
@@ -179,14 +178,14 @@ const fetchData = () => {
                 <div class="header">
                     <div>
                         <h5 class="card-title">${data.title}</h5>
-                        <h7>${data.due_date}</h7>
+                        <h7>${formatDate(data.due_date)}</h7>
                     </div>
                 </div>
                 <div class="card-body" >
                     <p class="card-text">${data.description}</p>
                 </div>
                 <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" ${check}>
+                <input type="checkbox" class="form-check-input" id="updateStatus" ${check} onclick="updateStatus(${data.id})">
                 <label class="form-check-label" for="exampleCheck1">Complite?</label>
                 </div>
                 <div class="cardButton">
@@ -219,10 +218,11 @@ const edit = (id) => {
         }
     })
         .done(result => {
+            console.log(formatDate(result.due_date));
             console.log(result);
             $('#editTitle').val(result.title)
             $('#editDescription').val(result.description)
-            $('#editDueDate').val(result.due_date)
+            $('#editDueDate').val(formatDate(result.due_date))
             $('#idedited').val(result.id)
 
         })
@@ -304,7 +304,7 @@ const addTodo = () => {
 
 //DELETE TODO
 function deleteTodo(id) {
-    console.log(id);
+    // console.log(id);
 
     $.ajax({
         url: `http://localhost:3000/todos/${id}`,
@@ -314,7 +314,7 @@ function deleteTodo(id) {
         }
     })
         .done(result => {
-            console.log('berhasil terhapus', result)
+            // console.log('berhasil terhapus', result)
             fetchData()
         })
         .fail(err => {
@@ -345,4 +345,48 @@ const weather = () => {
         .fail(err => {
             console.log(err);
         })
-} 
+}
+
+//FORMATED DATE
+function formatDate(date) {
+    var now = new Date(date);
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    return today = now.getFullYear() + "-" + (month) + "-" + (day)
+}
+
+
+//EDIT STATUS TODO
+
+function updateStatus(id) {
+    console.log(id);
+    let status = $('#updateStatus').val()
+    console.log(status);
+    if ($(this).is(":checked")) {
+        //'checked' event code
+        status = false
+    } else {
+        status = true
+    }
+
+    $.ajax({
+        url: `http://localhost:3000/todos/${id}`,
+        method: "PATCH",
+        data: {
+            status
+        },
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+        .done(result => {
+            // console.log(result);
+            fetchData()
+
+        })
+        .fail(err => {
+            console.log(err)
+        })
+
+}
+
