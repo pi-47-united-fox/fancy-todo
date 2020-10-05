@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="256037848773-e749160nepbp7r6rvaufq9vhvk9rug3i.apps.googleusercontent.com">
+    <title>Fancy Todo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/weather.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <!-- Nav Bar -->
+    <div class="container navbar">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Fancy Todo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link user-logedin-nav" id="btn-signOut" href="#">Sign Out</a>
+                    </li>
+                    <li>
+                        <a class="nav-link user-logedin-nav" id='btn-editUser' href="#" data-toggle="modal" data-target="#editUserForm" data-whatever="">User Setting</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade" id="editUserForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Change User Data</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">User name:</label>
+                  <input type="text" class="form-control" id="user_nameEd" required>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Email :</label>
+                  <input type="email" class="form-control" id="emailEd" required>
+
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Kota :</label>
+                    <input type="text" class="form-control" id="locationEd" required>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label"> Change Dashboard Background :</label>
+                    <input type="text" class="form-control" id="bgKeynameEd">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <p>* After Click Save Button you can close, sign out, then sign in again to see the result</p>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="saveEdit(event)">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- END MODAL -->
+
+    <!-- Main 1 : Front Page -->
+    <div class="container">
+        <div class="jumbotron" id="homePage1">
+            <div class="row">
+                <div class="col">
+                    <!-- Kata - kata sambutan -->
+                    <h1 class="display"></h1>
+                    <hr class="my-4">
+                    <p class="lead">Fancy Todo is a task management app to help you stay organized and manage your day-to-day. You can use Fancy Todo to make shopping lists, take notes, plan an event to increase your productivity and focus on what matters to you. Fancy Todo makes it easy to stay organized and manage your life.</p>
+                </div>
+                <div class="col">
+                    <!-- Unutk Form -->
+                    <!-- Form Sign In -->
+                    <div id="signInForm">
+                        <h1>Sign In</h1>
+                        <form onsubmit="signIn(event)">
+                            <div class="form-group">
+                                <label for="emailSI">Email address :</label>
+                                <input type="email" class="form-control" id="emailSI" aria-describedby="emailHelp"
+                                    placeholder="Enter email" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSI">Password :</label>
+                                <input type="password" class="form-control" id="passwordSI" placeholder="Password" required>
+                            </div>
+                            <div id="showNotifLogin">
+
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Sign In</button>
+                                <button class="btn btn-success" onclick="showSignUpForm(event)">Don't Have Account</button>
+                            </div><br>
+                            <div>
+                                <h5>Or Sign In With:</h5>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- form sign Up -->
+                    <div id="signUpForm">
+                        <h1>Sign Up</h1>
+                        <form onsubmit="signUp(event)">
+                            <div class="form-group">
+                                <label for="emailSU">Email address :</label>
+                                <input type="email" class="form-control" id="emailSU" aria-describedby="emailHelp"
+                                    placeholder="Enter email" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSU">Password :</label>
+                                <input type="password" class="form-control" id="passwordSU" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSU">Repeat Password :</label>
+                                <input type="password" class="form-control" id="passwordSU-2nd" placeholder="Password" required>
+                            </div>
+                            <div id="notifikasiSignUp">
+
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Sign Up</button>
+                                <button class="btn btn-success" onclick="showSignInForm(event)">I have an Account</button>
+                            </div><br>
+                            <div>
+                                <h5>Or Sign Up With:</h5>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main 2 : Dashboard -->
+    <div class="container jumbotron" id="mainDashboard1">
+        <div class="row">
+            <div class="col">
+                <h2>Hallo <span id="halo-name"></span></h2>
+                <h5>Berikut perikiraan cuaca hari ini:</h5>
+                <div id="cuaca">
+                    <!-- Append from user-database -->
+                </div>
+            </div>
+            <div class="col-8">
+                <h3>Here Your task: </h3>
+                <br>
+                <a href="#" class="btn btn-primary" onclick="addTodoForm()">Add Todo</a>
+                <hr>
+                <!-- Form add -->
+                <div id="addTodo" style="width: 40rem; margin-bottom: 2rem">
+                    <form onsubmit="addTodo(event)">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control title" placeholder="Title" id="titleAdd" required>
+                            </div>
+                            <div class="col">
+                                <input type="date" class="form-control due_date" placeholder="due date" id="dueDateAdd" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control description" id="descriptionAdd" rows="3"
+                                placeholder="Description Here...."></textarea>
+                        </div>
+                        <p>* Date Must be grather than today</p>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button onclick="cancleAdd(event)" class="btn btn-danger">Cancel</button>
+                    </form>
+                </div>
+                <div id="todoList">
+                    <!-- Isi Todo dari DataBase -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!--  -->
+    <!-- <script src="./js/jquery.imgcheckbox.js"></script> -->
+    <script src="./main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+body {
+    background: url('https://kecbio.com/wallpaper/hot-pink-minimalist-wallpapers-high-quality-For-Full-Resolution-Wallpaper.jpg');
+    background-size: cover;
+}
+
+#mainDashboard1 {
+    backdrop-filter: blur(10px);
+}
+
+.jumbotron {
+    background: none;
+}

@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A Fancy Todo - Server",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "NODE_ENV=development nodemon app.js"
+  },
+  "keywords": [
+    "todo",
+    "express",
+    "sequelize",
+    "postgres",
+    "CRUD"
+  ],
+  "author": "Bagus Rizki Setiawan",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "sequelize-cli": "^6.2.0"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "google-auth-library": "^6.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.5"
+  }
+}
