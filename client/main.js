@@ -53,7 +53,7 @@ function loginApp(event) {
         })
 }
 
-function editTodo(event) {
+function editTodo(event, id) {
     event.preventDefault()
     let title = $('#editTitle').val()
     let description = $('#editDescription').val()
@@ -68,6 +68,7 @@ function editTodo(event) {
             data: {
                 title,
                 description,
+                status,
                 due_date
             }
         })
@@ -110,6 +111,7 @@ function getTodos() {
             Todos = result
             $("#todoList").empty()
             $.each(Todos, (key, value) => {
+                console.log(value.id);
                 $("#todoList").append(`
                 <tbody>
                 <tr>
@@ -124,7 +126,7 @@ function getTodos() {
                         <td>${value.status}</td>
                         <td>${value.due_date}</td>
                         <td>
-                            <a href="#" onClick="editTodo(${value.id})" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#" onClick="editTodo(${value.id})" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                             <a href="#" onClick="deleteTodo(${value.id})" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                         </td>
                         </tr>
@@ -191,6 +193,12 @@ $(".register-btn").click(function() {
 
 $(".btn-add").click(() => {
     $(".create").show()
+    $(".dashboard").hide()
+    $(".user-todo-list").show()
+})
+
+$(".edit").click(() => {
+    $(".edit").show()
     $(".dashboard").hide()
     $(".user-todo-list").show()
 })
