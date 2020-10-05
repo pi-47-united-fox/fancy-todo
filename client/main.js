@@ -33,7 +33,7 @@ const login = (event) => {
 	const email = $("#email").val();
 	const password = $("#password").val();
 	$.ajax({
-		url: "https://api-manga-fancy-todo.herokuapp.com/login",
+		url: "http://localhost:3000/login",
 		method: "POST",
 		data: { email, password },
 	})
@@ -51,17 +51,22 @@ const login = (event) => {
 		});
 };
 
-const onSignIn = (googleUser) => {
-	const token = googleUser.getAuthResponse().id_token;
-	$.ajax({
-		method: "POST",
-		url: "https://api-manga-fancy-todo.herokuapp.com/googlesign",
-		data: { token },
-	}).done(({ access_token }) => {
-		localStorage.access_token = access_token;
-		afterLogin();
-	});
-};
+function onSignIn(googleUser) {
+    const token = googleUser.getAuthResponse().id_token;
+
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/googlesign',
+        data: {token}
+    })
+        .done(result => {
+            localStorage.setItem('access_token', result.access_token)
+            afterLogin()
+        })
+        .fail(err => {
+            console.log(err)
+        })
+}
 
 $(document).ready(() => {
 	$("#logout").click(() => {
@@ -97,7 +102,7 @@ const register = (event) => {
 		gender: $("input[name='gender']:checked").val(),
 	};
 	$.ajax({
-		url: "https://api-manga-fancy-todo.herokuapp.com/register",
+		url: "http://localhost:3000/register",
 		method: "POST",
 		data: userData,
 	})
@@ -112,7 +117,7 @@ const register = (event) => {
 
 const showAllTodo = () => {
 	$.ajax({
-		url: "https://api-manga-fancy-todo.herokuapp.com/todos",
+		url: "http://localhost:3000/todos",
 		method: "GET",
 		headers: {
 			access_token: localStorage.access_token,
@@ -153,7 +158,7 @@ const showAllTodo = () => {
 const deleteTodo = (event, id) => {
 	event.preventDefault();
 	$.ajax({
-		url: `https://api-manga-fancy-todo.herokuapp.com/todos/${id}`,
+		url: `http://localhost:3000/todos/${id}`,
 		method: "DELETE",
 		headers: {
 			access_token: localStorage.access_token,
@@ -170,7 +175,7 @@ const deleteTodo = (event, id) => {
 const changeStatusTodo = (event, id, status) => {
 	event.preventDefault();
 	$.ajax({
-		url: `https://api-manga-fancy-todo.herokuapp.com/todos/${id}`,
+		url: `http://localhost:3000/todos/${id}`,
 		method: "PATCH",
 		headers: {
 			Content_Type: "application/json",
@@ -193,7 +198,7 @@ const searchManga = (event) => {
 	const title = $("#search-manga").val();
 
 	$.ajax({
-		url: "https://api-manga-fancy-todo.herokuapp.com/jikan/search",
+		url: "http://localhost:3000/jikan/search",
 		method: "POST",
 		headers: {
 			access_token: localStorage.access_token,
@@ -207,7 +212,7 @@ const searchManga = (event) => {
 				// have to remove qoute's, need better solution
 				for (let i = 0; i < el.synopsis.length; i++) {
 					if (el.synopsis[i] === '"') {
-						el.synopsis = el.synopsis.slice(0, i) + el.synopsis.slice(i + 1)
+						el.synopsis = el.synopsis.slice(0, i) + el.synopsis.slice(i + 1);
 					}
 				}
 				$(".row").append(`
@@ -254,7 +259,7 @@ const searchManga = (event) => {
 const addManga = (event, title, description, img_url, score) => {
 	event.preventDefault();
 	$.ajax({
-		url: "https://api-manga-fancy-todo.herokuapp.com/todos",
+		url: "http://localhost:3000/todos",
 		method: "POST",
 		headers: {
 			access_token: localStorage.access_token,

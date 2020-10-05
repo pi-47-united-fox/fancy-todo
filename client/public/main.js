@@ -51,17 +51,21 @@ const login = (event) => {
 		});
 };
 
-const onSignIn = (googleUser) => {
-	const token = googleUser.getAuthResponse().id_token;
-	$.ajax({
-		method: "POST",
-		url: "https://api-manga-fancy-todo.herokuapp.com/googlesign",
-		data: { token },
-	}).done(({ access_token }) => {
-		localStorage.access_token = access_token;
-		afterLogin();
-	});
-};
+function onSignIn(googleUser) {
+    const token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: 'POST',
+        url: 'https://api-manga-fancy-todo.herokuapp.com/googlesign',
+        data: {token}
+    })
+        .done(result => {
+            localStorage.setItem('access_token', result.access_token)
+            afterLogin()
+        })
+        .fail(err => {
+            console.log(err)
+        })
+}
 
 $(document).ready(() => {
 	$("#logout").click(() => {
