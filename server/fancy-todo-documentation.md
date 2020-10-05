@@ -557,3 +557,40 @@ _Response (404 - Not Found)_
     "message": "Data Not Found"
 }
 ```
+### POST /googlesign
+
+> Create A Todo
+
+_Request Header_
+
+```
+{
+    "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+
+```
+{
+    "token": "<token id from google>"
+}
+```
+
+_Response (201 - Created)_
+
+```
+{
+    "access_token": "<generated accesss token>",
+    "useName": "<user first name + user last name>",
+    "profilePic": "<user link to profile picture>"
+}
+```
+
+_Response (500 - Internal Server Error)_
+
+```
+{
+    "message": "<error messages>"
+}
+```

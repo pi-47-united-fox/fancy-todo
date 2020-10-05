@@ -74,7 +74,11 @@ class userController {
 			})
 			.then((data) => {
 				const access_token = loginToken({ email: data.email, id: data.id });
-				res.status(200).json({ access_token });
+				res.status(200).json({
+					access_token,
+					userName: `${data.first_name} ${data.last_name}`,
+					profile_pic: data.profile_pic,
+				});
 			})
 			.catch((err) => {
 				next(err);

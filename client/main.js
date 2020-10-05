@@ -9,12 +9,14 @@ $(document).ready(() => {
 const beforeLogin = () => {
 	$(".before-login").show();
 	$(".after-login").hide();
+	$("#main-page-title").text("");
 };
 
 const afterLogin = () => {
 	$(".before-login").hide();
 	$(".after-login").show();
 	showAllTodo();
+	$("#user-profile-picture").empty();
 	$("#user-profile-picture").append(`
 		<img src="${localStorage.profile_pic}" width="30"
 		height="30" class="d-inline-block align-top" alt=""> Hey ${localStorage.userName}, Welcome back
@@ -52,20 +54,22 @@ const login = (event) => {
 };
 
 function onSignIn(googleUser) {
-    const token = googleUser.getAuthResponse().id_token;
+	const token = googleUser.getAuthResponse().id_token;
 
-    $.ajax({
-        method: 'POST',
-        url: 'http://localhost:3000/googlesign',
-        data: {token}
-    })
-        .done(result => {
-            localStorage.setItem('access_token', result.access_token)
-            afterLogin()
-        })
-        .fail(err => {
-            console.log(err)
-        })
+	$.ajax({
+		method: "POST",
+		url: "http://localhost:3000/googlesign",
+		data: { token },
+	})
+		.done(({ access_token, userName, profile_pic }) => {
+			localStorage.access_token = access_token;
+			localStorage.userName = userName;
+			localStorage.profile_pic = profile_pic;
+			afterLogin();
+		})
+		.fail((err) => {
+			console.log(err);
+		});
 }
 
 $(document).ready(() => {
@@ -132,7 +136,7 @@ const showAllTodo = () => {
 				<div class="card m-1" style="width: 17rem" id="todos-${el.id}">
 					<img class="card-img-top" style="height: 20rem" src="${el.img_url}" alt="manga cover ${el.title}" />
 					<div class="card-body">
-						<h5 class="card-title" style="height: 2rem">${el.title}</h5>
+						<h5 class="card-title" style="height: 4rem">${el.title}</h5>
 						<p class="card-text" style="height: 12rem">${el.description}</p>
 					</div>
 					<ul class="list-group list-group-flush">
@@ -208,41 +212,36 @@ const searchManga = (event) => {
 		.done((result) => {
 			$("#main-page-title").text("Search Result");
 			$(".row").empty();
-			result.forEach((el) => {
-				// have to remove qoute's, need better solution
-				for (let i = 0; i < el.synopsis.length; i++) {
-					if (el.synopsis[i] === '"') {
-						el.synopsis = el.synopsis.slice(0, i) + el.synopsis.slice(i + 1);
-					}
-				}
+			result.forEach((el, i) => {
+				console.log(el);
 				$(".row").append(`
 				<div class="card m-1" style="width: 17rem">
-					<img class="card-img-top" style="height: 20rem" src="${el.image_url}" alt="manga cover ${el.title}" />
+					<img class="card-img-top" style="height: 20rem" id="img_url-${i}" src="${el.image_url}" alt="manga cover ${el.title}" />
 					<div class="card-body">
-						<h5 class="card-title" style="height: 3rem">${el.title}</h5>
-						<p class="card-text" style="height: 12rem">${el.synopsis}</p>
+						<h5 class="card-title" style="height: 4rem" id="title-${i}">${el.title}</h5>
+						<p class="card-text" style="height: 12rem" id="synopsis-${i}">${el.synopsis}</p>
 					</div>
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Rating: ${el.score}</li>
+						<li class="list-group-item" >Rating: ${el.score}</li>
 						<li class="list-group-item">Status: <br>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="status-${el.title}" value="true">
-								<label class="form-check-label" for="status-${el.title}">Finished</label>
+								<input class="form-check-input" type="radio" name="status-${i}" value="true">
+								<label class="form-check-label" for="status-${i}">Finished</label>
 					  		</div>
 					  		<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="status-${el.title}" value="false">
-								<label class="form-check-label" for="status-${el.title}">Reading</label>
+								<input class="form-check-input" type="radio" name="status-${i}" value="false">
+								<label class="form-check-label" for="status-${i}">Reading</label>
 					  		</div>
 						</li>
 						<li class="list-group-item">Due Date: 
-							<input type="date" class="form-control-inline" id="dueDate-${el.title}">
+							<input type="date" class="form-control-inline" id="dueDate-${i}">
 						</li>
 					</ul>
 					<div class="card-body">
 						<button 
 							class="btn btn-outline-secondary" 
 							type="button" 
-							onclick="addManga(event, '${el.title}', '${el.synopsis}', '${el.image_url}', ${el.score})"
+							onclick="addManga(event, ${el.score}, ${i})"
 						>
 							Add to List
 						</button>
@@ -256,7 +255,7 @@ const searchManga = (event) => {
 		});
 };
 
-const addManga = (event, title, description, img_url, score) => {
+const addManga = (event, score, i) => {
 	event.preventDefault();
 	$.ajax({
 		url: "http://localhost:3000/todos",
@@ -265,12 +264,12 @@ const addManga = (event, title, description, img_url, score) => {
 			access_token: localStorage.access_token,
 		},
 		data: {
-			title,
-			description,
-			img_url,
+			title: $(`#title-${i}`).text(),
+			description: $(`#synopsis-${i}`).text(),
+			img_url: $(`#img_url-${i}`).prop("src"),
 			score,
-			status: $(`input[name="status-${title}"]:checked`).val(),
-			due_date: $(`input[id="dueDate-${title}"]`).val(),
+			status: $(`input[name="status-${i}"]:checked`).val(),
+			due_date: $(`input[id="dueDate-${i}"]`).val(),
 		},
 	})
 		.done(() => {
