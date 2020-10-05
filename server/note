@@ -1,0 +1,6 @@
+heroku - server
+
+1. kasih conditional untuk dotenv pada stage development -- app.js--
+2. pastikan cors terpasang, app.js
+3. pada stage production isi dengan "use_env_variable": "DATABASE_URL", config/config.json
+4. script tampahkan "start": "node app.js", package.json

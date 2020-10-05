@@ -36,6 +36,7 @@ class UserController {
                     email: input.email
                 }
             })
+            console.log(comparePassword(input.password, user.password))
 
             if(!user) {
                 res.status(401).json({

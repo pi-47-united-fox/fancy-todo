@@ -1,5 +1,7 @@
 'use strict'
-require('dotenv').config()
+if(process.NODE_ENV === 'develpoment') {
+    require('dotenv').config() 
+}
 const express = require('express')
 const cors  = require('cors')
 const app = express()

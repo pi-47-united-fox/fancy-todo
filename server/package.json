@@ -4,6 +4,8 @@
   "description": "Membuat website untuk manage hal- hal menarik yang akan dilakukan",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
+    "dev":"NODE_ENV=development nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
