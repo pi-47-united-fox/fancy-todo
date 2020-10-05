@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     status: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       validate: {
         notEmpty: {
           msg: "Please fill the status!"
@@ -55,24 +55,39 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: "Please fill the Artist!"
+          msg: "Cannot find Link by the Artist, Please Change the Artist!"
         }
       }
     },
     image: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Cannot find Image by the Artist, Please Change the Artist!"
+        }
+      }
     },
     song: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Cannot find Song by the Artist, Please Change the Artist!"
+        }
+      }
     },
     artist: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Please fill the Artist!"
+        }
+      }
     },
     UserId: DataTypes.INTEGER
   }, {
     hooks: {
       beforeCreate(Todo) {
-        Todo.status = false
+        Todo.status = "Incomplete"
       }
     },
     sequelize,

@@ -86,7 +86,10 @@ class UserController {
                 id: user.id,
                 email: user.email
             })
-            return res.status(200).json({access_token,UserId: user.id,message:'berhasil login'})
+            return res.status(200).json({
+                access_token,
+                UserId: user.id,
+                message:'berhasil login'})
         })
         .catch(err => {
             next(err)

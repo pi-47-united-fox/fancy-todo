@@ -59,7 +59,6 @@ class TodoController {
         })
     }
     static putTodo(req,res,next){
-        let id = +req.params.id
         TodoController.searchMusic(req.body.artist)
         .then(response => {
             return Todo.update({
@@ -67,14 +66,15 @@ class TodoController {
                 description: req.body.description,
                 status: req.body.status,
                 due_date: req.body.due_date,
-                artist: response.data.data[0].artist.name,
+                artist: req.body.artist,
+
                 song: response.data.data[0].title,
                 link: response.data.data[0].link,
                 image: response.data.data[0].artist.picture_big,
                 UserId: req.userData.id
             },{
                 where: {
-                    id : id
+                    id : +req.params.id
                 }
             })
         })

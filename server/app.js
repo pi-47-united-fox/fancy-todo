@@ -7,7 +7,6 @@ const cors = require('cors')
 const port = process.env.PORT
 const routes = require('./routes/index.js')
 
-
 const errorHandler = require('./middlewares/errorHandler.js')
 
 app.use(cors())

@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Pacifico&family=Secular+One&display=swap" rel="stylesheet">
+
     <!-- client id oauth google -->
     <meta name="google-signin-client_id" content="616383882459-uqnok50c92mhonl6fgotr1iij2jinnea.apps.googleusercontent.com">
 <!-- require css bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="styles.css">
     <title>Music Todos</title>
 </head>
 
@@ -16,7 +18,7 @@
 
 <!-- navbar -->
 <div></div>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-white ">
   <a class="navbar-brand" href="#">Music Todos</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -52,7 +54,6 @@
       class="form-control" 
       id="login-email" 
       aria-describedby="emailHelp">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <div class="form-group">
       <label for="login-password">Password</label>
@@ -62,7 +63,8 @@
       id="login-password">
     </div>
     <button type="submit" class="btn btn-primary">Login!</button>
-  </form>
+  </form><br>
+  <br>
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
 </div>
 </div>
@@ -93,16 +95,18 @@
 </div>
 
 <!-- ADD TODOS --------------------------------------------------------------------------------------->
-<div class="container" id="addTodos">
-<h2>Add your Todo list</h2>
+
+<div class="jumbotron container" id="addTodos">
+<h2><b>Add your Todo list</b></h2>
 <form onsubmit="addTodos(event)">
   <div class="form-group">
+    
     <label for="titletodos">Title Todos</label>
-    <input type="text" class="form-control" value="e.g: Belajar Coding" id="title">
+    <input type="text" class="form-control" placeholder="e.g: Belajar Coding" id="title">
   </div>
   <div class="form-group">
     <label for="descriptiontodos">Description</label>
-    <input type="text" class="form-control" value="e.g: Dengerin musik hits sambil melakukan kegiatan belajar" id="description">
+    <input type="text" class="form-control" placeholder="e.g: Dengerin musik hits sambil melakukan kegiatan belajar" id="description">
   </div>
   <div class="form-group">
     <label for="duedatetodos">Due Date</label>
@@ -110,20 +114,30 @@
   </div>
   <div class="form-group">
     <label for="artisttodos">Music Artist</label>
-    <input type="text" class="form-control" value="Must be Artist Name, e.g: Blackpink" id="artist">
+    <input type="text" class="form-control" placeholder="Must be Artist Name, e.g: Blackpink" id="artist">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <br>
+</div>
+</div>
 
-<!-- content -->
-<h4>This is your Todo list with Music to entertain you</h4>
+
+<!-- List TODOS -->
+<center><h3>This is your Todo list with Music to entertain you</h3></center><br>
 <div class="container" class="after-login">
-  <div class="row row-cols-1 row-cols-md-2" id="todolist">
+  <div class="row row-cols-1 row-cols-md-3" id="todolist">
     <!-- append from script -->
   </div>
 </div>
 </div>
+
+<!-- UPDATE TODOS --------------------------------------------------------------------------------------->
+<div class="jumbotron container" id="updateTodos">
+  <div class="row row-cols-1 row-cols-md-2 "></div>
+</div>
+</div>
+</div><br>
 
 <!-- 1. Define CDN jQuery -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>

@@ -1,0 +1,45 @@
+body {
+    /* The image used */
+    background-image: url("https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+  
+    /* Full height */
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Merriweather', serif;
+}
+
+.navbar-brand {
+    font-family: 'Pacifico', cursive;
+    font-size: 30px;
+}
+
+.jumbotron {
+    background-color: rgb(248, 248, 248);
+    box-shadow: 10px 10px 5px black;
+}
+
+.jumbotron2 {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 10px 10px 5px black;
+}
+
+
+
+h3 {
+    display: inline-block; /* keep the background color wrapped tight */
+    padding:5px;font-size:30px;background-color:rgb(219, 12, 92);color:#ffffff;
+}
+
+#login {
+    color:#ffffff;
+}
+
+#todolist {
+    font-size: 18px;
+    color:#d62828;
+    box-shadow: black;
+}
