@@ -8,6 +8,6 @@ heroku - server
 6. tambah remote heroku
 7. git subtree push --prefix server heroku master
 8. heroku run bash, terminal
-9. npm i -D sequelize-cli
+9. npm i sequelize-cli -g
 10. sequelize db:migrate
 11. sequelize db:seed:all
