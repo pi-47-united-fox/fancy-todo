@@ -37,7 +37,7 @@ const loginApp = (event) => {
     //pakai ajax untuk http request ke server
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/user/login',
+        url: 'https://fancy-todo-anime.herokuapp.com/user/login',
         data: { email, password }
     })
         .done(result => {
@@ -45,7 +45,7 @@ const loginApp = (event) => {
             afterLogin()
         })
         .fail(function (err) {
-            alert(err.responseJSON.message)
+            console.log(err.message)
         })
 }
 
@@ -58,7 +58,7 @@ const addHandler = (event) => {
     }
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/todos',
+        url: 'https://fancy-todo-anime.herokuapp.com/todos',
         data: obj,
         headers: {
             access_token: localStorage.access_token
@@ -74,7 +74,7 @@ const addHandler = (event) => {
 
         })
         .fail(err => {
-            alert(err.responseJSON.message)
+            console.log(err.message)
         })
 }
 
@@ -83,14 +83,12 @@ const removeAnime = (id, event) => {
     event.preventDefault()
     $.ajax({
         method: 'DELETE',
-        url: `http://localhost:3000/todos/${id}`,
+        url: `https://fancy-todo-anime.herokuapp.com/todos/${id}`,
         headers: {
             access_token: localStorage.access_token
         }
     })
         .done((data) => {
-           // console.log(data)
-            // console.log(result)
             afterLogin()
         })
         .fail((err) => {
@@ -108,7 +106,7 @@ const updateAnime = (id,event) =>{
     $("#jumbotron_edit_form").show()
     $.ajax({
         method: 'GET',
-        url: `http://localhost:3000/todos/${id}`,
+        url: `https://fancy-todo-anime.herokuapp.com/todos/${id}`,
         headers: {
             access_token: localStorage.access_token
         }
@@ -155,7 +153,7 @@ const putAnime = (id,event) => {
     let status = $('#edit-status').val()
     $.ajax({
         method: 'PUT',
-        url: `http://localhost:3000/todos/${id}`,
+        url: `https://fancy-todo-anime.herokuapp.com/todos/${id}`,
         headers: {
             access_token: localStorage.access_token
         },
@@ -179,7 +177,7 @@ const searchHandler = (event) =>{
     let input = $('#search').val()
     $.ajax({
         method: 'GET',
-        url: `http://localhost:3000/todos/anime?search=${input}`,
+        url: `https://fancy-todo-anime.herokuapp.com/todos/anime?search=${input}`,
         headers: {
             access_token: localStorage.access_token
         },
@@ -197,7 +195,7 @@ const searchHandler = (event) =>{
 const fetchListAnime = () => {
     $.ajax({
         method: 'GET',
-        url: 'http://localhost:3000/todos',
+        url: 'https://fancy-todo-anime.herokuapp.com/todos',
         headers: {
             access_token: localStorage.access_token
         }
@@ -221,7 +219,7 @@ const fetchListAnime = () => {
             })
         })
         .fail(err => {
-            alert(err.responseJSON.message)
+            console.log(err.message)
         })
 }
 
@@ -260,7 +258,7 @@ function onSignIn(googleUser) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/user/googleLogin',
+        url: 'https://fancy-todo-anime.herokuapp.com/user/googleLogin',
         headers: {
             google_access_token
         }
@@ -270,7 +268,7 @@ function onSignIn(googleUser) {
             afterLogin()
         })
         .fail(err => {
-            alert(err)
+            console.log(err.message)
         })
 }
 
