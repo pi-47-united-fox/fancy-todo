@@ -89,7 +89,7 @@ class UserController {
             return res.status(200).json({
                 access_token,
                 UserId: user.id,
-                message:'berhasil login'})
+                message:'Akun Google berhasil login'})
         })
         .catch(err => {
             next(err)

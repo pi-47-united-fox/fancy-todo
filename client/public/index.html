@@ -18,7 +18,7 @@
 
 <!-- navbar -->
 <div></div>
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
+<nav class="navbar navbar-expand-lg navbar-light bg-white ">
   <a class="navbar-brand" href="#">Music Todos</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -45,29 +45,27 @@
 <br>
 <div id="login">
 <form onsubmit="loginApp(event)">
-  <div class="jumbotron shadow ml-5 mr-5 before-login">
-    <center><h2 class="container mt-3">Login</h2></center>
-      <div class="container form-group">
-      <label for="login-email"></label>
+  <div class="container before-login">
+    <div class="form-group">
+      <h1>Login</h1>
+      <label for="login-email">Email</label>
       <input 
       type="email"
       class="form-control" 
       id="login-email" 
-      placeholder="Enter your email here"
       aria-describedby="emailHelp">
     </div>
-    <div class="container form-group">
-      <label for="login-password"></label>
+    <div class="form-group">
+      <label for="login-password">Password</label>
       <input 
       type="password"
       class="form-control"
-      placeholder="Enter your password here"
       id="login-password">
     </div>
-    <center><button type="submit" class="btn btn-primary mt-3">Login!</button></center>
+    <button type="submit" class="btn btn-primary">Login!</button>
   </form><br>
   <br>
-  <center><div class="g-signin2" data-onsuccess="onSignIn"></div></center>
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
 </div>
 </div>
 
@@ -98,7 +96,7 @@
 
 <!-- ADD TODOS --------------------------------------------------------------------------------------->
 
-<div class="jumbotron container shadow" id="addTodos">
+<div class="jumbotron container" id="addTodos">
 <h2><b>Add your Todo list</b></h2>
 <form onsubmit="addTodos(event)">
   <div class="form-group">
@@ -126,8 +124,8 @@
 
 
 <!-- List TODOS -->
-<div class="container after-login">
-  <center><h3>This is your Todo list with Music to entertain you</h3></center><br>
+<center><h3>This is your Todo list with Music to entertain you</h3></center><br>
+<div class="container" class="after-login">
   <div class="row row-cols-1 row-cols-md-3" id="todolist">
     <!-- append from script -->
   </div>

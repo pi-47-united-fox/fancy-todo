@@ -165,9 +165,8 @@ function addTodos(event) {
       }
     })
     .done(result=>{
-    //   console.log(result)
-        fetchTodo()
-        afterLogin()
+      console.log(result)
+      afterLogin()
     })
     .fail(err =>{
       console.log(err)
@@ -227,7 +226,7 @@ function updateTodo(input, event){
                 <label for="artisttodos">Music Artist</label>
                 <input type="text" class="form-control" name="${result.artist}" value="artist" id="artist">
             </div>
-            <button type="submit" class="btn btn-primary" onsubmit="putTodo(${result.id}, event)">Update</button>
+            <button type="submit" class="btn btn-primary" onclick="putTodo(${result.id}, event)">Update</button>
         </form>
         `)
     })
@@ -256,7 +255,6 @@ function putTodo(input,event){
     })
     .done(result => {
         console.log(result)
-        fetchData()
         afterLogin()
     })
     .fail(err => {

@@ -15,6 +15,7 @@ Membuat website untuk manage musik untuk hal- hal menarik yang akan dilakukan. T
 `- DELETE /todos/:id`
 `- POST /register`
 `- POST /login`
+`- POST /googleLogin`
 
 ### GET /todos
 
@@ -337,6 +338,33 @@ _Request Body_
 {
   "email": "todo@gmail.com",
   "password": "<your hash password from bcrypt>"
+}
+```
+
+_Response (200 - AccessToken)_
+```json
+{
+  "access_token": "<your token from jwt>"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid Input"
+}
+```
+
+### POST /users/googleLogin
+
+> Login Google Auth
+
+
+_Request Body_
+```json
+{
+  "email": "<your google mail account>",
+  "password": "<your google mail password>"
 }
 ```
 
