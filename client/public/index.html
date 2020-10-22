@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Pacifico&family=Secular+One&display=swap" rel="stylesheet">
+
+    <!-- client id oauth google -->
+    <meta name="google-signin-client_id" content="616383882459-uqnok50c92mhonl6fgotr1iij2jinnea.apps.googleusercontent.com">
+<!-- require css bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <title>Music Todos</title>
+</head>
+
+<!-- content -->
+<body>
+
+<!-- navbar -->
+<div></div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white ">
+  <a class="navbar-brand" href="#">Music Todos</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" id="btn-home" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="btn-login" href="#">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="btn-register" href="#">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="btn-logout" href="#">Logout</a>
+      </li>
+      </ul>
+  </div>
+</nav>
+  
+<!-- form login -->
+<br>
+<div id="login">
+<form onsubmit="loginApp(event)">
+  <div class="container before-login">
+    <div class="form-group">
+      <h1>Login</h1>
+      <label for="login-email">Email</label>
+      <input 
+      type="email"
+      class="form-control" 
+      id="login-email" 
+      aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <label for="login-password">Password</label>
+      <input 
+      type="password"
+      class="form-control"
+      id="login-password">
+    </div>
+    <button type="submit" class="btn btn-primary">Login!</button>
+  </form><br>
+  <br>
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+</div>
+</div>
+
+<!-- form register -->
+<br>
+<div id="register">
+<form onsubmit="registerApp(event)">
+  <div class="container register">
+    <div class="form-group">
+      <h1>Register</h1>
+      <label for="register-email">Email</label>
+      <input 
+      type="email"
+      class="form-control" 
+      id="register-email" >
+    </div>
+    <div class="form-group">
+      <label for="register-password">Password</label>
+      <input 
+      type="password"
+      class="form-control"
+      id="register-password">
+    </div>
+    <button type="submit" class="btn btn-primary">Register me!</button>
+  </form>
+</div>
+</div>
+
+<!-- ADD TODOS --------------------------------------------------------------------------------------->
+
+<div class="jumbotron container" id="addTodos">
+<h2><b>Add your Todo list</b></h2>
+<form onsubmit="addTodos(event)">
+  <div class="form-group">
+    
+    <label for="titletodos">Title Todos</label>
+    <input type="text" class="form-control" placeholder="e.g: Belajar Coding" id="title">
+  </div>
+  <div class="form-group">
+    <label for="descriptiontodos">Description</label>
+    <input type="text" class="form-control" placeholder="e.g: Dengerin musik hits sambil melakukan kegiatan belajar" id="description">
+  </div>
+  <div class="form-group">
+    <label for="duedatetodos">Due Date</label>
+    <input type="date" class="form-control" id="due_date">
+  </div>
+  <div class="form-group">
+    <label for="artisttodos">Music Artist</label>
+    <input type="text" class="form-control" placeholder="Must be Artist Name, e.g: Blackpink" id="artist">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br>
+</div>
+</div>
+
+
+<!-- List TODOS -->
+<center><h3>This is your Todo list with Music to entertain you</h3></center><br>
+<div class="container" class="after-login">
+  <div class="row row-cols-1 row-cols-md-3" id="todolist">
+    <!-- append from script -->
+  </div>
+</div>
+</div>
+
+<!-- UPDATE TODOS --------------------------------------------------------------------------------------->
+<div class="jumbotron container" id="updateTodos">
+  <div class="row row-cols-1 row-cols-md-2 "></div>
+</div>
+</div>
+</div><br>
+
+<!-- 1. Define CDN jQuery -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>
+</body>
+</html>
