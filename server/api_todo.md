@@ -3,16 +3,12 @@
 ` - POST /todos `
 ` - GET /todos/:id `
 ` - DELETE /todos/:id `
-` - PUT /todos/:id `
-` - PATCH /todos/:id `
+` - PATCH /todos/:id ` // Just to mark the todo as completed
+` - PUT /todos/:id ` // For edit data completely...
 
 ` - GET /dashboard `
 ` - POST /login `
 ` - POST /register `
-
-
-
-
 
 
 ## GET /todos

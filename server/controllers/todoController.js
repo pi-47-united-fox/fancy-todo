@@ -6,7 +6,9 @@ class TodoController {
     }
 
     static findAllTodos(req, res, next) {
-        Todo.findAll()
+        Todo.findAll({
+            order: [['due_date', 'DESC']]
+        })
             .then(data => {
                 res.status(201).json(data)
             })
@@ -42,7 +44,6 @@ class TodoController {
         })
         .then(() => {
             res.status(201).json({
-                name: "Delete Success",
                 message: "Data has been succesfully deleted."
             })
         })
@@ -95,11 +96,11 @@ class TodoController {
         })     
         .then(data => {
             res.status(200).json({
-                name: "Replace Success",
-                message: "Data has been succesfully replaced."
+                message: "Data has been succesfully edited."
             })
         })
         .catch(err => {
+            // console.log(err)
             next(err)
         })
     }
@@ -115,7 +116,6 @@ class TodoController {
         })     
         .then(data => {
             res.status(200).json({
-                name: "Update Success",
                 message: "Data has been succesfully updated."
             })
         })

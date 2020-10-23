@@ -58,23 +58,25 @@ class UserController {
             }
 
         } catch(err) {
-            res.status(500).json(err)
+            console.log(err)
+            // res.status(500).json(err)
         }
 
     }
 
     static googleLogin(req, res) {
-        const CLIENT_ID = "639126342145-10qrf40f8aett5k1kmphduh1d73g7055.apps.googleusercontent.com"
-        const client = new OAuth2Client(CLIENT_ID)
-        let email
+        console.log("masuk controller")
+        const client = new OAuth2Client(process.env.CLIENT_ID)
+        let email = ''
 
         client.verifyIdToken({
-            idToken: req.headers.google_accesss_token,
-            audience: CLIENT_ID
+            idToken: req.headers.google_access_token,
+            audience: process.env.CLIENT_ID
         })
         .then(ticket => {
+            console.log(ticket)
             let payload = ticket.getPayload()
-            email = payload.email
+            email = payload['email']
             return User.findOne({
                 where: {
                     email: email
@@ -95,7 +97,7 @@ class UserController {
         })
         .then(user => {
             let access_token  = signToken({id: user.id, email: user.email})
-            return res.status(200).json({
+            return res.status(201).json({
                 access_token
             })
         })

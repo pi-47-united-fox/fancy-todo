@@ -18,25 +18,15 @@ $(document).ready(() => {
     }
 })
 
-// function afterLogin() {
-//     $('.after-login').show()
-//     $('.before-login').hide()
-// }
-
-// function beforeLogin() {
-//     $('.after-login').hide()
-//     $('.before-login').show()
-// }
 
 function hideAll() {
-    // $('.after-login').hide()
-    // $('.before-login').hide()
     $('#todo-list-dashboard').hide()
     $('#todo-list-form').hide()
     $('#view-todo-details').hide()
     $("#login-form").hide()
     $("#signup-form").hide()
     $("#edit-form").hide()
+    $("#edit-form-update").hide()
 
 
 
@@ -47,6 +37,8 @@ function backToHome() {
     hideAll()
     viewAllTodosOfUser()
     $('#todo-list-dashboard').show()
+    $("#btn-login").hide()
+    $("#btn-register").hide()
 }
 
 
@@ -55,7 +47,6 @@ function loginApp(event) {
     event.preventDefault()
     let email = $('#email').val()
     let password = $('#password').val()
-    console.log(email, password)
     
     $.ajax({
         method: 'POST',
@@ -67,7 +58,7 @@ function loginApp(event) {
     })
     .done(result => {
         localStorage.setItem('access_token', `${result.access_token}`)
-        console.log("Success")
+        // console.log("Success")
         backToHome()
 
         $("#btn-logout").show()
@@ -102,7 +93,7 @@ function register(event) {
     event.preventDefault()
     let emailInput = $('#emailregister').val()
     let passwordInput = $('#passwordregister').val()
-    console.log("masuk")
+    // console.log("masuk")
     
     $.ajax({
         method: 'POST',
@@ -113,7 +104,7 @@ function register(event) {
         }
     })
     .done(result => {
-        console.log("success")
+        // console.log("success")
         hideAll()
         $("#login-form").show()
     })
@@ -126,7 +117,6 @@ function register(event) {
 // Sign in with google
 function onSignIn(googleUser) {
     var google_access_token = googleUser.getAuthResponse().id_token;
-    // console.log(id_token)
 
     $.ajax({
         method: "POST",
@@ -136,8 +126,12 @@ function onSignIn(googleUser) {
         }
     })
     .done(result => {
-        localStorage.setItem('access_token', result)
+        localStorage.setItem('access_token', result.access_token)
         backToHome()
+
+        $("#btn-logout").show()
+        $("#btn-nav-my-todo-list").show()
+        $("#btn-add-todo-form").show()
     })
     .fail(err => {
         console.log(err)
@@ -235,7 +229,7 @@ function viewAllTodosOfUser() {
     })
     .done(result => {
         $.each(result, (key, value) => {
-            console.log(value)
+            // console.log(value)
             $("#user-todo-list").append(`
             <div class="todo-list-item">
                 <div class="card" style="width: 30rem;">
@@ -243,12 +237,10 @@ function viewAllTodosOfUser() {
                     <h5 class="card-title"><b>${value.title}</b></h5>
                     <h6 class="card-subtitle mb-2 text-muted">${value.due_date} (${value.status})</h6>
                     <p class="card-text">${value.description}</p>
-
                     <button type="button" class="btn btn-primary btn-sm" onclick="viewTodoItemById(${value.id})">View</button>
                     <button type="button" class="btn btn-secondary btn-sm" onclick="showEditForm(${value.id})">Edit</button>
                     <button type="button" class="btn btn-success btn-sm" onclick="completeTodoItem(${value.id})">Complete</button>
                     <button type="button" class="btn btn-danger btn-sm" onclick="deleteTodoItem(${value.id})">Delete</button>
-
                     </div>
                 </div>
             </div>
@@ -268,7 +260,7 @@ function viewTodoItemById(id) {
         headers: { access_token: localStorage.access_token }
     })
     .done(result => {
-        console.log(result)
+        // console.log(result)
         hideAll()
         $("#view-todo-details").empty()
         $("#view-todo-details").show()
@@ -354,7 +346,7 @@ function showEditForm(id){
           <div class="card-body">
             <div>
               <p><b>Please update the data</b><p>
-              <form onsubmit="editTodoListItem(event)">
+              <form onsubmit="editTodoListItem(event, ${object.id})">
                 <div class="form-group">
                   <label for="titleInputEditTask">Title</label>
                   <input type="text" class="form-control" name="titleInputEditTask" id="titleInputEditTask" value=${object.title}>
@@ -394,7 +386,7 @@ function showEditForm(id){
 
 
 // edit todo function
-function editTodoListItem(event) {
+function editTodoListItem(event, id) {
     event.preventDefault()
     let title = $("#titleInputEditTask").val()
     let description = $("#descriptionInputEditTask").val()
@@ -403,7 +395,7 @@ function editTodoListItem(event) {
 
     $.ajax({
         method: "PUT",
-        url: 'http://localhost:3000/todos',
+        url: `http://localhost:3000/todos/${id}`,
         headers: {access_token: localStorage.access_token},
         data: {
             title: title,
@@ -414,8 +406,10 @@ function editTodoListItem(event) {
     })
     .done(result => {
         console.log(result)
+        backToHome()
     })
     .fail(err => {
+        console.log("masuk")
         console.log(err)
     })
 }
