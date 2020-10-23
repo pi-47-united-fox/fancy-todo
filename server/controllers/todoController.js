@@ -37,6 +37,7 @@ class TodoController{
             .catch(err => {
                 // res.status(500).json(err)
                 // res.send(err)
+                console.log(err.name, "From create task todoController")
                 next(err)
             })
     }

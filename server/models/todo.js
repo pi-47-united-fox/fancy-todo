@@ -43,7 +43,10 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate:{
-        isAfter: todayDate()
+        isAfter: {
+          args: [`${new Date()}`],
+          msg: "Due date must be today or later"
+        }
       }
     },
     UserId: {

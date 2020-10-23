@@ -206,7 +206,7 @@ function addTodo(event){
             `)
         })
         .always(() => {
-            $('#addTravelForm').trigger("reset")
+            $('#addTodoForm').trigger("reset")
         })
 
 }

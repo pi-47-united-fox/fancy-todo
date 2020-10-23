@@ -1,7 +1,5 @@
 const errorHandler = (err, req, res, next) => {
     console.log(err, "From errorHandler")
-    // if(err === null)
-
     switch(err.name){
         case 'Unauthorized':
             res.status(401).json({
@@ -10,9 +8,10 @@ const errorHandler = (err, req, res, next) => {
             })
             break
         case 'SequelizeValidationError':
+            // console.log(err.message, 'from switch err handler')
             res.status(400).json({
                 name: 'Bad Request',
-                message: [{message: err.message}]
+                message: err.message
             })
             break
         case 'Forbidden':
@@ -30,7 +29,7 @@ const errorHandler = (err, req, res, next) => {
         default:
             status = 500
             res.status(status).json({
-                name: err.name,
+                name: "Internal Server Error",
                 message: err.message
             })
             break
