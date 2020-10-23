@@ -233,6 +233,7 @@ function addPokemon(event){
     .done(result=>{
         fetchDatas()
         $("#data-pokemon-home").show()
+        $("#add-pokemon").val("")
     })
     .fail(err=>{
         console.log(err)

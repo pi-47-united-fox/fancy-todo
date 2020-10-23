@@ -15,6 +15,9 @@ app.use(express.urlencoded({extended:false}))
 
 
 app.use(router)
+app.get('/', (req,res)=>{
+    res.send('hello home')
+})
 app.use(errorHandler)
 
 

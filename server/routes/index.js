@@ -4,7 +4,7 @@ const TodoRouter = require('./TodoRouter')
 
 
 
-router.use(userRouter)
+router.use('/', userRouter)
 router.use('/todos',TodoRouter)
 
 

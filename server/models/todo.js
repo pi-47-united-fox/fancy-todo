@@ -21,7 +21,15 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    due_date: DataTypes.DATE,
+    due_date: {
+      type:DataTypes.DATE,
+      validate : {
+        isAfter : {
+          args : new Date().toLocaleDateString(),
+          message : 'invalid date please select date today or after today'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER,
     imageurl: DataTypes.STRING,
   }, {
