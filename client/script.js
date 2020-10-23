@@ -1,125 +1,160 @@
-let Todo = []
-let Food = []
-baseUrl = 'http://localhost:3000'
-userFullName = ''
+let Todo = [];
+let Food = [];
+baseUrl = "http://localhost:3000";
+userFullName = "";
 
 $(document).ready(function () {
-    console.log("kuyyy!");
-    //cek token
-    if (localStorage.access_token) {
-        afterLogin()
-    } else {
-        firstPage()
-        // beforeLogin()
-    }
+  console.log("kuyyy!");
+  //cek token
+  if (localStorage.access_token) {
+    afterLogin();
+  } else {
+    firstPage();
+    // beforeLogin()
+  }
 });
 
 function firstPage() {
-    $(".afterLogin").hide()
-    $(".beforeLogin").hide()
-    $(".firstPage").show()
-    $(".formAdd").hide()
+  $(".afterLogin").hide();
+  $(".beforeLogin").hide();
+  $(".firstPage").show();
+  $(".formAdd").hide();
+  $(".registerForm").hide();
 }
 
 function beforeLogin() {
-    $(".afterLogin").hide()
-    $(".beforeLogin").show()
-    $(".firstPage").hide()
-    $(".formAdd").hide()
-    $(".formEdit").hide()
+  $(".afterLogin").hide();
+  $(".beforeLogin").show();
+  $(".firstPage").hide();
+  $(".formAdd").hide();
+  $(".formEdit").hide();
+  $(".registerForm").hide();
+}
+
+function registerForm() {
+  $(".afterLogin").hide();
+  $(".beforeLogin").hide();
+  $(".firstPage").hide();
+  $(".formAdd").hide();
+  $(".formEdit").hide();
+  $(".registerForm").show();
 }
 
 function afterLogin() {
-    $(".afterLogin").show()
-    $(".beforeLogin").hide()
-    $(".firstPage").hide()
-    $(".formAdd").hide()
-    $(".formEdit").hide()
-    fetchData()
-    getUserName()
+  $(".afterLogin").show();
+  $(".beforeLogin").hide();
+  $(".firstPage").hide();
+  $(".formAdd").hide();
+  $(".formEdit").hide();
+  $(".registerForm").hide();
+  fetchData();
+  getUserName();
 }
 
 function addForm() {
-    $(".afterLogin").hide()
-    $(".beforeLogin").hide()
-    $(".firstPage").hide()
-    $(".formAdd").show()
-    $(".formEdit").hide()
-    $(".btn-food-search").click(function () {
-        $(".table-toggle").fadeToggle();
-    });
+  $(".afterLogin").hide();
+  $(".beforeLogin").hide();
+  $(".firstPage").hide();
+  $(".formAdd").show();
+  $(".formEdit").hide();
+  $(".registerForm").hide();
+  $(".btn-food-search").click(function () {
+    $(".table-toggle").fadeToggle();
+  });
 }
 function editForm() {
-    $(".afterLogin").hide()
-    $(".beforeLogin").hide()
-    $(".firstPage").hide()
-    $(".formAdd").hide()
-    $(".formEdit").show()
+  $(".afterLogin").hide();
+  $(".beforeLogin").hide();
+  $(".firstPage").hide();
+  $(".formAdd").hide();
+  $(".formEdit").show();
+  $(".registerForm").hide();
 
-    $(".btn-food-search").click(function () {
-        $(".table-toggle").fadeToggle();
-    });
+  $(".btn-food-search").click(function () {
+    $(".table-toggle").fadeToggle();
+  });
 }
 
 function loginApp(event) {
-    event.preventDefault()
-    let email = $("#email").val()
-    let password = $("#password").val()
-    console.log(email, password)
-    localStorage.setItem('username', email)
+  event.preventDefault();
+  let email = $("#email").val();
+  let password = $("#password").val();
+  console.log(email, password);
+  localStorage.setItem("username", email);
 
-    $.ajax({
-        method: 'POST',
-        url: `${baseUrl}/login`,
-        data: { email, password }
+  $.ajax({
+    method: "POST",
+    url: `${baseUrl}/login`,
+    data: { email, password },
+  })
+    .done((res) => {
+      console.log(`login sucesss`, res);
+      localStorage.setItem("access_token", res.access_token);
+      afterLogin();
     })
-        .done((res) => {
-            console.log(`login sucesss`, res)
-            // cara1
-            // localStorage.access_token = res.access_token
-            // cara2
-            localStorage.setItem('access_token', res.access_token)
-            afterLogin()
-        })
-        .fail((err) => {
-            console.log(`cannot login`, err)
-        })
-        .always(function () {
-            console.log(`compleate!`)
-        })
+    .fail((err) => {
+      console.log(`cannot login`, err);
+    })
+    .always(function () {
+      console.log(`compleate!`);
+    });
+}
+
+function register(event) {
+  event.preventDefault();
+  let username = $("#username").val();
+  let email = $("#email-register").val();
+  let password = $("#password-register").val();
+
+  $.ajax({
+    method: "POST",
+    url: `${baseUrl}/register`,
+    data: { username, email, password },
+  })
+    .done((res) => {
+      console.log(`register sucesss`, res);
+      localStorage.setItem("access_token", res.access_token);
+      beforeLogin();
+    })
+    .fail((err) => {
+      console.log(`cannot register`, err);
+    })
+    .always(function () {
+      console.log(`compleate!`);
+    });
 }
 
 $("#logout").click(() => {
-    localStorage.removeItem(`access_token`)
-    $("#email").val('')
-    $("#password").val('')
-    beforeLogin()
-    signOut()
-})
+  localStorage.removeItem(`access_token`);
+  $("#email").val("");
+  $("#password").val("");
+  beforeLogin();
+  signOut();
+});
 
 //fetch data user todo
 function fetchData() {
-    $.ajax({
-        method: 'GET',
-        url: `${baseUrl}/todos`,
-        headers: {
-            access_token: localStorage.access_token
+  $.ajax({
+    method: "GET",
+    url: `${baseUrl}/todos`,
+    headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((result) => {
+      // console.log(result)
+      Todo = result;
+      $("#list-todo").empty();
+
+      //forEach ajax
+      $.each(Todo, (key, value) => {
+        console.log(value, "value");
+
+        let stat = "Done";
+        if (value.status == false) {
+          stat = "Progress";
         }
-    })
-        .done(result => {
-            // console.log(result)
-            Todo = result
-            $("#list-todo").empty()
-
-            //forEach ajax
-            $.each(Todo, (key, value) => {
-                console.log(value, 'value')
-
-                let stat = 'Done'
-                if (value.status == false) {
-                    stat = 'Progress'
-                }
-                $("#list-todo").append(`
+        $("#list-todo").append(`
        
                 <div class="card ml-5 mb-5">
                 <h5 class="card-header">${stat}</h5>
@@ -134,103 +169,102 @@ function fetchData() {
                     <button class="btn btn-light" onclick="deleteData(event,${value.id})">Remove</button>
                 </div>
                 </div>
-                `)
-            })
-        })
-        .fail(err => {
-            console.log(err)
-        })
+                `);
+      });
+    })
+    .fail((err) => {
+      console.log(err);
+    });
 }
 
 function deleteData(event, id) {
-    event.preventDefault()
-    $.ajax({
-        method: 'DELETE',
-        data: { id },
-        url: `${baseUrl}/todos/${id}`,
-        headers: {
-            access_token: localStorage.access_token
-        }
+  event.preventDefault();
+  $.ajax({
+    method: "DELETE",
+    data: { id },
+    url: `${baseUrl}/todos/${id}`,
+    headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((res) => {
+      console.log(`berhasil delete data`);
+      afterLogin();
     })
-        .done(res => {
-            console.log(`berhasil delete data`)
-            afterLogin()
-        })
-        .fail(err => {
-            console.log(`err saat delete`, err)
-        })
+    .fail((err) => {
+      console.log(`err saat delete`, err);
+    });
 }
 
-
 function fetchFood() {
-    let search = $("#search").val()
-    $.ajax({
-        method: 'GET',
-        url: `${baseUrl}/resto?search=${search}`,
-        headers: {
-            access_token: localStorage.access_token
-        }
-    })
-        .done(result => {
-            // console.log(result)
-            Food = result
-            idFood = null
-            $("#search").empty()
-            $("#list-food").empty()
-            //forEach food
-            $.each(Food, (key, value) => {
-                console.log(value, 'value')
-                console.log(value.restaurant.name)
-                console.log(value.restaurant.id)
-                idFood = value.restaurant.id
+  let search = $("#search").val();
+  $.ajax({
+    method: "GET",
+    url: `${baseUrl}/resto?search=${search}`,
+    headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((result) => {
+      // console.log(result)
+      Food = result;
+      idFood = null;
+      $("#search").empty();
+      $("#list-food").empty();
+      //forEach food
+      $.each(Food, (key, value) => {
+        console.log(value, "value");
+        console.log(value.restaurant.name);
+        console.log(value.restaurant.id);
+        idFood = value.restaurant.id;
 
-                $("#list-food").append(`
+        $("#list-food").append(`
             <tr>
                 <td>${value.restaurant.name}</td>
                 <td>${value.restaurant.cuisines}</td>
                 <td>${value.restaurant.average_cost_for_two}K</td>
                 <td>${value.restaurant.location.locality_verbose}</td>
             </tr>
-            `)
+            `);
 
-                $(".select-food").append(`
+        $(".select-food").append(`
             <option value="${value.restaurant.name}">${value.restaurant.name}</option >
-            `)
+            `);
 
-                $(".input-location").append(`
+        $(".input-location").append(`
             <option value="${value.restaurant.location.locality_verbose}">${value.restaurant.location.locality_verbose}</option >
-            `)
+            `);
 
-                $(".input-price").append(`
+        $(".input-price").append(`
             <option value="${value.restaurant.average_cost_for_two}">${value.restaurant.average_cost_for_two}K</option >
-            `)
-            })
-        })
-        .fail(err => {
-            console.log(err)
-        })
+            `);
+      });
+    })
+    .fail((err) => {
+      console.log(err);
+    });
 }
 
 function editFoodForm(id) {
-    let search = $("#search").val()
-    $.ajax({
-        method: 'GET',
-        url: `${baseUrl}/todos/${id}`,
-        headers: {
-            access_token: localStorage.access_token
-        }
-    })
-        .done(result => {
-            // console.log(result)
-            console.log(id)
-            Food = result
-            idFood = null
+  let search = $("#search").val();
+  $.ajax({
+    method: "GET",
+    url: `${baseUrl}/todos/${id}`,
+    headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((result) => {
+      // console.log(result)
+      console.log(id);
+      Food = result;
+      idFood = null;
 
-            //forEach food
-            $.each(Food, (key, value) => {
-                console.log(value, 'value')
+      //forEach food
+      $.each(Food, (key, value) => {
+        console.log(value, "value");
 
-                $(".input-edit").append(`
+        $(".input-edit").append(`
             <div class="container formEdit">
             <h1>Search Food</h1>
             <!--Food Search-->
@@ -276,102 +310,101 @@ function editFoodForm(id) {
                 <button onclick="afterLogin()" class="btn btn-danger">Cancel</button>
             </form>
         </div>
-            `)
-            })
-
-        })
-        .fail(err => {
-            console.log(err)
-        })
+            `);
+      });
+    })
+    .fail((err) => {
+      console.log(err);
+    });
 }
 
 // http://localhost:3000/todos/3
 function editData(id) {
-    let title = $("#title-edit").val()
-    let description = $("#description-edit").val()
-    let food = $("#food-edit").val()
-    let location = $("#description-edit").val()
-    let link = $("#link-edit").val()
-    let status = $("#status-edit").val()
+  let title = $("#title-edit").val();
+  let description = $("#description-edit").val();
+  let food = $("#food-edit").val();
+  let location = $("#description-edit").val();
+  let link = $("#link-edit").val();
+  let status = $("#status-edit").val();
 
-    $.ajax({
-        method: 'PUT',
-        url: `${baseUrl}/todos/${id}`,
-        headers: {
-            access_token: localStorage.access_token
-        },
-        data: {
-            title,
-            description,
-            status: status,
-            due_date: new Date(),
-            food: food,
-            location: location,
-            link: link
-        }
+  $.ajax({
+    method: "PUT",
+    url: `${baseUrl}/todos/${id}`,
+    headers: {
+      access_token: localStorage.access_token,
+    },
+    data: {
+      title,
+      description,
+      status: status,
+      due_date: new Date(),
+      food: food,
+      location: location,
+      link: link,
+    },
+  })
+    .done((res) => {
+      // $(append)
+      // localStorage.removeItem(`access_token`)
+      console.log(`edit data success`, res);
+      afterLogin();
     })
-        .done((res) => {
-            // $(append)
-            // localStorage.removeItem(`access_token`)
-            console.log(`edit data success`, res)
-            afterLogin()
-        })
-        .fail((err) => {
-            console.log(`cannot edit`, err)
-        })
+    .fail((err) => {
+      console.log(`cannot edit`, err);
+    });
 }
 
 function addData(event) {
-    event.preventDefault()
-    let title = $("#title").val()
-    let description = $("#description").val()
-    let food = $("#food").val()
-    let location = $("#description").val()
-    let link = $("#link").val()
+  event.preventDefault();
+  let title = $("#title").val();
+  let description = $("#description").val();
+  let food = $("#food").val();
+  let location = $("#description").val();
+  let link = $("#link").val();
 
-    $.ajax({
-        method: 'POST',
-        url: `${baseUrl}/todos`,
-        headers: {
-            access_token: localStorage.access_token
-        },
-        data: {
-            title,
-            description,
-            status: false,
-            due_date: new Date(),
-            food: food,
-            location: location,
-            link: link
-        }
+  $.ajax({
+    method: "POST",
+    url: `${baseUrl}/todos`,
+    headers: {
+      access_token: localStorage.access_token,
+    },
+    data: {
+      title,
+      description,
+      status: false,
+      due_date: new Date(),
+      food: food,
+      location: location,
+      link: link,
+    },
+  })
+    .done((res) => {
+      // $(append)
+      // localStorage.removeItem(`access_token`)
+      console.log(`adding data success`, res);
+      afterLogin();
     })
-        .done((res) => {
-            // $(append)
-            // localStorage.removeItem(`access_token`)
-            console.log(`adding data success`, res)
-            afterLogin()
-        })
-        .fail((err) => {
-            console.log(`cannot add`, err)
-        })
+    .fail((err) => {
+      console.log(`cannot add`, err);
+    });
 }
 
 function headerUser() {
-    $.ajax({
-        method: 'GET',
-        url: `${baseUrl}/login`,
-        headers: {
-            access_token: localStorage.access_token
-        }
-    })
-        .done(result => {
-            // console.log(result)
-            Todo = result
-            $("#select-food").empty()
-            //forEach ajax
-            $.each(Todo, (key, value) => {
-                console.log(value, 'value')
-                $("#list-todo").append(`
+  $.ajax({
+    method: "GET",
+    url: `${baseUrl}/login`,
+    headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((result) => {
+      // console.log(result)
+      Todo = result;
+      $("#select-food").empty();
+      //forEach ajax
+      $.each(Todo, (key, value) => {
+        console.log(value, "value");
+        $("#list-todo").append(`
 
                 <div class="col-4 mb-3">
                 <div class="card" style="width: 18rem;">
@@ -384,44 +417,46 @@ function headerUser() {
                     </div>
                 </div>
             </div>
-                `)
-            })
-        })
-        .fail(err => {
-            console.log(err)
-        })
-}
-
-function onSignIn(googleUser) {
-    var google_access_token = googleUser.getAuthResponse().id_token;
-    console.log(google_access_token)
-    $.ajax({
-        method: 'POST',
-        url: 'http://localhost:3000/googleLogin',
-        headers: {
-            google_access_token
-        }
+                `);
+      });
     })
-        .done(result => {
-            localStorage.setItem('access_token', result.access_token)
-            afterLogin()
-        })
-        .fail(err => {
-            console.log(err)
-        })
-}
-
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        console.log('User signed out.');
+    .fail((err) => {
+      console.log(err);
     });
 }
 
+function onSignIn(googleUser) {
+  var google_access_token = googleUser.getAuthResponse().id_token;
+  console.log(google_access_token);
+  $.ajax({
+    method: "POST",
+    url: "http://localhost:3000/googleLogin",
+    headers: {
+      google_access_token,
+    },
+  })
+    .done((result) => {
+      localStorage.setItem("access_token", result.access_token);
+      afterLogin();
+    })
+    .fail((err) => {
+      console.log(err);
+    });
+}
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log("User signed out.");
+  });
+}
+
 function getUserName() {
-    console.log(`get full name function`)
-    $("#user-name").empty()
-    $("#user-name").append(`
-        <h1 class="display-3">Hallo! ${(localStorage.username).split('@').slice(0, 1)}</h1>
-        `)
+  console.log(`get full name function`);
+  $("#user-name").empty();
+  $("#user-name").append(`
+        <h1 class="display-3">Hallo! ${localStorage.username
+          .split("@")
+          .slice(0, 1)}</h1>
+        `);
 }

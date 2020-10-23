@@ -7,7 +7,7 @@
 
     <!--Client ID Google-->
     <meta name="google-signin-client_id"
-        content="191664169756-oigpp8ndp58u3m9s4guuc7cn7etb985o.apps.googleusercontent.com">
+        content="473073932556-pnkida6qauma854ueuf2j2hrlt56qqkk.apps.googleusercontent.com">
     <!--require local css-->
     <link rel="stylesheet" href="style.css">
 
@@ -68,6 +68,7 @@
     </div>
 
     <br>
+
     <!--form login-->
     <div class="container beforeLogin">
         <h1>Login Fancy APP</h1>
@@ -81,9 +82,33 @@
                 <input type="password" class="form-control" id="password">
             </div>
             <button type="submit" class="btn btn-dark">Submit</button>
+            <a class="btn btn-dark" onclick="registerForm()">register</a>
         </form>
+
         <br>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+
+    <!--form register-->
+    <div class="container registerForm">
+        <h1>Register Fancy APP</h1>
+        <form onsubmit="register(event)">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password-register">
+            </div>
+            <button type="submit" class="btn btn-dark">Submit</button>
+            <a class="btn btn-dark" onclick="beforeLogin()">Cancel</a>
+        </form>
+        <br>
     </div>
 
     <!--Form Add Todo-->
