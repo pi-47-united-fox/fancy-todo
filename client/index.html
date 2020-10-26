@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="244855054226-201ce2see3kqsv3757qc8sfoftuusdqo.apps.googleusercontent.com">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="#" class="navbar-brand" onclick="loginPage()">FANCY TODO</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link dashboard" href="#">Dashboard <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-logout" href="#">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link register-btn" onclick="registerBtn()" href="#">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-login" onclick="loginPage()" href="#">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!--FORM LOGIN-->
+    <div class="container before-login">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-transparent mb-0">
+                        <h5 class="text-center">Please <span class="font-weight-bold text-primary">LOGIN</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <form onsubmit="loginApp(event)">
+                            <div class="form-group">
+                                <input type="text" name="" class="form-control" id="email" placeholder="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="" class="form-control" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="" value="Login" class="btn btn-primary btn-block">
+                            </div>
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--FORM REGISTER-->
+    <div class="container register">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-transparent mb-0">
+                        <h5 class="text-center">Please <span class="font-weight-bold text-primary">REGISTER</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <form onsubmit="register(event)">
+                            <div class="form-group">
+                                <input type="text" name="" class="form-control" id="reg-email" placeholder="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="" class="form-control" id="reg-password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="" value="Register" class="btn btn-primary btn-block">
+                            </div>
+                            <div class="justify-content-center">
+                                <div class=" mb-3">
+                                    <a onclick="loginPage()" href="">Already have an account? Login Here</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container create">
+        <h1>Add Your Holiday Plan</h1>
+        <form id="btn-add" onsubmit="createTodo(event)">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" id="create-title" placeholder="e.g: Mendaki Gunung Everest">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" id="create-description" rows="3" placeholder="e.g: Liburan Akhir Tahun"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <input type="text" class="form-control" id="create-status">
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" class="form-control" id="create-due_date">
+            </div>
+            <button type="submit" class="btn btn-primary btn-create" onclick="dashboard()">Save</button>
+        </form>
+        <div id="user-todo-list">
+            <h5 id="titleDate" class="d-flex justify-content-center text-center">Rekomendasi tanggal buat liburanmu</h5>
+            <div class="row d-flex justify-content-center" id="holiday"></div>
+        </div>
+    </div>
+
+    <!--EDIT-->
+    <div class="container edit">
+        <h1>Edit Your Holiday Plan</h1>
+        <form id="btn-edit" onsubmit="editTodo(event)">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" id="editTitle" value="title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" id="editDescription" rows="3" value="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <input type="text" class="form-control" id="editStatus" value="status">
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" class="form-control" id="editDue_date" value="due_date">
+            </div>
+            <button type="submit" class="btn btn-primary btn-edit" onclick="dashboard()">Save</button>
+        </form>
+    </div>
+
+
+    <!--CONTENT-->
+    <div class="container dashboard mt-8 justify-content-center">
+        <div class="table-wrapper">
+            <div>
+                <a class="nav-link btn-add" href="#">Create Todo</a>
+            </div>
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Manage <b>Todos</b></h2>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <table class="table table-striped table-hover" id="todoList">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="custom-checkbox">
+                                        <input type="checkbox" id="selectAll">
+                                        <label for="selectAll"></label>
+                                    </span>
+                            </th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Due_date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>1</b> out of <b>1</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="./main.js"></script>
+
+</html>
