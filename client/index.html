@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google sign in client ID -->
+    <meta name="google-signin-client_id" content="411524848726-8596p4ossfobk8fd2c3sv0acalu7mpvj.apps.googleusercontent.com">
+    <!-- require CSS from bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Fancy To do</title>
+</head>
+<body>
+    <!-- navbar -->
+    <header class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
+        <button class="nav-link btn btn-dark text-white" type="button">Fancy Todo</button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="HomeNav"
+                        onclick="afterLogin()">Home</button>
+                </li>
+                <li class="nav-item active">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="RegisterNav"
+                        onclick="showRegisterForm()">Register</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="NewTodoNav"
+                        onclick="showAddForm()">Create To do</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link btn btn-dark text-white" type="button" id="logout">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- form login -->
+    <div class="jumbotron jumbotron-fluid mt-5 bg-white" id="loginForm">
+        <div class="container mx-auto px-5 w-50">
+            <div id="headlogin">
+                <h1 class="text-center">Login to your account</h1>
+            </div>
+            <div class="container rounded border border-dark mt-3">
+                <!-- error message -->
+                <div class="container" id="login_error_message">
+                    
+                </div>
+                <form onsubmit="login(event)">
+                    <div class="form-group mt-3">
+                        <small id="errorHandler" class="form-text text-muted"></small>
+                        <label for="input_email">Email address</label>
+                        <input type="email" class="form-control" id="input_email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_password">Password</label>
+                        <input type="password" class="form-control" id="input_password">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3">Login</button>
+                    <small>Or click here to <a href="#" onclick="showRegisterForm()">register</a>.</small>
+                </form>
+                <div class="mb-3">
+                    <p>Or login with</p>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- form register -->
+    <div class="jumbotron jumbotron-fluid mt-5 bg-white" id="register">
+        <div class="container mx-auto px-5 w-50">
+            <h1 class="text-center">Register</h1>
+            <div class="container rounded border border-dark w-50 mt-3">
+                <div class="container" id="register_error_message">
+                    
+                </div>
+                <form onsubmit="register(event)" id="registerForm">
+                    <div class="form-group mt-3">
+                        <small id="errorHandler" class="form-text text-muted"></small>
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+    
+                    <button type="submit" class="btn btn-primary mb-3">Register</button>
+                    <small>Have an account? Login <a href="#" onclick="showLoginForm()">here</a>.</small>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Todos -->
+    <div class="jumbotron mt-5 bg-transparent" id="contentTodos">
+        <div class="container">
+            <div class="mb-5">
+                <h1 class="text-dark bg-transparent">Your Todos: </h1>
+                <!-- error message -->
+                <div class="container" id="error_message">
+                    
+                </div>
+            </div>
+            <div class="row mt-3" id="todos">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- form add Todo -->
+    <div class="jumbotron bg-white" id="jumbotron_addTodoForm">
+        <div class="container ">
+            <form id="addTodoForm" onsubmit="addTodo(event)">
+                <h3>What do you want to do?</h3>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="e.g. Cooking Nasi Goreng">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" placeholder="e.g. Prepare Nasi Goreng for my lonely self">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status">  
+                        <option>Please select one</option>
+                        <option value="On Progress">On Progress</option>
+                        <option value="Cancel">Cancel</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Due Date</label>
+                    <input type="date" class="form-control" id="date">
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="">Add</button>
+                <button type="button" class="btn btn-danger" onclick="afterLogin()">Cancel</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- form edit Todo -->
+    <div class="jumbotron" id="jumbotron_editTodoForm">
+        <div class="container" id="editTodoForm">
+        </div>
+    </div>
+
+    <!-- Define CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <!-- script api google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./main.js"></script>
+</body>
+</html>
