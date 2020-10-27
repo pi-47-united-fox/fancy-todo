@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Login-->
+    <meta name="google-signin-client_id" content="639126342145-10qrf40f8aett5k1kmphduh1d73g7055.apps.googleusercontent.com">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./custom.css">
+
+    <title>Welcome to ListPorter</title>
+  </head>
+  <body>
+  
+      <!----- Navbar -------------------------------------------------------------------------------------------------------->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Listporter</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="btn-login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="btn-register">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="btn-logout">Logout</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="btn-nav-my-todo-list">My Todo List</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="btn-add-todo-form">Add to do List</a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+
+  <div class="container">
+
+    <!-------BEFORE LOGIN-------------------------------------------------------------------------------------------->
+    <!-- Form Login -->
+    <div class="before-login" id="login-form">
+      <h1>Log In</h1>
+        <form onsubmit="loginApp(event)">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+
+    <!-------AFTER LOGIN-------------------------------------------------------------------------------------------->
+
+    <!------- REGISTER -------------------------------------------------------------------------------------------->
+    
+    <!-- Form Signup -->
+    <div class="before-login" id="signup-form">
+      <h1>Sign Up</h1>
+        <form onsubmit="register(event)">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="emailregister" aria-describedby="emailHelp">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="passwordregister">
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+    </div>
+
+    <!------- ADD TODO LIST FORM -------------------------------------------------------------------------------------------->
+    <div class="container" id="todo-list-form">
+      <br>
+      <h1>Create a new Task</h1>
+      <div class="card">
+        <div class="card-body">
+          <p><b>Get a writing task for your reporting content</b><p>
+          <form onsubmit="addTodoWrite(event)">
+            <div class="form-group">
+              <label for="searchInputAddTask">Get a writing task and content</label>
+              <input type="text" class="form-control todo-list-input" id="topicInput" placeholder="Search a news by topic">
+            </div>
+            <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn">Give me a writing task</button>
+          </form>
+  
+          <hr>
+   
+          <div>
+            <p><b>Create a traditional task</b><p>
+            <form onsubmit="addTodoListItem(event)">
+              <div class="form-group">
+                <label for="titleInputAddTask">Title</label>
+                <input type="text" class="form-control" name="titleInputAddTask" id="titleInputAddTask">
+              </div>
+    
+              <div class="form-group">
+                <label for="descriptionInputAddTask">Description</label>
+                <textarea class="form-control" id="descriptionInputAddTask" rows="3"></textarea>
+              </div>
+    
+              <div class="form-group">
+                <label for="dueDateInputAddTask">Due Date</label>
+                <input type="date" class="form-control" name="dueDateInputAddTask" id="dueDateInputAddTask">
+              </div>
+              
+              <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn">Commit a task</button>
+            </form>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!------- VIEW ALL TODO OWNED BY THE ID -------------------------------------------------------------------------------------------->
+    
+    <div id="todo-list-dashboard">
+      <h2>Writer Dashboard</h2>
+      <div class="page-content page-container" id="page-content">
+        <div id="user-todo-list">
+            
+
+
+
+        </div>
+    </div>
+
+  </div>
+
+    <!------- VIEW DETAIL OF A SPECIFIC TODO ITEM -------------------------------------------------------------------------------------------->
+
+    <div id="view-todo-details">
+        <!--- Appended-->
+    </div>
+
+        <!------- EDIT TODO LIST FORM -------------------------------------------------------------------------------------------->
+        <div class="container" id="edit-form-update">
+            <!--- Append edit-->
+        </div>
+  </div> 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    
+    <!-- Script API Google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- JS Sendiri -->
+    <script src="./main.js"></script>
+  </body>
+</html>
