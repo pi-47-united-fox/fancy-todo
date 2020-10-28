@@ -1,0 +1,13 @@
+heroku - server
+
+1. kasih conditional untuk dotenv pada stage development -- app.js--
+2. pastikan cors terpasang, app.js
+3. pada stage production isi dengan "use_env_variable": "DATABASE_URL", config/config.json
+4. script tampahkan "start": "node app.js", package.json
+5. heroku login// via terminal
+6. tambah remote heroku
+7. git subtree push --prefix server heroku master
+8. heroku run bash, terminal
+9. npm i sequelize-cli -g
+10. sequelize db:migrate
+11. sequelize db:seed:all
