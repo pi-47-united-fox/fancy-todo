@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Client ID Google-->
+    <meta name="google-signin-client_id"
+        content="473073932556-pnkida6qauma854ueuf2j2hrlt56qqkk.apps.googleusercontent.com">
+    <!--require local css-->
+    <link rel="stylesheet" href="style.css">
+
+    <!--require bootstrap css-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Fancy Todo</title>
+</head>
+
+<body>
+
+    <!--navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Fancy-Todos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!--jumbotron-->
+    <div class="jumbotron firstPage">
+        <h1 class="display-4">Todo Apps, easy!</h1>
+        <p class="lead">Todo list is a web app software to manage your activity more easy and fun.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <a class="btn btn-dark btn-lg" onclick="beforeLogin()" href="#" role="button">Login</a>
+    </div>
+
+    <!--header list-->
+    <div class="jumbotron jumbotron afterLogin">
+        <div class="container">
+            <div id="user-name">
+                <!--<h1 class="display-3">Hallo! </h1>-->
+            </div>
+            <p class="lead">Mau makaan apa hari ini ?
+            </p>
+        </div>
+    </div>
+    <!--list todos-->
+    <div class="container mt-5 afterLogin">
+        <button type="submit" onclick="addForm()" class="btn btn-dark mb-5">Add Activity</button>
+        <div class="row " id="list-todo">
+            <!--append scrip list-todo-->
+        </div>
+    </div>
+
+    <br>
+
+    <!--form login-->
+    <div class="container beforeLogin">
+        <h1>Login Fancy APP</h1>
+        <form onsubmit="loginApp(event)">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-dark">Submit</button>
+            <a class="btn btn-dark" onclick="registerForm()">register</a>
+        </form>
+
+        <br>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+
+    <!--form register-->
+    <div class="container registerForm">
+        <h1>Register Fancy APP</h1>
+        <form onsubmit="register(event)">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password-register">
+            </div>
+            <button type="submit" class="btn btn-dark">Submit</button>
+            <a class="btn btn-dark" onclick="beforeLogin()">Cancel</a>
+        </form>
+        <br>
+    </div>
+
+    <!--Form Add Todo-->
+    <div class="container formAdd">
+        <h1>Search Food</h1>
+        <!--Food Search-->
+        <div class="form-group">
+            <input type="text" class="form-control" id="search" placeholder="masukin query disini">
+            <button class="btn btn-dark btn-food-search mt-3" onclick="fetchFood()">Search Food</button>
+        </div>
+        <table class="table table-dark table-toggle mt-3 mb-3">
+            <thead>
+                <tr>
+                    <th>Food Name</th>
+                    <th>Cusines</th>
+                    <th>Price</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody id="list-food">
+                <!--Append list food-->
+            </tbody>
+        </table>
+        <br>
+        <h2>Add Eativity</h2>
+        <form>
+            <!--title-->
+            <div class="form-group mt-3">
+                <label for="exampleFormControlInput1">Ttitle</label>
+                <input type="text" class="form-control" id="title" placeholder="mau makan mi ayam">
+            </div>
+            <!--food-->
+            <label for="exampleFormControlSelect1">Food Name</label>
+            <select class="form-control select-food" id="food">
+                <!--append food-->
+            </select>
+            <!--location-->
+            <label for="exampleFormControlSelect1">Location</label>
+            <select class="form-control input-location" id="location">
+                <!--append food-->
+            </select>
+            <!--link-->
+            <label for="exampleFormControlSelect1">Price</label>
+            <select class="form-control input-price" id="link">
+                <!--append food-->
+            </select>
+            <!--descriptiom-->
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea class="form-control" id="description" rows="3"
+                    placeholder="coba tulis disini keteranganya"></textarea>
+            </div>
+            <button type="submit" onclick="addData(event)" class="btn btn-success">Submit</button>
+            <button onclick="afterLogin()" class="btn btn-danger">Cancel</button>
+        </form>
+    </div>
+
+    <!--Form Edit Todo-->
+    <div class="container formEdit">
+        <h1>Search Food</h1>
+        <!--Food Search-->
+        <div class="form-group">
+            <input type="text" class="form-control" id="search" placeholder="masukin query disini">
+            <button class="btn btn-dark btn-food-search mt-3" onclick="fetchFood()">Search Food</button>
+        </div>
+        <br>
+        <h2>Edit Eativity</h2>
+        <form>
+            <!--title-->
+            <div class="form-group mt-3">
+                <label for="exampleFormControlInput1">Ttitle</label>
+                <input type="text" class="form-control" id="title-edit" placeholder="mau makan mi ayam">
+            </div>
+            <!--food-->
+            <label for="exampleFormControlSelect1">Food Name</label>
+            <select class="form-control select-food" id="food-edit">
+                <!--append food-->
+            </select>
+            <!--location-->
+            <label for="exampleFormControlSelect1">Location</label>
+            <select class="form-control input-location" id="location-edit">
+                <!--append food-->
+            </select>
+            <!--link-->
+            <label for="exampleFormControlSelect1">Price</label>
+            <select class="form-control input-price" id="link-edit">
+                <!--append food-->
+            </select>
+            <!--descriptiom-->
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea class="form-control" id="description-edit" rows="3"
+                    placeholder="coba tulis disini keteranganya"></textarea>
+            </div>
+            <button type="submit" onclick="editData(id)" class="btn btn-success">Submit</button>
+            <button onclick="afterLogin()" class="btn btn-danger">Cancel</button>
+        </form>
+    </div>
+
+    <!--define cdn query-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <!--require script function-->
+    <script src="script.js"></script>
+
+    <!--require Script API Google Oauth-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</body>
+
+</html>

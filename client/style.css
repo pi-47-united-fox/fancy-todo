@@ -1,0 +1,27 @@
+body{
+    margin : 0 auto;
+    background-color: black;
+}
+
+.card-food{
+    margin: 0 auto;
+    background-color: black;
+    width: 300px;
+    height: 400px;
+    border-radius: 20px;
+}
+.card-food-image{
+    margin: 0 auto;
+    height: 250px;
+    background-color: blue;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    
+}
+
+.card-food-text {
+    margin: 0 auto;
+    width: 300px;
+    height: 250px;
+    background-color: brown;
+}
